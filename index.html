@@ -31,8 +31,8 @@
 
 <!-- ===================================================================
      ICONE
-     Disegnate qui una volta sola e richiamate nel resto della pagina con
-     <svg class="icona"><use href="#nome"></use></svg>.
+     Disegnate qui una volta sola e richiamate nel resto della pagina
+     con un tag svg che punta al simbolo tramite use href.
      Prendono il colore del testo che hanno intorno.
      =================================================================== -->
 <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
@@ -58,8 +58,21 @@
     <circle cx="12" cy="12" r="8.6"/>
     <path d="M12 6.9V12l3.4 2.1"/>
   </symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24">
+    <rect x="3" y="5.2" width="18" height="13.6" rx="2.6"/>
+    <path d="m4.4 7.6 7.6 5.2 7.6-5.2"/>
+  </symbol>
   <symbol id="i-stella" viewBox="0 0 24 24">
     <path d="m12 2.6 2.9 5.88 6.5.95-4.7 4.58 1.11 6.47L12 17.42l-5.81 3.06 1.11-6.47L2.6 9.43l6.5-.95z"/>
+  </symbol>
+  <symbol id="i-freccia" viewBox="0 0 24 24">
+    <path d="M4.5 12h15M13.5 6l6 6-6 6"/>
+  </symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24">
+    <path d="M3.6 7h16.8M3.6 12h16.8M3.6 17h16.8"/>
+  </symbol>
+  <symbol id="i-chiudi" viewBox="0 0 24 24">
+    <path d="M6 6l12 12M18 6L6 18"/>
   </symbol>
   <symbol id="i-chiave" viewBox="0 0 24 24">
     <path d="M14.6 3.2a5.5 5.5 0 0 0-4.9 8l-6 6a2.1 2.1 0 1 0 3 3l6-6a5.5 5.5 0 0 0 8-4.9c0-.7-.14-1.37-.4-2l-3.4 3.4-2.7-2.7 3.4-3.4a5.5 5.5 0 0 0-2-.4z"/>
@@ -76,6 +89,8 @@
   </symbol>
 </svg>
 
+<span class="ancora-ferma" id="chiudi"></span>
+
 <header class="testata">
   <div class="wrap">
     <a class="marchio" href="#contenuto">
@@ -87,6 +102,7 @@
     <nav class="nav" aria-label="Navigazione principale">
       <a href="#officina">Cosa facciamo</a>
       <a href="#lavoro">Il lavoro</a>
+      <a href="#recensioni">Recensioni</a>
       <a href="#dove">Dove siamo</a>
     </nav>
 
@@ -98,8 +114,46 @@
         <svg class="icona icona-piena"><use href="#i-whatsapp"></use></svg>
       </a>
     </div>
+
+    <a class="apri-menu" href="#menu" aria-label="Apri il menu">
+      <svg class="icona"><use href="#i-menu"></use></svg>
+    </a>
   </div>
 </header>
+
+<!-- ===================================================================
+     MENU DEL TELEFONO
+     Si apre con :target, senza JavaScript. Toccando una voce l'ancora
+     cambia e il pannello si chiude da solo.
+     =================================================================== -->
+<div class="pannello" id="menu">
+  <div class="pannello-testata">
+    <span class="marchio">
+      <img src="img/logo-bomber-garage.webp" width="720" height="720" alt="" decoding="async">
+      <span>Bomber<br>Garage</span>
+    </span>
+    <a class="chiudi-menu" href="#chiudi" aria-label="Chiudi il menu">
+      <svg class="icona"><use href="#i-chiudi"></use></svg>
+    </a>
+  </div>
+
+  <nav class="pannello-nav" aria-label="Menu">
+    <a href="#officina">Cosa facciamo</a>
+    <a href="#lavoro">Il lavoro</a>
+    <a href="#recensioni">Recensioni</a>
+    <a href="#dove">Dove siamo e orari</a>
+    <a href="#contatti">Contatti</a>
+  </nav>
+
+  <div class="pannello-contatti">
+    <a class="btn btn-oro" href="tel:+393931087444">
+      <svg class="icona"><use href="#i-telefono"></use></svg>Chiama 393 108 7444
+    </a>
+    <a class="btn btn-velo" href="https://wa.me/393931087444?text=Ciao%2C%20vi%20scrivo%20dal%20sito%20Bomber%20Garage." target="_blank" rel="noopener">
+      <svg class="icona icona-piena"><use href="#i-whatsapp"></use></svg>WhatsApp
+    </a>
+  </div>
+</div>
 
 <main id="contenuto">
 
@@ -130,20 +184,26 @@
           <svg class="icona icona-piena"><use href="#i-whatsapp"></use></svg>WhatsApp
         </a>
       </div>
-
-      <a class="voto" href="https://maps.app.goo.gl/XPU6XxXUKYwf9M847" target="_blank" rel="noopener">
-        <span class="stelle" aria-hidden="true">
-          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
-          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
-          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
-          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
-          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
-        </span>
-        <span><strong>5,0</strong> su Google, 11 recensioni</span>
-      </a>
     </div>
 
   </section>
+
+
+  <!-- =================================================================
+       FASCIA DEGLI ORARI
+       ================================================================= -->
+  <div class="fascia-orari">
+    <div class="wrap">
+      <p class="orario">
+        <svg class="icona"><use href="#i-orologio"></use></svg>
+        Lunedì - venerdì 9:00 - 18:00
+      </p>
+      <p class="chiuso">Sabato e domenica chiuso</p>
+      <a href="#dove">
+        <svg class="icona"><use href="#i-posizione"></use></svg>Via Umberto Biancamano 34, Roma
+      </a>
+    </div>
+  </div>
 
 
   <!-- =================================================================
@@ -184,52 +244,72 @@
 
   <!-- =================================================================
        IL LAVORO
+       Foto vere di lavori usciti dall'officina. Ogni didascalia dice
+       cosa si sta guardando e cosa e' stato fatto.
        ================================================================= -->
   <section class="sezione sezione-2" id="lavoro">
     <div class="wrap">
 
       <p class="etichetta">Il lavoro</p>
       <h2>Roba passata<br>sul banco</h2>
+      <p class="lead misura-l dopo-titolo">Non sono foto da catalogo: sono moto di clienti, fotografate qui dentro mentre si lavorava. Sotto a ognuna c'è scritto cosa si sta guardando.</p>
 
-      <figure class="foto-grande">
+      <figure class="foto-grande scatto">
         <img src="img/carburatore.webp"
              width="1100" height="1104"
              alt="Un carburatore smontato pezzo per pezzo e disposto su un panno bianco"
              loading="lazy" decoding="async">
-        <figcaption class="didascalia">Carburatore aperto, ogni pezzo al suo posto</figcaption>
+        <figcaption class="didascalia">
+          <strong>Carburatore</strong>
+          Aperto e smontato pezzo per pezzo. Ogni componente va pulito, controllato e rimontato con le guarnizioni nuove: se manca qualcosa al rimontaggio, si vede subito.
+        </figcaption>
       </figure>
 
       <div class="coppia">
-        <figure>
+        <figure class="scatto">
+          <span class="tag">Prima</span>
           <img src="img/motore-prima.webp"
                width="1100" height="1100"
                alt="Motore bicilindrico Honda tolto dal telaio e appoggiato sul cavalletto"
                loading="lazy" decoding="async">
-          <figcaption class="didascalia prima-dopo">Prima</figcaption>
+          <figcaption class="didascalia">
+            <strong>Motore Honda 583</strong>
+            Tolto dal telaio e messo sul cavalletto, come è arrivato.
+          </figcaption>
         </figure>
-        <figure>
+        <figure class="scatto">
+          <span class="tag">Dopo</span>
           <img src="img/motore-dopo.webp"
                width="1100" height="1100"
                alt="Lo stesso motore rimontato, con i carter riverniciati"
                loading="lazy" decoding="async">
-          <figcaption class="didascalia prima-dopo">Dopo</figcaption>
+          <figcaption class="didascalia">
+            <strong>Lo stesso motore</strong>
+            Rifatto e richiuso, carter riverniciati, pronto per tornare dentro.
+          </figcaption>
         </figure>
       </div>
 
       <div class="coppia">
-        <figure>
+        <figure class="scatto">
           <img src="img/yamaha-xjr.webp"
                width="1100" height="1100"
                alt="Una Yamaha XJR aperta in officina, con il radiatore dell'olio in vista"
                loading="lazy" decoding="async">
-          <figcaption class="didascalia">Yamaha XJR, quattro cilindri ad aria</figcaption>
+          <figcaption class="didascalia">
+            <strong>Yamaha XJR</strong>
+            Quattro cilindri ad aria, aperta per arrivare al radiatore dell'olio e ai collettori.
+          </figcaption>
         </figure>
-        <figure>
+        <figure class="scatto">
           <img src="img/forcella.webp"
                width="1100" height="1100"
                alt="Moto sollevata con l'avantreno smontato e gli steli della forcella a terra"
                loading="lazy" decoding="async">
-          <figcaption class="didascalia">Avantreno giù, steli da rifare</figcaption>
+          <figcaption class="didascalia">
+            <strong>Avantreno smontato</strong>
+            Moto sollevata e forcella giù: steli fuori per rifare paraoli e olio.
+          </figcaption>
         </figure>
       </div>
 
@@ -238,9 +318,90 @@
 
 
   <!-- =================================================================
+       RECENSIONI
+       Sono recensioni vere lasciate su Google. Qui ne stanno tre, in
+       breve; il link porta alla scheda con tutte.
+       ================================================================= -->
+  <section class="sezione" id="recensioni">
+
+    <div class="wrap">
+      <p class="etichetta">Dicono di lui</p>
+      <h2>Cinque stelle,<br>undici volte su undici</h2>
+      <a class="voto-grande" href="https://maps.app.goo.gl/XPU6XxXUKYwf9M847" target="_blank" rel="noopener">
+        <span class="stelle" aria-hidden="true">
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+        </span>
+        <span><strong>5,0</strong> su 11 recensioni Google</span>
+      </a>
+    </div>
+
+    <div class="recensioni">
+
+      <article class="recensione">
+        <div class="stelle" role="img" aria-label="5 stelle su 5">
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+        </div>
+        <blockquote>&ldquo;Officina seria ed onesta, Daniele il titolare è un vero professionista.&rdquo;</blockquote>
+        <footer>
+          <span class="iniziali" aria-hidden="true">GB</span>
+          <p class="chi"><strong>Gabriele B.</strong><span>Local Guide &middot; su Google</span></p>
+        </footer>
+      </article>
+
+      <article class="recensione">
+        <div class="stelle" role="img" aria-label="5 stelle su 5">
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+        </div>
+        <blockquote>&ldquo;Gran meccanico e persona gentilissima. Sempre disponibile e preciso.&rdquo;</blockquote>
+        <footer>
+          <span class="iniziali" aria-hidden="true">PM</span>
+          <p class="chi"><strong>Pietro di M.</strong><span>Local Guide &middot; su Google</span></p>
+        </footer>
+      </article>
+
+      <article class="recensione">
+        <div class="stelle" role="img" aria-label="5 stelle su 5">
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+        </div>
+        <blockquote>&ldquo;Meccanico preparato e veloce, officina pulitissima.&rdquo;</blockquote>
+        <footer>
+          <span class="iniziali" aria-hidden="true">LP</span>
+          <p class="chi"><strong>Leonardo P.</strong><span>Su Google</span></p>
+        </footer>
+      </article>
+
+    </div>
+
+    <div class="wrap">
+      <a class="tutte-recensioni" href="https://maps.app.goo.gl/XPU6XxXUKYwf9M847" target="_blank" rel="noopener">
+        Leggile tutte su Google
+        <svg class="icona"><use href="#i-freccia"></use></svg>
+      </a>
+    </div>
+
+  </section>
+
+
+  <!-- =================================================================
        L'OFFICINA
        ================================================================= -->
-  <section class="sezione">
+  <section class="sezione sezione-2">
     <div class="wrap">
 
       <div class="officina">
@@ -257,28 +418,29 @@
             <p>L'officina l'ha presa <strong>Daniele Stacchiotti</strong> a luglio. Ponti, muro degli attrezzi, pavimento pulito: chi entra se ne accorge subito, e nelle recensioni è la prima cosa che scrivono.</p>
             <p>Ci passa di tutto: scooter, stradali, maxi enduro, moto a carburatori che nessuno vuole più toccare. Se la moto cammina, la si guarda.</p>
           </div>
-
-          <blockquote class="citazione">
-            &ldquo;Officina seria ed onesta&rdquo;
-            <cite>Recensione su Google</cite>
-          </blockquote>
         </div>
       </div>
 
       <div class="coppia">
-        <figure>
+        <figure class="scatto">
           <img src="img/bmw-r1200rt.webp"
                width="800" height="1422"
                alt="Una BMW R 1200 RT sul ponte dell'officina"
                loading="lazy" decoding="async">
-          <figcaption class="didascalia">BMW R 1200 RT in tagliando</figcaption>
+          <figcaption class="didascalia">
+            <strong>BMW R 1200 RT</strong>
+            Sul ponte per il tagliando.
+          </figcaption>
         </figure>
-        <figure>
+        <figure class="scatto">
           <img src="img/officina-interno.webp"
                width="1200" height="1600"
                alt="L'officina vista dall'ingresso, con tre moto sui ponti"
                loading="lazy" decoding="async">
-          <figcaption class="didascalia">Via Umberto Biancamano 34</figcaption>
+          <figcaption class="didascalia">
+            <strong>Via Umberto Biancamano 34</strong>
+            Due ponti, il banco e il muro degli attrezzi.
+          </figcaption>
         </figure>
       </div>
 
@@ -287,9 +449,9 @@
 
 
   <!-- =================================================================
-       DOVE SIAMO
+       DOVE SIAMO E ORARI
        ================================================================= -->
-  <section class="sezione sezione-2" id="dove">
+  <section class="sezione" id="dove">
     <div class="wrap">
 
       <p class="etichetta">Dove siamo</p>
@@ -326,7 +488,7 @@
             </g>
 
             <!-- strade -->
-            <g stroke="#3b3b44" stroke-linecap="round" fill="none">
+            <g stroke="#34343c" stroke-linecap="round" fill="none">
               <path d="M186 336 L436 60" stroke-width="17"/>
               <path d="M214 400 L742 322" stroke-width="19"/>
               <path d="M172 428 L344 550" stroke-width="17"/>
@@ -340,14 +502,14 @@
                   stroke-linecap="round" fill="none"/>
 
             <!-- piazza di Porta San Giovanni -->
-            <circle cx="188" cy="382" r="46" fill="none" stroke="#3b3b44" stroke-width="16"/>
+            <circle cx="188" cy="382" r="46" fill="none" stroke="#34343c" stroke-width="16"/>
 
             <!-- nomi -->
             <g fill="rgba(246,244,240,0.42)" font-family="Inter, system-ui, sans-serif"
                font-size="21" font-weight="500">
               <text x="256" y="266" transform="rotate(-47.8 256 266)" font-size="19">Via Emanuele Filiberto</text>
               <text x="316" y="418" transform="rotate(-8.4 316 418)" font-size="19">Viale Carlo Felice</text>
-              <text x="206" y="472" transform="rotate(35.3 206 472)" font-size="18">Via Appia Nuova</text>
+              <text x="238" y="512" transform="rotate(35.3 238 512)" font-size="18">Via Appia Nuova</text>
               <text x="118" y="120" transform="rotate(81.8 118 120)" font-size="17" fill="rgba(232,200,136,0.45)">Mura Aureliane</text>
               <text x="188" y="470" text-anchor="middle" font-size="17">Porta San Giovanni</text>
             </g>
@@ -360,9 +522,9 @@
             <circle cx="368" cy="272" r="34" fill="#e8c888" opacity="0.14"/>
             <path d="M368 276c0-.6-18-16.2-18-27a18 18 0 0 1 36 0c0 10.8-18 26.4-18 27z" fill="#e8c888"/>
             <circle cx="368" cy="249" r="6.4" fill="#0c0c0d"/>
-            <rect x="394" y="250" width="218" height="46" rx="10" fill="#e8c888"/>
-            <text x="503" y="281" text-anchor="middle" font-family="Inter, system-ui, sans-serif"
-                  font-size="22" font-weight="800" letter-spacing="-0.3" fill="#0c0c0d">BOMBER GARAGE</text>
+            <rect x="394" y="250" width="212" height="46" rx="10" fill="#e8c888"/>
+            <text x="414" y="281" font-family="Inter, system-ui, sans-serif"
+                  font-size="25" font-weight="800" letter-spacing="-0.4" fill="#0c0c0d">BOMBER GARAGE</text>
 
           </svg>
           <span class="mappa-azione">
@@ -382,11 +544,15 @@
 
           <div class="riquadro">
             <p class="titolino"><svg class="icona"><use href="#i-orologio"></use></svg>Orari</p>
-            <dl class="orari">
-              <dt>Da lunedì a venerdì</dt>
-              <dd>9:00 - 18:00</dd>
-              <dt>Sabato e domenica</dt>
-              <dd>Chiuso</dd>
+            <dl class="orari-grandi">
+              <div>
+                <dt>Lunedì - venerdì</dt>
+                <dd>9:00 - 18:00</dd>
+              </div>
+              <div>
+                <dt>Sabato e domenica</dt>
+                <dd class="chiuso">Chiuso</dd>
+              </div>
             </dl>
           </div>
 
@@ -401,7 +567,7 @@
   <!-- =================================================================
        CONTATTI
        ================================================================= -->
-  <section class="sezione contatti" id="contatti">
+  <section class="sezione sezione-2 contatti" id="contatti">
     <div class="wrap">
 
       <p class="etichetta">Contatti</p>
@@ -426,6 +592,10 @@
         <a href="https://www.facebook.com/bombersmotorcycle/" target="_blank" rel="noopener">
           <svg class="icona icona-piena"><use href="#i-facebook"></use></svg>BomberGarage
         </a>
+        <!-- SEGNAPOSTO: quando c'e' un'email, sostituire questa riga con
+             <a href="mailto:...."><svg class="icona"><use href="#i-mail"></use></svg>indirizzo</a>
+             e aggiungere "email" nel JSON-LD in fondo alla pagina. -->
+        <span class="segnaposto">Email da inserire</span>
       </div>
 
     </div>
@@ -438,7 +608,7 @@
   <div class="wrap">
     <p>BomberGarage di Stacchiotti Daniele &nbsp;&middot;&nbsp; Via Umberto Biancamano 34, 00185 Roma &nbsp;&middot;&nbsp; <a href="tel:+393931087444">393 108 7444</a></p>
     <!-- SEGNAPOSTO: inserire la partita IVA reale -->
-    <p>Partita IVA <strong>DA INSERIRE</strong></p>
+    <p>Partita IVA <span class="segnaposto">da inserire</span></p>
   </div>
 </footer>
 
@@ -464,6 +634,7 @@
      Google dell'attivita'. Il voto non e' marcato apposta: marcare le
      recensioni altrui sul proprio sito e' contro le linee guida di
      Google e si rischia una penalizzazione.
+     Quando c'e' un'email, si aggiunge "email": "..." qui sotto.
      =================================================================== -->
 <script type="application/ld+json">
 {
