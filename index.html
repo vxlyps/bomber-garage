@@ -36,6 +36,7 @@
 <link rel="canonical" href="https://vxlyps.github.io/bomber-garage/">
 <meta property="og:url" content="https://vxlyps.github.io/bomber-garage/">
 <meta property="og:image" content="https://vxlyps.github.io/bomber-garage/img/anteprima-whatsapp.jpg">
+<meta name="twitter:image" content="https://vxlyps.github.io/bomber-garage/img/anteprima-whatsapp.jpg">
 
 <script type="application/ld+json">
 {
@@ -105,15 +106,26 @@
 <meta name="twitter:card" content="summary_large_image">
 
 <!-- ###################################################################
-     UMAMI, statistiche senza cookie
-     Non usa cookie ne' localStorage e non profila nessuno, quindi non
-     serve nessun banner. E' l'unica richiesta a un server esterno che
-     fa questo sito.
-     DA FARE: sostituire UMAMI_WEBSITE_ID con l'id vero del sito preso
-     dal pannello di Umami Cloud. Finche' e' il segnaposto, lo script
-     si carica ma i dati non arrivano da nessuna parte.
+     UMAMI, statistiche senza cookie: ADESSO E' SPENTO
+
+     Con lo script commentato il sito non fa nessuna richiesta a
+     nessun server esterno. Zero.
+
+     PER RIACCENDERLO servono due cose:
+       1. togliere la riga "<!--" qui sotto e la riga "-->" dopo lo
+          script, cosi' il tag torna attivo;
+       2. sostituire UMAMI_WEBSITE_ID con l'id vero del sito, preso dal
+          pannello di Umami Cloud.
+     Va fatto su tutte e tre le pagine: index.html, privacy/index.html
+     e 404.html.
+
+     Le marcature data-umami-event sui pulsanti sono rimaste nel
+     markup: non fanno niente finche' lo script e' spento, e quando
+     torna acceso funzionano subito senza toccare altro.
      ################################################################### -->
+<!--
 <script defer src="https://cloud.umami.is/script.js" data-website-id="UMAMI_WEBSITE_ID"></script>
+-->
 
 <link rel="stylesheet" href="style.css">
 <!-- ===================================================================
@@ -427,7 +439,7 @@
 
     <div class="wrap">
       <p class="etichetta">Dicono di lui</p>
-      <h2>Cinque stelle,<br>undici volte su undici</h2>
+      <h2>Chi ci è passato,<br>dice così</h2>
       <a class="voto-grande" href="https://maps.app.goo.gl/XPU6XxXUKYwf9M847" data-umami-event="recensioni-google" target="_blank" rel="noopener">
         <span class="stelle" aria-hidden="true">
           <svg class="icona icona-piena"><use href="#i-stella"></use></svg>

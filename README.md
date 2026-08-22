@@ -23,8 +23,9 @@ Sito di BomberGarage, officina moto in via Umberto Biancamano 34 a Roma.
 > togliere la riga `/CNAME` da `.gitignore`, e committare.
 > **Solo dopo che i record DNS sono già a posto**, mai prima.
 >
-> Extra, quando ci sono: l'id vero di Umami al posto di
-> `UMAMI_WEBSITE_ID` (tre pagine), la partita IVA e l'email.
+> Extra, quando ci sono: riaccendere Umami (togliere i commenti attorno
+> allo script e mettere l'id vero, su tre pagine), la partita IVA e
+> l'email.
 
 Una pagina sola, HTML e CSS statici. Nessun framework, nessun build step,
 nessuna libreria esterna. Il carattere è Inter e sta dentro `fonts/`, non
@@ -183,14 +184,23 @@ pronte e ritagliate.
 
 ## Statistiche e privacy
 
-Le statistiche sono di **Umami Cloud**: non usa cookie né localStorage e
-non profila nessuno, quindi non serve nessun banner. È l'unica richiesta
-a un server esterno che fa il sito: tutto il resto (carattere, icone,
-mappa) è servito da qui.
+Le statistiche sarebbero di **Umami Cloud**, ma **adesso lo script è
+commentato**: il sito non fa nessuna richiesta a nessun server esterno,
+zero. Carattere, icone, mappa e anteprima sono tutti serviti da qui.
 
-Nella testa di ogni pagina c'è `data-website-id="UMAMI_WEBSITE_ID"`: va
-sostituito con l'id vero preso dal pannello di Umami. Finché è il
-segnaposto lo script si carica ma i dati non arrivano da nessuna parte.
+Per riaccenderlo, su **tutte e tre le pagine**:
+
+1. togliere i due segni di commento attorno al tag `<script>` di Umami
+   nella testa (la riga `<!--` sopra e la riga `-->` sotto);
+2. sostituire `UMAMI_WEBSITE_ID` con l'id vero preso dal pannello di
+   Umami Cloud.
+
+Umami non usa cookie né localStorage e non profila nessuno, quindi anche
+da acceso non serve nessun banner.
+
+Le marcature `data-umami-event` sui pulsanti sono rimaste nel markup:
+non fanno niente a script spento, e quando torna acceso funzionano
+subito senza toccare altro.
 
 Tutti i pulsanti sono marcati con `data-umami-event`, con la posizione
 dentro al nome, così dal pannello si vede quale converte:
@@ -211,10 +221,12 @@ normalmente, perché aprono il telefono e la pagina resta dov'è.
 
 ## L'anteprima quando si manda il link
 
-`img/anteprima-whatsapp.jpg`, 1200x630, fatta apposta: stemma, nome
-grande e foto dell'officina sotto, leggibile anche a francobollo. È in
-JPEG e non in webp perché l'anteprima di WhatsApp con il webp non è
-affidabile.
+`img/anteprima-whatsapp.jpg`, JPEG vero 1200x630, 120 KB (WhatsApp salta
+la miniatura sopra i 300 KB circa). Stemma, nome grande e foto
+dell'officina sotto, leggibile anche a francobollo. È in JPEG e non in
+webp perché l'anteprima di WhatsApp e Facebook col webp non è
+affidabile. Ci puntano sia `og:image` sia `twitter:image`, con
+`og:image:type`, `width`, `height` e `alt`.
 
 ## Le cose da riempire
 
