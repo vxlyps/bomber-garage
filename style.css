@@ -1225,16 +1225,20 @@ p { text-wrap: pretty; }
 
 
 /* =========================================================================
-   24. LE RECENSIONI CHE SCORRONO DA SOLE
+   24. LE RECENSIONI CHE AVANZANO DI UNA ALLA VOLTA
    Solo da desktop, dove prima stavano ferme in tre colonne. Sul telefono
    restano come sono: si scorrono col dito e vanno bene cosi'.
 
-   Come funziona: le tre schede sono scritte due volte nel markup (la
-   seconda serie ha aria-hidden, gli screen reader la saltano), il nastro
-   scorre di meta' della sua larghezza e riparte da capo. Meta' esatta =
-   una serie intera, quindi il giro si chiude senza scatti. Per questo lo
-   spazio fra le schede e' un margin e non un gap: col gap i conti non
-   tornerebbero e si vedrebbe il salto.
+   Non e' uno scorrimento continuo: ne stanno tre in vista, restano ferme
+   sei secondi e mezzo, poi il nastro scatta di una posizione a sinistra e
+   ne entra una nuova da destra. Giro completo in 24 secondi.
+
+   I conti: il nastro e' largo quanto la finestra, e ogni scheda e' un
+   terzo della finestra meno gli spazi. Un passo vale quindi una scheda
+   piu' uno spazio, cioe' (100% + 1rem) / 3. Tre passi fanno esattamente
+   una serie intera di schede: per questo le schede sono scritte due
+   volte nel markup, cosi' al terzo passo si riparte da capo senza che si
+   veda il salto.
 
    Si ferma passandoci sopra col mouse o arrivandoci col tasto Tab, e non
    parte proprio per chi ha chiesto meno animazioni nelle impostazioni.
@@ -1249,30 +1253,44 @@ p { text-wrap: pretty; }
 @media (min-width: 56em) and (prefers-reduced-motion: no-preference) {
   .recensioni {
     display: block;
-    width: 100%;
+    width: min(100% - (var(--margine) * 2), var(--larghezza));
+    margin-inline: auto;
     padding-inline: 0;
     overflow: hidden;
   }
 
+  /* le colonne oltre la terza escono dal contenitore e vengono tagliate */
   .recensioni-nastro {
-    display: flex;
-    width: max-content;
-    animation: scorri-recensioni 44s linear infinite;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - 2rem) / 3);
+    gap: 1rem;
+    animation: passo-recensioni 24s infinite;
   }
 
-  .recensioni .recensione {
-    width: 21rem;
-    flex: none;
-    margin-right: 1rem;
-  }
-
+  .recensioni .recensione { width: auto; margin-right: 0; }
   .recensione[aria-hidden="true"] { display: flex; }
 
   .recensioni:hover .recensioni-nastro,
   .recensioni:focus-within .recensioni-nastro { animation-play-state: paused; }
 
-  @keyframes scorri-recensioni {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
+  @keyframes passo-recensioni {
+    /* ferme, poi scatto: le coppie di percentuali sono l'inizio e la
+       fine di ogni sosta, il tratto fra una coppia e l'altra e' il passo */
+    0%, 26.667% {
+      transform: translateX(0);
+      animation-timing-function: ease-in-out;
+    }
+    33.333%, 60% {
+      transform: translateX(calc((100% + 1rem) / 3 * -1));
+      animation-timing-function: ease-in-out;
+    }
+    66.667%, 93.333% {
+      transform: translateX(calc((100% + 1rem) / 3 * -2));
+      animation-timing-function: ease-in-out;
+    }
+    100% {
+      transform: translateX(calc((100% + 1rem) / 3 * -3));
+    }
   }
 }

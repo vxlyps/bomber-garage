@@ -244,12 +244,20 @@ e chiudono un commento: se li scrivi, il commento si chiude davvero in
 quel punto e tutto il testo che segue finisce visibile in cima alla
 pagina. È già successo una volta con le istruzioni di Umami.
 
-## Le recensioni che scorrono
+## Le recensioni che avanzano
 
-Da desktop scorrono da sole, sul telefono si scorrono col dito come
-prima. Le tre schede sono scritte **due volte** in `index.html`: la
-seconda serie ha `aria-hidden="true"`, serve solo a chiudere il giro del
-nastro senza scatti, ed è nascosta quando il nastro non è attivo.
+Da desktop ne stanno tre in vista: restano ferme sei secondi e mezzo,
+poi il nastro scatta di una posizione e ne entra una nuova da destra.
+Giro completo in 24 secondi. Sul telefono si scorrono col dito come
+prima, senza nessun movimento automatico.
+
+Le tre schede sono scritte **due volte** in `index.html`: la seconda
+serie ha `aria-hidden="true"`, serve solo a far ripartire il giro senza
+che si veda il salto, ed è nascosta quando il nastro non è attivo.
+
+Per cambiare il ritmo si tocca solo la durata in `style.css`, sezione
+24: `animation: passo-recensioni 24s infinite`. Le percentuali dentro ai
+keyframe sono la sosta e lo scatto, e restano proporzionate da sole.
 
 **Se aggiungi o togli una recensione, fallo in tutte e due le serie**,
 altrimenti il giro non si chiude e si vede il salto.
