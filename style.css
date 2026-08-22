@@ -1,0 +1,728 @@
+/* =========================================================================
+   Bomber Garage - foglio di stile unico
+   Officina moto, via Umberto Biancamano 34, Roma
+
+   Impostazione grafica: fondo nero, oro preso dal logo (#e8c888),
+   titoli grossi in maiuscolo, foto grandi. Niente righe di separazione:
+   a dividere sono lo spazio e il fondo. Angoli leggermente stondati.
+
+   Indice:
+     1.  Carattere
+     2.  Variabili                      <- si cambia quasi tutto da qui
+     3.  Base
+     4.  Tipografia
+     5.  Impaginazione
+     6.  Icone
+     7.  Testata
+     8.  Pulsanti e barra contatti
+     9.  Apertura
+    10.  Cosa si fa qui
+    11.  Il lavoro (foto)
+    12.  L'officina
+    13.  Dove siamo
+    14.  Contatti
+    15.  Piede pagina
+
+   Mobile first: le regole base valgono per il telefono, i @media
+   aggiungono roba solo dagli schermi larghi in su.
+   ========================================================================= */
+
+
+/* =========================================================================
+   1. CARATTERE
+   Inter, caricato dalla cartella fonts/. Un solo file variabile con tutti
+   gli spessori. Niente Google Fonts, niente richieste esterne, quindi
+   niente cookie e niente banner.
+   ========================================================================= */
+
+@font-face {
+  font-family: "Inter";
+  src: url("fonts/InterVariable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* =========================================================================
+   2. VARIABILI
+   ========================================================================= */
+
+:root {
+
+  /* --- colori ---------------------------------------------------------- */
+  --nero:      #0c0c0d;   /* fondo pagina */
+  --nero-2:    #151517;   /* sezioni e riquadri staccati */
+  --nero-3:    #1f1f23;   /* superfici sopra ai riquadri */
+  --bianco:    #f6f4f0;   /* testo principale */
+  --grigio:    rgba(246, 244, 240, 0.64);  /* testo secondario */
+  --grigio-2:  rgba(246, 244, 240, 0.42);  /* didascalie */
+  --oro:       #e8c888;   /* preso dal logo: accento e pulsante principale */
+  --oro-cupo:  #d2ac62;   /* stesso oro, per il passaggio del mouse */
+
+  /* --- caratteri ------------------------------------------------------- */
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  --t-corpo:    1.0625rem;
+  --t-piccolo:  0.9375rem;
+  --t-micro:    0.75rem;
+  --t-lead:     clamp(1.125rem, 1.7vw, 1.375rem);
+  --t-h3:       1.1875rem;
+  --t-h2:       clamp(2rem, 6vw, 3.5rem);
+  --t-h1:       clamp(2.75rem, 10.5vw, 6.5rem);
+
+  /* --- spazi ----------------------------------------------------------- */
+  --sp-xs:  0.5rem;
+  --sp-s:   1rem;
+  --sp-m:   1.5rem;
+  --sp-l:   2.5rem;
+  --sp-xl:  4rem;
+  --sezione: clamp(4rem, 9vw, 7rem);
+
+  /* --- misure ---------------------------------------------------------- */
+  --larghezza:  74rem;
+  --stretto:    34rem;
+  --margine:    1.375rem;
+  --raggio:     8px;    /* pulsanti */
+  --raggio-g:   14px;   /* riquadri e foto */
+  --testata:    4.25rem;
+  --barra:      4.5rem; /* barra contatti in fondo, solo telefono */
+}
+
+
+/* =========================================================================
+   3. BASE
+   ========================================================================= */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background: var(--nero);
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  margin: 0;
+  background: var(--nero);
+  color: var(--bianco);
+  font-family: var(--font);
+  font-size: var(--t-corpo);
+  line-height: 1.6;
+  font-feature-settings: "liga" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  padding-bottom: calc(var(--barra) + env(safe-area-inset-bottom, 0px));
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+a { color: inherit; }
+
+:where(h1, h2, h3, p, ul, ol, figure, dl) { margin: 0; }
+
+:focus-visible {
+  outline: 2px solid var(--oro);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+:target { scroll-margin-top: calc(var(--testata) + var(--sp-s)); }
+
+
+/* =========================================================================
+   4. TIPOGRAFIA
+   I titoli sono in maiuscolo e spessi: e' la voce dell'officina.
+   Inter a corpo grande vuole la spaziatura fra le lettere stretta.
+   ========================================================================= */
+
+h1, h2 {
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--t-h1); }
+h2 { font-size: var(--t-h2); }
+
+h3 {
+  font-size: var(--t-h3);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+p { text-wrap: pretty; }
+
+/* etichetta di sezione, in oro, piccola */
+.etichetta {
+  display: block;
+  margin-bottom: 0.875rem;
+  font-size: var(--t-micro);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--oro);
+}
+
+.lead {
+  font-size: var(--t-lead);
+  line-height: 1.5;
+  letter-spacing: -0.011em;
+  color: var(--grigio);
+}
+
+.lead strong { color: var(--bianco); font-weight: 600; }
+
+.misura   { max-width: var(--stretto); }
+.misura-l { max-width: 42rem; }
+
+.prosa { color: var(--grigio); }
+.prosa > * + * { margin-top: var(--sp-s); }
+.prosa strong { color: var(--bianco); font-weight: 600; }
+
+.dopo-titolo { margin-top: var(--sp-m); }
+
+.didascalia {
+  margin-top: 0.75rem;
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--grigio-2);
+}
+
+
+/* =========================================================================
+   5. IMPAGINAZIONE
+   ========================================================================= */
+
+.wrap {
+  width: min(100% - (var(--margine) * 2), var(--larghezza));
+  margin-inline: auto;
+}
+
+.sezione { padding-block: var(--sezione); }
+.sezione-2 { background: var(--nero-2); }
+
+.salta { position: absolute; left: -9999px; }
+.salta:focus {
+  left: var(--sp-s);
+  top: var(--sp-s);
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--oro);
+  color: var(--nero);
+  border-radius: var(--raggio);
+}
+
+
+/* =========================================================================
+   6. ICONE
+   Disegnate a mano nello sprite in cima alla pagina e richiamate con
+   <use>. Prendono il colore del testo intorno.
+   ========================================================================= */
+
+.icona {
+  width: 1.25em;
+  height: 1.25em;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* i marchi e le stelle sono sagome piene, non tratti */
+.icona-piena { fill: currentColor; stroke: none; }
+
+
+/* =========================================================================
+   7. TESTATA
+   Resta attaccata in cima: i contatti non spariscono mai.
+   ========================================================================= */
+
+.testata {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--nero);
+}
+
+.testata .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-s);
+  min-height: var(--testata);
+}
+
+.marchio {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  text-decoration: none;
+}
+
+.marchio img {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+}
+
+.marchio span {
+  font-size: 0.9375rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.nav { display: none; }
+.azioni-testata { display: none; }
+
+@media (min-width: 56em) {
+  .marchio img { width: 2.625rem; height: 2.625rem; }
+  .marchio span { font-size: 1.0625rem; }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-l);
+    font-size: var(--t-micro);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .nav a { text-decoration: none; color: var(--grigio); }
+  .nav a:hover { color: var(--bianco); }
+
+  .azioni-testata { display: flex; align-items: center; gap: 0.625rem; }
+}
+
+
+/* =========================================================================
+   8. PULSANTI E BARRA CONTATTI
+   ========================================================================= */
+
+.bottoni { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3.375rem;
+  padding: 0.75rem 1.625rem;
+  border: 0;
+  border-radius: var(--raggio);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  line-height: 1.2;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.btn .icona { width: 1.1875rem; height: 1.1875rem; }
+
+.btn-piccolo {
+  min-height: 2.75rem;
+  padding: 0.5rem 1.125rem;
+  font-size: var(--t-piccolo);
+}
+
+/* l'oro del logo fa da pulsante principale, con la scritta nera */
+.btn-oro { background: var(--oro); color: var(--nero); }
+.btn-oro:hover { background: var(--oro-cupo); }
+
+.btn-velo { background: rgba(246, 244, 240, 0.13); color: var(--bianco); }
+.btn-velo:hover { background: rgba(246, 244, 240, 0.22); }
+
+/* pulsante quadrato con la sola icona */
+.btn-icona {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--raggio);
+  background: rgba(246, 244, 240, 0.13);
+  color: var(--bianco);
+  text-decoration: none;
+}
+.btn-icona:hover { background: rgba(246, 244, 240, 0.22); }
+.btn-icona .icona { width: 1.3125rem; height: 1.3125rem; }
+
+/* sul telefono i pulsanti grandi stanno larghi uguali */
+@media (max-width: 34em) {
+  .bottoni > .btn { flex: 1 1 100%; }
+}
+
+/* --- barra fissa in fondo, solo telefono ------------------------------- */
+
+.barra-contatti {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.barra-contatti a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: var(--barra);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.barra-contatti .icona { width: 1.25rem; height: 1.25rem; }
+.barra-contatti .b-chiama { background: var(--oro); color: var(--nero); }
+.barra-contatti .b-wa { background: var(--nero-3); color: var(--bianco); }
+
+@media (min-width: 56em) {
+  body { padding-bottom: 0; }
+  .barra-contatti { display: none; }
+}
+
+
+/* =========================================================================
+   9. APERTURA
+   Foto dell'officina a tutta pagina, velo scuro sopra, logo e titolo.
+   ========================================================================= */
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: calc(100vh - var(--testata));
+  min-height: calc(100svh - var(--testata));
+  /* sotto si lascia posto alla barra fissa dei contatti, altrimenti
+     la copre l'ultima riga */
+  padding-block: var(--sp-xl) calc(var(--sp-l) + var(--barra));
+  overflow: hidden;
+}
+
+@media (min-width: 56em) {
+  .hero { padding-block: var(--sp-xl); }
+}
+
+.hero-foto { position: absolute; inset: 0; }
+.hero-foto img { width: 100%; height: 100%; object-fit: cover; }
+
+/* velo a tinta piatta: serve a leggere il titolo, non a decorare */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 8, 9, 0.68);
+}
+
+.hero-contenuto { position: relative; z-index: 2; }
+
+.hero-logo {
+  width: clamp(5.5rem, 17vw, 8.5rem);
+  height: auto;
+  margin-bottom: var(--sp-m);
+  border-radius: 50%;
+}
+
+.hero h1 { margin-bottom: var(--sp-m); }
+
+.hero .lead {
+  max-width: 33rem;
+  margin-bottom: var(--sp-l);
+  color: rgba(246, 244, 240, 0.8);
+}
+
+/* la riga con il voto di Google */
+.voto {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: var(--sp-m);
+  font-size: var(--t-piccolo);
+  color: var(--grigio);
+  text-decoration: none;
+}
+.voto .stelle { display: inline-flex; gap: 0.125rem; color: var(--oro); }
+.voto .stelle .icona { width: 0.9375rem; height: 0.9375rem; }
+.voto strong { color: var(--bianco); font-weight: 700; }
+.voto:hover { color: var(--bianco); }
+
+
+/* =========================================================================
+   10. COSA SI FA QUI
+   ========================================================================= */
+
+.lavori {
+  display: grid;
+  gap: 0.875rem;
+  margin-top: var(--sp-xl);
+}
+
+.lavoro {
+  padding: 1.75rem;
+  border-radius: var(--raggio-g);
+  background: var(--nero-2);
+}
+
+.lavoro .icona {
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-bottom: 1rem;
+  color: var(--oro);
+}
+
+.lavoro h3 { margin-bottom: 0.5rem; }
+.lavoro p { font-size: var(--t-piccolo); color: var(--grigio); }
+
+@media (min-width: 46em) {
+  .lavori { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+}
+
+/* dentro le sezioni grigie i riquadri si schiariscono, per staccare */
+.sezione-2 .lavoro { background: var(--nero-3); }
+
+
+/* =========================================================================
+   11. IL LAVORO (foto)
+   ========================================================================= */
+
+.foto-grande img,
+.coppia img,
+.terzetto img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: var(--raggio-g);
+}
+
+.foto-grande { margin-top: var(--sp-xl); }
+.foto-grande img { aspect-ratio: 4 / 3; }
+
+@media (min-width: 56em) {
+  .foto-grande img { aspect-ratio: 2 / 1; }
+}
+
+.coppia, .terzetto {
+  display: grid;
+  gap: 0.875rem;
+  margin-top: 0.875rem;
+}
+
+.coppia figure, .terzetto figure { margin: 0; }
+.coppia img { aspect-ratio: 1 / 1; }
+.terzetto img { aspect-ratio: 3 / 4; }
+
+@media (min-width: 46em) {
+  .coppia { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .terzetto { grid-template-columns: 1fr 1fr; gap: 1rem; }
+}
+
+/* la coppia prima/dopo porta l'etichetta in oro */
+.coppia .prima-dopo { color: var(--oro); }
+
+
+/* =========================================================================
+   12. L'OFFICINA
+   ========================================================================= */
+
+.officina { display: grid; gap: var(--sp-l); }
+
+.officina img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: var(--raggio-g);
+}
+
+/* la frase di una recensione, messa in evidenza */
+.citazione {
+  margin-top: var(--sp-l);
+  padding-left: var(--sp-m);
+  border-left: 3px solid var(--oro);
+  font-size: var(--t-lead);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.citazione cite {
+  display: block;
+  margin-top: var(--sp-xs);
+  font-size: var(--t-micro);
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--grigio-2);
+}
+
+@media (min-width: 56em) {
+  .officina {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-xl);
+    align-items: center;
+  }
+  .officina .officina-foto { order: -1; }
+}
+
+
+/* =========================================================================
+   13. DOVE SIAMO
+   ========================================================================= */
+
+.dove {
+  display: grid;
+  gap: 0.875rem;
+  margin-top: var(--sp-xl);
+}
+
+.dove-schede { display: grid; gap: 0.875rem; align-content: start; }
+
+.riquadro {
+  padding: 1.75rem;
+  border-radius: var(--raggio-g);
+  background: var(--nero-2);
+}
+
+.riquadro .titolino {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: var(--sp-s);
+  font-size: var(--t-micro);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--oro);
+}
+.riquadro .titolino .icona { width: 1.125rem; height: 1.125rem; }
+
+.indirizzo {
+  font-style: normal;
+  font-size: 1.3125rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+}
+
+.orari {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem var(--sp-m);
+  font-size: var(--t-piccolo);
+}
+.orari dt { font-weight: 600; }
+.orari dd { margin: 0; color: var(--grigio); font-variant-numeric: tabular-nums; }
+
+/* --- la mappa ----------------------------------------------------------
+   Disegno SVG dentro alla pagina, nei colori del sito. Non e' un servizio
+   esterno: nessuna richiesta a Google, nessun cookie. Non e' in scala. */
+
+.mappa {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--raggio-g);
+  background: var(--nero-2);
+  text-decoration: none;
+}
+
+.mappa svg { display: block; width: 100%; height: auto; }
+
+.mappa-azione {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9375rem 1rem;
+  background: var(--oro);
+  color: var(--nero);
+  font-size: var(--t-piccolo);
+  font-weight: 700;
+}
+.mappa:hover .mappa-azione { background: var(--oro-cupo); }
+.mappa-azione .icona { width: 1.0625rem; height: 1.0625rem; }
+
+@media (min-width: 56em) {
+  .dove { grid-template-columns: 1.35fr 1fr; gap: 1rem; align-items: start; }
+  .dove-schede { gap: 1rem; }
+  .mappa-azione {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    display: inline-flex;
+    padding: 0.625rem 1rem;
+    border-radius: var(--raggio);
+  }
+}
+
+
+/* =========================================================================
+   14. CONTATTI
+   ========================================================================= */
+
+.contatti .lead { max-width: 33rem; }
+.contatti .bottoni { margin-top: var(--sp-l); }
+
+/* la riga di sottotesto sotto i pulsanti */
+.sottotesto {
+  max-width: 33rem;
+  margin-top: var(--sp-m);
+  font-size: var(--t-piccolo);
+  color: var(--grigio-2);
+}
+
+.social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-m);
+  margin-top: var(--sp-xl);
+  font-size: var(--t-piccolo);
+}
+
+.social a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--grigio);
+  text-decoration: none;
+}
+.social a:hover { color: var(--oro); }
+.social .icona { width: 1.1875rem; height: 1.1875rem; }
+
+
+/* =========================================================================
+   15. PIEDE PAGINA
+   ========================================================================= */
+
+.piede {
+  background: #08080a;
+  color: var(--grigio-2);
+  padding-block: var(--sp-l);
+  font-size: var(--t-micro);
+}
+
+.piede .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--sp-xs) var(--sp-l);
+}
+.piede a { color: var(--grigio); }
