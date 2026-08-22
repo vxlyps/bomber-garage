@@ -640,10 +640,14 @@ p { text-wrap: pretty; }
 
 .dove-schede { display: grid; gap: 0.875rem; align-content: start; }
 
+/* Le schede si staccano dal fondo con un grigio piu' chiaro e la stessa
+   righina oro delle schede dei servizi: prima erano quasi del colore
+   dello sfondo e le informazioni si leggevano male. */
 .riquadro {
   padding: 1.75rem;
+  border: 1px solid rgba(232, 200, 136, 0.3);
   border-radius: var(--raggio-g);
-  background: var(--nero-2);
+  background: var(--nero-3);
 }
 
 .riquadro .titolino {
@@ -659,12 +663,13 @@ p { text-wrap: pretty; }
 }
 .riquadro .titolino .icona { width: 1.125rem; height: 1.125rem; }
 
+/* l'indirizzo e' la cosa piu' importante della sezione, quindi la piu' grande */
 .indirizzo {
   font-style: normal;
-  font-size: 1.3125rem;
+  font-size: 1.4375rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  line-height: 1.35;
+  line-height: 1.3;
 }
 
 .orari {
@@ -684,6 +689,7 @@ p { text-wrap: pretty; }
   position: relative;
   display: block;
   overflow: hidden;
+  border: 1px solid rgba(232, 200, 136, 0.3);
   border-radius: var(--raggio-g);
   background: var(--nero-2);
   text-decoration: none;
@@ -1078,7 +1084,7 @@ p { text-wrap: pretty; }
   gap: var(--sp-s);
 }
 
-.orari-grandi dt { font-size: var(--t-piccolo); color: var(--grigio); }
+.orari-grandi dt { font-size: var(--t-corpo); font-weight: 600; color: var(--bianco); }
 
 .orari-grandi dd {
   margin: 0;
@@ -1089,7 +1095,7 @@ p { text-wrap: pretty; }
   color: var(--oro);
 }
 
-.orari-grandi .chiuso { color: var(--grigio-2); font-weight: 600; font-size: 1.0625rem; }
+.orari-grandi .chiuso { color: var(--grigio); font-weight: 600; font-size: 1.0625rem; }
 
 
 /* =========================================================================
@@ -1099,15 +1105,19 @@ p { text-wrap: pretty; }
    orari scritti.
    ========================================================================= */
 
+/* Aperto o chiuso adesso: deve saltare all'occhio sulla fascia oro.
+   Aperto = pastiglia nera con il pallino verde. Chiuso = pastiglia rossa
+   piena. Il rosso compare solo qui ed e' un segnale di stato, non una
+   decorazione: prima era un grigio slavato e non si leggeva. */
 .fascia-orari .stato {
   display: inline-flex;
   align-items: center;
-  gap: 0.4375rem;
-  padding: 0.3125rem 0.75rem;
+  gap: 0.5rem;
+  padding: 0.4375rem 0.875rem;
   border-radius: 999px;
-  font-size: var(--t-micro);
-  font-weight: 800;
-  letter-spacing: 0.01em;
+  font-size: var(--t-piccolo);
+  line-height: 1.2;
+  letter-spacing: 0;
   white-space: nowrap;
 }
 
@@ -1116,11 +1126,17 @@ p { text-wrap: pretty; }
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  background: currentColor;
+  flex: none;
 }
 
-.fascia-orari .stato.aperto { background: var(--nero); color: var(--bianco); }
-.fascia-orari .stato.chiuso { background: rgba(12, 12, 13, 0.13); color: rgba(12, 12, 13, 0.74); }
+.fascia-orari .stato b { font-weight: 800; }
+.fascia-orari .stato .dettaglio { opacity: 0.8; }
+
+.fascia-orari .stato.aperto { background: var(--nero); color: #fff; }
+.fascia-orari .stato.aperto::before { background: #34a853; }
+
+.fascia-orari .stato.chiuso { background: #9e1f17; color: #fff; }
+.fascia-orari .stato.chiuso::before { background: rgba(255, 255, 255, 0.9); }
 
 /* deve stare dopo, altrimenti il display sopra vince sull'attributo */
 .fascia-orari .stato[hidden] { display: none; }
@@ -1205,4 +1221,58 @@ p { text-wrap: pretty; }
   letter-spacing: -0.05em;
   color: var(--oro);
   margin-bottom: var(--sp-m);
+}
+
+
+/* =========================================================================
+   24. LE RECENSIONI CHE SCORRONO DA SOLE
+   Solo da desktop, dove prima stavano ferme in tre colonne. Sul telefono
+   restano come sono: si scorrono col dito e vanno bene cosi'.
+
+   Come funziona: le tre schede sono scritte due volte nel markup (la
+   seconda serie ha aria-hidden, gli screen reader la saltano), il nastro
+   scorre di meta' della sua larghezza e riparte da capo. Meta' esatta =
+   una serie intera, quindi il giro si chiude senza scatti. Per questo lo
+   spazio fra le schede e' un margin e non un gap: col gap i conti non
+   tornerebbero e si vedrebbe il salto.
+
+   Si ferma passandoci sopra col mouse o arrivandoci col tasto Tab, e non
+   parte proprio per chi ha chiesto meno animazioni nelle impostazioni.
+   ========================================================================= */
+
+/* senza il nastro attivo il contenitore non deve esistere per il layout,
+   e la seconda serie di schede va nascosta: serve solo a chiudere il giro
+   del nastro, altrimenti sul telefono si scorrerebbero due volte */
+.recensioni-nastro { display: contents; }
+.recensione[aria-hidden="true"] { display: none; }
+
+@media (min-width: 56em) and (prefers-reduced-motion: no-preference) {
+  .recensioni {
+    display: block;
+    width: 100%;
+    padding-inline: 0;
+    overflow: hidden;
+  }
+
+  .recensioni-nastro {
+    display: flex;
+    width: max-content;
+    animation: scorri-recensioni 44s linear infinite;
+  }
+
+  .recensioni .recensione {
+    width: 21rem;
+    flex: none;
+    margin-right: 1rem;
+  }
+
+  .recensione[aria-hidden="true"] { display: flex; }
+
+  .recensioni:hover .recensioni-nastro,
+  .recensioni:focus-within .recensioni-nastro { animation-play-state: paused; }
+
+  @keyframes scorri-recensioni {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
 }

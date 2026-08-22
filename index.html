@@ -108,20 +108,25 @@
 <!-- ###################################################################
      UMAMI, statistiche senza cookie: ADESSO E' SPENTO
 
-     Con lo script commentato il sito non fa nessuna richiesta a
-     nessun server esterno. Zero.
+     Con lo script commentato il sito non fa nessuna richiesta a nessun
+     server esterno. Zero.
 
      PER RIACCENDERLO servono due cose:
-       1. togliere la riga "<!--" qui sotto e la riga "-->" dopo lo
-          script, cosi' il tag torna attivo;
+       1. togliere le due righe di commento che racchiudono il tag
+          script qui sotto, cioe' quella subito sopra e quella subito
+          sotto, cosi' il tag torna attivo;
        2. sostituire UMAMI_WEBSITE_ID con l'id vero del sito, preso dal
           pannello di Umami Cloud.
      Va fatto su tutte e tre le pagine: index.html, privacy/index.html
      e 404.html.
 
-     Le marcature data-umami-event sui pulsanti sono rimaste nel
-     markup: non fanno niente finche' lo script e' spento, e quando
-     torna acceso funzionano subito senza toccare altro.
+     Le marcature data-umami-event sui pulsanti sono rimaste nel markup:
+     non fanno niente finche' lo script e' spento, e quando torna acceso
+     funzionano subito senza toccare altro.
+
+     NOTA PER CHI METTE MANO QUI: dentro a un commento HTML non si
+     possono scrivere i segni che aprono e chiudono un commento, perche'
+     lo chiudono davvero e il resto del testo finisce dritto in pagina.
      ################################################################### -->
 <!--
 <script defer src="https://cloud.umami.is/script.js" data-website-id="UMAMI_WEBSITE_ID"></script>
@@ -178,18 +183,25 @@
     var feriale = giorno >= 1 && giorno <= 5;
     var aperto = feriale && adesso >= APRE && adesso < CHIUDE;
 
-    var testo;
+    var parola, dettaglio;
     if (aperto) {
-      testo = 'Aperto, chiude alle 18:00';
+      parola = 'Aperto adesso';
+      dettaglio = 'si chiude alle 18:00';
     } else if (feriale && adesso < APRE) {
-      testo = 'Chiuso, apre oggi alle 9:00';
+      parola = 'Chiuso adesso';
+      dettaglio = 'apre oggi alle 9:00';
     } else if (giorno >= 1 && giorno <= 4) {
-      testo = 'Chiuso, apre domani alle 9:00';
+      parola = 'Chiuso adesso';
+      dettaglio = 'apre domani alle 9:00';
     } else {
-      testo = 'Chiuso, apre lunedì alle 9:00';
+      parola = 'Chiuso adesso';
+      dettaglio = 'apre lunedì alle 9:00';
     }
 
-    pastiglia.textContent = testo;
+    var grassetto = pastiglia.querySelector('b');
+    var resto = pastiglia.querySelector('.dettaglio');
+    if (grassetto) grassetto.textContent = parola;
+    if (resto) resto.textContent = dettaglio;
     pastiglia.className = 'stato ' + (aperto ? 'aperto' : 'chiuso');
     pastiglia.removeAttribute('hidden');
 
@@ -386,7 +398,7 @@
         Lunedì - venerdì 9:00 - 18:00
       </p>
       <!-- la pastiglia la riempie lo script che sta nella testa -->
-      <span class="stato" hidden></span>
+      <span class="stato" hidden><b></b><span class="dettaglio"></span></span>
       <a href="#dove">
         <svg class="icona"><use href="#i-posizione"></use></svg>Via Umberto Biancamano 34, Roma
       </a>
@@ -454,6 +466,7 @@
     </div>
 
     <div class="recensioni">
+      <div class="recensioni-nastro">
 
       <article class="recensione">
         <header class="recensione-testa">
@@ -503,6 +516,60 @@
         <blockquote>Meccanico preparato e veloce, officina pulitissima.</blockquote>
       </article>
 
+        <!-- Seconda serie, uguale alla prima: serve solo perche' il
+             nastro scorra all'infinito senza saltare. E' aria-hidden,
+             quindi chi usa uno screen reader le sente una volta sola.
+             Se si aggiunge o si toglie una recensione sopra, va fatto
+             anche qui, altrimenti il giro non si chiude. -->
+      <article class="recensione" aria-hidden="true">
+        <header class="recensione-testa">
+          <span class="iniziali" aria-hidden="true">GB</span>
+          <p class="chi"><strong>Gabriele B.</strong><span>Local Guide</span></p>
+          <svg class="logo-google" viewBox="0 0 48 48"><use href="#i-google"></use></svg>
+        </header>
+        <div class="stelle">
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+        </div>
+        <blockquote>Officina seria ed onesta, Daniele il titolare è un vero professionista.</blockquote>
+      </article>
+
+      <article class="recensione" aria-hidden="true">
+        <header class="recensione-testa">
+          <span class="iniziali" aria-hidden="true">PM</span>
+          <p class="chi"><strong>Pietro di M.</strong><span>Local Guide</span></p>
+          <svg class="logo-google" viewBox="0 0 48 48"><use href="#i-google"></use></svg>
+        </header>
+        <div class="stelle">
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+        </div>
+        <blockquote>Gran meccanico e persona gentilissima. Sempre disponibile e preciso.</blockquote>
+      </article>
+
+      <article class="recensione" aria-hidden="true">
+        <header class="recensione-testa">
+          <span class="iniziali" aria-hidden="true">LP</span>
+          <p class="chi"><strong>Leonardo P.</strong><span>Recensione su Google</span></p>
+          <svg class="logo-google" viewBox="0 0 48 48"><use href="#i-google"></use></svg>
+        </header>
+        <div class="stelle">
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+        </div>
+        <blockquote>Meccanico preparato e veloce, officina pulitissima.</blockquote>
+      </article>
+
+      </div>
     </div>
 
     <div class="wrap">
@@ -586,10 +653,10 @@
           <svg viewBox="0 0 800 560" role="img"
                aria-label="Mappa della zona: l'officina si trova in via Umberto Biancamano, poco sopra piazza di Porta San Giovanni">
 
-            <rect width="800" height="560" fill="#151517"/>
+            <rect width="800" height="560" fill="#17171b"/>
 
             <!-- isolati -->
-            <g fill="#1c1c21">
+            <g fill="#212127">
               <rect x="238" y="150" width="150" height="96" rx="8" transform="rotate(-25.3 313 198)"/>
               <rect x="404" y="88" width="140" height="92" rx="8" transform="rotate(-25.3 474 134)"/>
               <rect x="286" y="300" width="150" height="86" rx="8" transform="rotate(-9 361 343)"/>
@@ -605,7 +672,7 @@
             </g>
 
             <!-- strade -->
-            <g stroke="#34343c" stroke-linecap="round" fill="none">
+            <g stroke="#464651" stroke-linecap="round" fill="none">
               <path d="M186 336 L436 60" stroke-width="17"/>
               <path d="M214 400 L742 322" stroke-width="19"/>
               <path d="M172 428 L344 550" stroke-width="17"/>
@@ -615,33 +682,33 @@
             </g>
 
             <!-- via Umberto Biancamano, la strada dell'officina -->
-            <path d="M200 350 L566 176" stroke="#4d4d57" stroke-width="21"
+            <path d="M200 350 L566 176" stroke="#5c5c68" stroke-width="21"
                   stroke-linecap="round" fill="none"/>
 
             <!-- piazza di Porta San Giovanni -->
-            <circle cx="188" cy="382" r="46" fill="none" stroke="#34343c" stroke-width="16"/>
+            <circle cx="188" cy="382" r="46" fill="none" stroke="#464651" stroke-width="16"/>
 
             <!-- nomi -->
-            <g fill="rgba(246,244,240,0.42)" font-family="Inter, system-ui, sans-serif"
+            <g fill="rgba(246,244,240,0.55)" font-family="Inter, system-ui, sans-serif"
                font-size="21" font-weight="500">
               <text x="256" y="266" transform="rotate(-47.8 256 266)" font-size="19">Via Emanuele Filiberto</text>
               <text x="316" y="418" transform="rotate(-8.4 316 418)" font-size="19">Viale Carlo Felice</text>
-              <text x="238" y="512" transform="rotate(35.3 238 512)" font-size="18">Via Appia Nuova</text>
+              <text x="196" y="450" transform="rotate(35.3 196 450)" font-size="18">Via Appia Nuova</text>
               <text x="118" y="120" transform="rotate(81.8 118 120)" font-size="17" fill="rgba(232,200,136,0.45)">Mura Aureliane</text>
               <text x="188" y="470" text-anchor="middle" font-size="17">Porta San Giovanni</text>
             </g>
 
-            <text x="470" y="224" transform="rotate(-25.4 470 224)" text-anchor="middle"
+            <text x="518" y="192" transform="rotate(-25.4 518 192)" text-anchor="middle"
                   font-family="Inter, system-ui, sans-serif" font-size="23" font-weight="700"
-                  fill="rgba(246,244,240,0.8)">Via Umberto Biancamano</text>
+                  fill="rgba(246,244,240,0.88)">Via Umberto Biancamano</text>
 
             <!-- l'officina -->
             <circle cx="368" cy="272" r="34" fill="#e8c888" opacity="0.14"/>
             <path d="M368 276c0-.6-18-16.2-18-27a18 18 0 0 1 36 0c0 10.8-18 26.4-18 27z" fill="#e8c888"/>
             <circle cx="368" cy="249" r="6.4" fill="#0c0c0d"/>
-            <rect x="394" y="250" width="212" height="46" rx="10" fill="#e8c888"/>
-            <text x="414" y="281" font-family="Inter, system-ui, sans-serif"
-                  font-size="25" font-weight="800" letter-spacing="-0.4" fill="#0c0c0d">BOMBER GARAGE</text>
+            <rect x="259" y="298" width="218" height="46" rx="10" fill="#e8c888"/>
+            <text x="368" y="329" text-anchor="middle" font-family="Inter, system-ui, sans-serif"
+                  font-size="22" font-weight="800" letter-spacing="-0.3" fill="#0c0c0d">BOMBER GARAGE</text>
 
           </svg>
           <span class="mappa-azione">

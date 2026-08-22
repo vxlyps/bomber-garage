@@ -236,3 +236,20 @@ Si trovano tutte con un grep solo:
 
 Sono la partita IVA e l'email. In pagina si vedono come riquadri
 tratteggiati in oro, così non passano inosservati.
+
+## Attenzione se metti mano ai commenti HTML
+
+Dentro a un commento HTML non si possono scrivere i due segni che aprono
+e chiudono un commento: se li scrivi, il commento si chiude davvero in
+quel punto e tutto il testo che segue finisce visibile in cima alla
+pagina. È già successo una volta con le istruzioni di Umami.
+
+## Le recensioni che scorrono
+
+Da desktop scorrono da sole, sul telefono si scorrono col dito come
+prima. Le tre schede sono scritte **due volte** in `index.html`: la
+seconda serie ha `aria-hidden="true"`, serve solo a chiudere il giro del
+nastro senza scatti, ed è nascosta quando il nastro non è attivo.
+
+**Se aggiungi o togli una recensione, fallo in tutte e due le serie**,
+altrimenti il giro non si chiude e si vede il salto.
