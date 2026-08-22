@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ###################################################################
+     DA TOGLIERE AL LANCIO
+     Vedi la stessa nota in index.html.
+     ################################################################### -->
+<meta name="robots" content="noindex, nofollow">
+
+<title>Pagina non trovata | Bomber Garage</title>
+<meta name="description" content="Questa pagina non esiste. Torna alla pagina principale di Bomber Garage.">
+<meta name="theme-color" content="#0c0c0d">
+
+<!-- Umami: statistiche senza cookie. Stesso segnaposto di index.html. -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="UMAMI_WEBSITE_ID"></script>
+
+<!-- ###################################################################
+     Questa pagina e' volutamente AUTONOMA: stile qui dentro, nessuna
+     immagine, nessun percorso verso altri file.
+
+     Il motivo: la 404 viene mostrata anche su indirizzi profondi tipo
+     /una/strada/qualsiasi/che/non/esiste. Un percorso relativo punterebbe
+     nel posto sbagliato, e uno assoluto andrebbe corretto al cambio di
+     dominio. Cosi' invece funziona sempre, oggi e dopo, e non e' una
+     cosa in piu' da ricordarsi al lancio.
+
+     I colori sono gli stessi di style.css. Se li cambi la', cambiali
+     anche qui: sono le sei righe del blocco :root.
+     ################################################################### -->
+<style>
+  :root {
+    --nero: #0c0c0d;
+    --nero-3: #1f1f23;
+    --bianco: #f6f4f0;
+    --grigio: rgba(246, 244, 240, 0.64);
+    --oro: #e8c888;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2.5rem 1.375rem;
+    background: var(--nero);
+    color: var(--bianco);
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .dentro { width: min(100% , 40rem); margin-inline: auto; }
+  .marchio {
+    display: block;
+    margin-bottom: 3rem;
+    font-size: 0.9375rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    line-height: 1.15;
+    color: var(--bianco);
+    text-decoration: none;
+  }
+  .numero {
+    margin: 0 0 1rem;
+    font-size: clamp(5rem, 20vw, 11rem);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    color: var(--oro);
+  }
+  h1 {
+    margin: 0 0 1.5rem;
+    font-size: clamp(1.875rem, 6vw, 3rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+  }
+  p { margin: 0; color: var(--grigio); }
+  .bottoni { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2.5rem; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.375rem;
+    padding: 0.75rem 1.625rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .btn-oro { background: var(--oro); color: var(--nero); }
+  .btn-velo { background: rgba(246, 244, 240, 0.13); color: var(--bianco); }
+  @media (max-width: 34em) { .btn { flex: 1 1 100%; } }
+  a:focus-visible { outline: 2px solid var(--oro); outline-offset: 3px; }
+</style>
+</head>
+
+<body>
+  <div class="dentro">
+
+    <!-- indirizzo assoluto apposta: la 404 puo' comparire a qualsiasi
+         profondita', e cosi' lo prende lo stesso sed di index.html -->
+    <a class="marchio" href="https://vxlyps.github.io/bomber-garage/">Bomber<br>Garage</a>
+
+    <p class="numero">404</p>
+    <h1>Questa pagina non c'è</h1>
+    <p>Hai sbagliato indirizzo, oppure la pagina è stata spostata. L'officina però sta sempre lì, in via Umberto Biancamano 34 a Roma.</p>
+
+    <div class="bottoni">
+      <a class="btn btn-oro" href="tel:+393931087444" data-umami-event="chiama-404">Chiama 393 108 7444</a>
+      <a class="btn btn-velo" href="https://vxlyps.github.io/bomber-garage/">Torna al sito</a>
+    </div>
+
+  </div>
+</body>
+</html>

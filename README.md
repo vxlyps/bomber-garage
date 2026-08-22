@@ -2,11 +2,35 @@
 
 Sito di BomberGarage, officina moto in via Umberto Biancamano 34 a Roma.
 
+> ## ⚠️ AL LANCIO: TRE COSE, IN QUEST'ORDINE
+>
+> **1. Togliere il noindex.**
+> Cancellare la riga `<meta name="robots" content="noindex, nofollow">`
+> (e il commento sopra) da **tutte e tre** le pagine: `index.html`,
+> `privacy/index.html`, `404.html`. Finché c'è, Google non indicizza.
+>
+> **2. Cambiare l'indirizzo del sito.**
+> Dalla cartella del sito, un comando solo:
+> ```
+> sed -i '' 's|https://vxlyps.github.io/bomber-garage|https://IL-TUO-DOMINIO.it|g' index.html privacy/index.html 404.html
+> ```
+> Tutti gli indirizzi assoluti stanno nel blocco marcato
+> "INDIRIZZO DEL SITO" nella testa di `index.html` (più due link nella
+> 404): non ce ne sono altri sparsi in giro.
+>
+> **3. Committare il CNAME.**
+> Scrivere il dominio dentro al file `CNAME` (adesso c'è un segnaposto),
+> togliere la riga `/CNAME` da `.gitignore`, e committare.
+> **Solo dopo che i record DNS sono già a posto**, mai prima.
+>
+> Extra, quando ci sono: l'id vero di Umami al posto di
+> `UMAMI_WEBSITE_ID` (tre pagine), la partita IVA e l'email.
+
 Una pagina sola, HTML e CSS statici. Nessun framework, nessun build step,
 nessuna libreria esterna. Il carattere è Inter e sta dentro `fonts/`, non
-viene da Google Fonts: quindi niente richieste a terzi, niente cookie e
-niente banner da mettere. Si carica su GitHub Pages così com'è e funziona
-subito.
+viene da Google Fonts. L'unica cosa che arriva da fuori è lo script delle
+statistiche (vedi sotto), che non usa cookie: quindi niente banner. Si
+carica su GitHub Pages così com'è e funziona subito.
 
 Il menu del telefono è senza JavaScript: il pulsante punta a `#menu` e il
 pannello compare con `:target`. Toccando una voce l'ancora cambia e il
@@ -34,11 +58,13 @@ guarda, così è giusta anche per chi apre il sito dall'estero.
 
 ## Cosa c'è dentro
 
-    index.html                  tutta la pagina
+    index.html                  la pagina principale
+    privacy/index.html          la pagina privacy
+    404.html                    pagina non trovata, si regge da sola
     style.css                   unico foglio di stile
     fonts/InterVariable.woff2   il carattere, caricato da qui
-    img/                        le foto e il logo, in webp
-    CNAME.txt                   il dominio, da attivare quando c'è
+    img/                        le foto, il logo, le icone e l'anteprima
+    CNAME                       pronto ma NON committato (vedi .gitignore)
 
 Le icone non sono una libreria: sono disegnate a mano in uno sprite SVG
 in cima alla pagina. Anche la mappa della zona è un disegno SVG dentro
@@ -154,3 +180,47 @@ Erano di una sezione "Il lavoro" con il prima e dopo del motore, tolta
 perché troppo specifica per una pagina di presentazione. Sono rimaste
 nella cartella: quando si vorrà fare una pagina dei lavori sono già
 pronte e ritagliate.
+
+## Statistiche e privacy
+
+Le statistiche sono di **Umami Cloud**: non usa cookie né localStorage e
+non profila nessuno, quindi non serve nessun banner. È l'unica richiesta
+a un server esterno che fa il sito: tutto il resto (carattere, icone,
+mappa) è servito da qui.
+
+Nella testa di ogni pagina c'è `data-website-id="UMAMI_WEBSITE_ID"`: va
+sostituito con l'id vero preso dal pannello di Umami. Finché è il
+segnaposto lo script si carica ma i dati non arrivano da nessuna parte.
+
+Tutti i pulsanti sono marcati con `data-umami-event`, con la posizione
+dentro al nome, così dal pannello si vede quale converte:
+
+    chiama-header      whatsapp-header
+    chiama-hero        whatsapp-hero
+    chiama-contatti    whatsapp-contatti
+    chiama-sticky      whatsapp-sticky
+    chiama-menu        whatsapp-menu      (menu del telefono)
+    chiama-footer                         (numero nel piede)
+    chiama-404         chiama-privacy
+    mappa-google       recensioni-google
+    instagram          facebook
+
+I link `wa.me` hanno `target="_blank" rel="noopener"`: la pagina non si
+scarica, quindi l'evento fa in tempo a partire. I `tel:` invece navigano
+normalmente, perché aprono il telefono e la pagina resta dov'è.
+
+## L'anteprima quando si manda il link
+
+`img/anteprima-whatsapp.jpg`, 1200x630, fatta apposta: stemma, nome
+grande e foto dell'officina sotto, leggibile anche a francobollo. È in
+JPEG e non in webp perché l'anteprima di WhatsApp con il webp non è
+affidabile.
+
+## Le cose da riempire
+
+Si trovano tutte con un grep solo:
+
+    grep -rn "DA-COMPILARE" .
+
+Sono la partita IVA e l'email. In pagina si vedono come riquadri
+tratteggiati in oro, così non passano inosservati.

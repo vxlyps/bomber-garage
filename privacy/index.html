@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ###################################################################
+     DA TOGLIERE AL LANCIO
+     Vedi la stessa nota in index.html: su una project page di GitHub
+     Pages il robots.txt non viene letto e non si possono mandare header
+     X-Robots-Tag, quindi questo meta tag e' l'unico modo di stare fuori
+     da Google. Va tenuto su ogni pagina finche' non si lancia.
+     ################################################################### -->
+<meta name="robots" content="noindex, nofollow">
+
+<title>Privacy | Bomber Garage</title>
+<meta name="description" content="Come tratta i dati il sito di Bomber Garage: nessun cookie, solo statistiche aggregate.">
+
+<!-- ###################################################################
+     INDIRIZZO DEL SITO: unico indirizzo assoluto di questa pagina.
+     Si cambia con lo stesso sed di index.html.
+     ################################################################### -->
+<link rel="canonical" href="https://vxlyps.github.io/bomber-garage/privacy/">
+
+<meta name="theme-color" content="#0c0c0d">
+<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32.png">
+<link rel="icon" type="image/webp" sizes="720x720" href="../img/logo-bomber-garage.webp">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+
+<link rel="preload" href="../fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+
+<!-- Umami: statistiche senza cookie. Stesso segnaposto di index.html. -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="UMAMI_WEBSITE_ID"></script>
+
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <symbol id="i-freccia" viewBox="0 0 24 24">
+    <path d="M4.5 12h15M13.5 6l6 6-6 6"/>
+  </symbol>
+</svg>
+
+<header class="testata">
+  <div class="wrap">
+    <a class="marchio" href="../">
+      <img src="../img/logo-bomber-garage.webp" width="720" height="720" alt="" decoding="async">
+      <span>Bomber<br>Garage</span>
+    </a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap pagina-semplice">
+
+    <h1>Privacy</h1>
+
+    <div class="prosa">
+      <p>Questo sito è di <strong>BomberGarage di Stacchiotti Daniele</strong>, via Umberto Biancamano 34, 00185 Roma. Partita IVA <!-- DA-COMPILARE: partita IVA --><span class="segnaposto" data-da-compilare="partita-iva">da inserire</span>.</p>
+
+      <p><strong>Qui non ci sono cookie.</strong> Nessuno, né nostri né di altri.</p>
+
+      <p>Per sapere quante persone passano di qui usiamo Umami, un contatore di visite che non usa cookie, non salva niente sul tuo telefono e non ti riconosce da una volta all'altra. Vediamo solo numeri messi insieme: quante visite, da che pagina si arriva, da che paese, se da telefono o da computer. Non c'è modo di risalire a chi sei.</p>
+
+      <p>Sul sito non ci sono moduli da compilare: non ti chiediamo il nome, la mail, né altro.</p>
+
+      <p>Se ci chiami o ci scrivi su WhatsApp, quello che ci dici serve solo a risponderti e resta tra noi.</p>
+
+      <p>I pulsanti verso Google Maps, Instagram e Facebook portano fuori da questo sito. Da lì in poi valgono le regole loro, non le nostre.</p>
+
+      <p>Per qualsiasi cosa, anche su questa pagina: <a href="tel:+393931087444" data-umami-event="chiama-privacy">393 108 7444</a>.</p>
+    </div>
+
+    <div class="bottoni">
+      <a class="btn btn-oro" href="../">
+        <svg class="icona"><use href="#i-freccia"></use></svg>Torna al sito
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<footer class="piede">
+  <div class="wrap">
+    <p>BomberGarage di Stacchiotti Daniele &nbsp;&middot;&nbsp; Via Umberto Biancamano 34, 00185 Roma</p>
+  </div>
+</footer>
+
+</body>
+</html>

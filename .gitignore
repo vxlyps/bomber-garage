@@ -1,0 +1,8 @@
+# Il file CNAME e' pronto ma NON deve finire nel repository finche' il
+# dominio non e' comprato e i DNS non sono a posto: se GitHub Pages lo
+# vede, manda tutti sul dominio nuovo e il sito non si apre piu' nemmeno
+# dall'indirizzo github.io.
+#
+# AL LANCIO: si scrive il dominio vero dentro a CNAME, si cancella la
+# riga qui sotto, e si committa il file.
+/CNAME

@@ -4,12 +4,92 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- ###################################################################
+     DA TOGLIERE AL LANCIO
+     Finche' il sito non e' pubblico, questa riga lo tiene fuori da
+     Google. Va tenuta su OGNI pagina (anche privacy e 404).
+
+     Perche' serve proprio il meta tag: questa e' una project page di
+     GitHub Pages, quindi il robots.txt di /bomber-garage/ NON viene
+     letto (i motori leggono solo quello alla radice del dominio, che
+     non e' nostro) e su GitHub Pages non si possono mandare header
+     X-Robots-Tag. Il meta tag e' l'unica cosa che funziona.
+     ################################################################### -->
+<meta name="robots" content="noindex, nofollow">
+
 <title>Bomber Garage | Officina moto a Roma, San Giovanni</title>
 <meta name="description" content="Officina moto a Roma, zona San Giovanni. Tagliandi e riparazioni, revisione carburatori, rifacimento motori. Su qualunque marca. Via Umberto Biancamano 34.">
 
+<!-- ###################################################################
+     INDIRIZZO DEL SITO: L'UNICO POSTO DA CAMBIARE
+
+     Tutti gli indirizzi assoluti della pagina stanno qui dentro, in
+     questo blocco e in nessun altro punto del file. Nel resto della
+     pagina i percorsi sono tutti relativi.
+
+     Quando arriva il dominio, dalla cartella del sito:
+
+       sed -i '' 's|https://vxlyps.github.io/bomber-garage|https://IL-TUO-DOMINIO.it|g' index.html privacy/index.html 404.html
+
+     e poi si controlla che qui sotto non sia rimasto niente di vecchio.
+     ################################################################### -->
 <link rel="canonical" href="https://vxlyps.github.io/bomber-garage/">
+<meta property="og:url" content="https://vxlyps.github.io/bomber-garage/">
+<meta property="og:image" content="https://vxlyps.github.io/bomber-garage/img/anteprima-whatsapp.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AutoRepair",
+  "@id": "https://vxlyps.github.io/bomber-garage/#officina",
+  "name": "Bomber Garage",
+  "legalName": "BomberGarage di Stacchiotti Daniele",
+  "description": "Officina moto a Roma, zona San Giovanni. Tagliandi e riparazioni, revisione carburatori e rifacimento motori, su qualunque marca.",
+  "url": "https://vxlyps.github.io/bomber-garage/",
+  "image": "https://vxlyps.github.io/bomber-garage/img/anteprima-whatsapp.jpg",
+  "logo": "https://vxlyps.github.io/bomber-garage/img/logo-bomber-garage.webp",
+  "telephone": "+393931087444",
+  "priceRange": "€€",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Via Umberto Biancamano 34",
+    "postalCode": "00185",
+    "addressLocality": "Roma",
+    "addressRegion": "RM",
+    "addressCountry": "IT"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 41.8874905,
+    "longitude": 12.51038
+  },
+  "hasMap": "https://maps.app.goo.gl/XPU6XxXUKYwf9M847",
+  "areaServed": { "@type": "City", "name": "Roma" },
+  "sameAs": [
+    "https://www.instagram.com/bomber_garage87/",
+    "https://www.facebook.com/bombersmotorcycle/"
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00",
+      "closes": "18:00"
+    }
+  ],
+  "makesOffer": [
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Tagliandi e riparazioni moto" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Revisione carburatori" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Revisione e rifacimento motori" } }
+  ]
+}
+</script>
+<!-- ############ fine del blocco degli indirizzi assoluti ############ -->
+
 <meta name="theme-color" content="#0c0c0d">
-<link rel="icon" type="image/webp" href="img/logo-bomber-garage.webp">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="icon" type="image/webp" sizes="720x720" href="img/logo-bomber-garage.webp">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 
 <link rel="preload" href="fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
 
@@ -17,10 +97,23 @@
 <meta property="og:locale" content="it_IT">
 <meta property="og:site_name" content="Bomber Garage">
 <meta property="og:title" content="Bomber Garage | Officina moto a Roma, San Giovanni">
-<meta property="og:description" content="Tagliandi e riparazioni, revisione carburatori, rifacimento motori. Su qualunque marca.">
-<meta property="og:url" content="https://vxlyps.github.io/bomber-garage/">
-<meta property="og:image" content="https://vxlyps.github.io/bomber-garage/img/officina-interno.webp">
+<meta property="og:description" content="Tagliandi e riparazioni, revisione carburatori, rifacimento motori. Su qualunque marca. Via Umberto Biancamano 34, San Giovanni.">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Stemma Bomber Garage e interno dell'officina">
 <meta name="twitter:card" content="summary_large_image">
+
+<!-- ###################################################################
+     UMAMI, statistiche senza cookie
+     Non usa cookie ne' localStorage e non profila nessuno, quindi non
+     serve nessun banner. E' l'unica richiesta a un server esterno che
+     fa questo sito.
+     DA FARE: sostituire UMAMI_WEBSITE_ID con l'id vero del sito preso
+     dal pannello di Umami Cloud. Finche' e' il segnaposto, lo script
+     si carica ma i dati non arrivano da nessuna parte.
+     ################################################################### -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="UMAMI_WEBSITE_ID"></script>
 
 <link rel="stylesheet" href="style.css">
 <!-- ===================================================================
@@ -165,6 +258,12 @@
     <path d="m10.7 11.8-.9 6.4M13.3 11.8l.9 6.4"/>
     <circle cx="12" cy="20.2" r="2"/>
   </symbol>
+  <symbol id="i-google" viewBox="0 0 48 48">
+    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+  </symbol>
 </svg>
 
 <span class="ancora-ferma" id="chiudi"></span>
@@ -184,10 +283,10 @@
     </nav>
 
     <div class="azioni-testata">
-      <a class="btn btn-oro btn-piccolo" href="tel:+393931087444">
+      <a class="btn btn-oro btn-piccolo" href="tel:+393931087444" data-umami-event="chiama-header">
         <svg class="icona"><use href="#i-telefono"></use></svg>Chiama
       </a>
-      <a class="btn-icona" href="https://wa.me/393931087444?text=Ciao%2C%20vi%20scrivo%20dal%20sito%20Bomber%20Garage." target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp">
+      <a class="btn-icona" href="https://wa.me/393931087444?text=Ciao%2C%20vi%20scrivo%20dal%20sito%20Bomber%20Garage." data-umami-event="whatsapp-header" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp">
         <svg class="icona icona-piena"><use href="#i-whatsapp"></use></svg>
       </a>
     </div>
@@ -222,10 +321,10 @@
   </nav>
 
   <div class="pannello-contatti">
-    <a class="btn btn-oro" href="tel:+393931087444">
+    <a class="btn btn-oro" href="tel:+393931087444" data-umami-event="chiama-menu">
       <svg class="icona"><use href="#i-telefono"></use></svg>Chiama 393 108 7444
     </a>
-    <a class="btn btn-velo" href="https://wa.me/393931087444?text=Ciao%2C%20vi%20scrivo%20dal%20sito%20Bomber%20Garage." target="_blank" rel="noopener">
+    <a class="btn btn-velo" href="https://wa.me/393931087444?text=Ciao%2C%20vi%20scrivo%20dal%20sito%20Bomber%20Garage." data-umami-event="whatsapp-menu" target="_blank" rel="noopener">
       <svg class="icona icona-piena"><use href="#i-whatsapp"></use></svg>WhatsApp
     </a>
   </div>
@@ -253,10 +352,10 @@
       <p class="lead">Via Umberto Biancamano 34. Tagliandi, carburatori e motori, su qualunque marca: dallo scooter alla maxi enduro.</p>
 
       <div class="bottoni">
-        <a class="btn btn-oro" href="tel:+393931087444">
+        <a class="btn btn-oro" href="tel:+393931087444" data-umami-event="chiama-hero">
           <svg class="icona"><use href="#i-telefono"></use></svg>Chiama 393 108 7444
         </a>
-        <a class="btn btn-velo" href="https://wa.me/393931087444?text=Ciao%2C%20vi%20scrivo%20dal%20sito%20Bomber%20Garage." target="_blank" rel="noopener">
+        <a class="btn btn-velo" href="https://wa.me/393931087444?text=Ciao%2C%20vi%20scrivo%20dal%20sito%20Bomber%20Garage." data-umami-event="whatsapp-hero" target="_blank" rel="noopener">
           <svg class="icona icona-piena"><use href="#i-whatsapp"></use></svg>WhatsApp
         </a>
       </div>
@@ -329,7 +428,7 @@
     <div class="wrap">
       <p class="etichetta">Dicono di lui</p>
       <h2>Cinque stelle,<br>undici volte su undici</h2>
-      <a class="voto-grande" href="https://maps.app.goo.gl/XPU6XxXUKYwf9M847" target="_blank" rel="noopener">
+      <a class="voto-grande" href="https://maps.app.goo.gl/XPU6XxXUKYwf9M847" data-umami-event="recensioni-google" target="_blank" rel="noopener">
         <span class="stelle" aria-hidden="true">
           <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
           <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
@@ -337,6 +436,7 @@
           <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
           <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
         </span>
+        <svg class="logo-google" viewBox="0 0 48 48" role="img" aria-label="Google"><use href="#i-google"></use></svg>
         <span><strong>5,0</strong> su 11 recensioni Google</span>
       </a>
     </div>
@@ -344,21 +444,11 @@
     <div class="recensioni">
 
       <article class="recensione">
-        <div class="stelle" role="img" aria-label="5 stelle su 5">
-          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
-          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
-          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
-          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
-          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
-        </div>
-        <blockquote>&ldquo;Officina seria ed onesta, Daniele il titolare è un vero professionista.&rdquo;</blockquote>
-        <footer>
+        <header class="recensione-testa">
           <span class="iniziali" aria-hidden="true">GB</span>
-          <p class="chi"><strong>Gabriele B.</strong><span>Local Guide &middot; su Google</span></p>
-        </footer>
-      </article>
-
-      <article class="recensione">
+          <p class="chi"><strong>Gabriele B.</strong><span>Local Guide</span></p>
+          <svg class="logo-google" viewBox="0 0 48 48" role="img" aria-label="Google"><use href="#i-google"></use></svg>
+        </header>
         <div class="stelle" role="img" aria-label="5 stelle su 5">
           <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
           <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
@@ -366,14 +456,15 @@
           <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
           <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
         </div>
-        <blockquote>&ldquo;Gran meccanico e persona gentilissima. Sempre disponibile e preciso.&rdquo;</blockquote>
-        <footer>
+        <blockquote>Officina seria ed onesta, Daniele il titolare è un vero professionista.</blockquote>
+      </article>
+
+      <article class="recensione">
+        <header class="recensione-testa">
           <span class="iniziali" aria-hidden="true">PM</span>
-          <p class="chi"><strong>Pietro di M.</strong><span>Local Guide &middot; su Google</span></p>
-        </footer>
-      </article>
-
-      <article class="recensione">
+          <p class="chi"><strong>Pietro di M.</strong><span>Local Guide</span></p>
+          <svg class="logo-google" viewBox="0 0 48 48" role="img" aria-label="Google"><use href="#i-google"></use></svg>
+        </header>
         <div class="stelle" role="img" aria-label="5 stelle su 5">
           <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
           <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
@@ -381,17 +472,29 @@
           <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
           <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
         </div>
-        <blockquote>&ldquo;Meccanico preparato e veloce, officina pulitissima.&rdquo;</blockquote>
-        <footer>
+        <blockquote>Gran meccanico e persona gentilissima. Sempre disponibile e preciso.</blockquote>
+      </article>
+
+      <article class="recensione">
+        <header class="recensione-testa">
           <span class="iniziali" aria-hidden="true">LP</span>
-          <p class="chi"><strong>Leonardo P.</strong><span>Su Google</span></p>
-        </footer>
+          <p class="chi"><strong>Leonardo P.</strong><span>Recensione su Google</span></p>
+          <svg class="logo-google" viewBox="0 0 48 48" role="img" aria-label="Google"><use href="#i-google"></use></svg>
+        </header>
+        <div class="stelle" role="img" aria-label="5 stelle su 5">
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+          <svg class="icona icona-piena"><use href="#i-stella"></use></svg>
+        </div>
+        <blockquote>Meccanico preparato e veloce, officina pulitissima.</blockquote>
       </article>
 
     </div>
 
     <div class="wrap">
-      <a class="tutte-recensioni" href="https://maps.app.goo.gl/XPU6XxXUKYwf9M847" target="_blank" rel="noopener">
+      <a class="tutte-recensioni" href="https://maps.app.goo.gl/XPU6XxXUKYwf9M847" data-umami-event="recensioni-google" target="_blank" rel="noopener">
         Leggile tutte su Google
         <svg class="icona"><use href="#i-freccia"></use></svg>
       </a>
@@ -461,7 +564,7 @@
 
       <div class="dove">
 
-        <a class="mappa"
+        <a class="mappa" data-umami-event="mappa-google"
            href="https://www.google.com/maps/search/?api=1&amp;query=BomberGarage%2C%20Via%20Umberto%20Biancamano%2034%2C%2000185%20Roma"
            target="_blank" rel="noopener">
           <!-- Mappa disegnata a mano, non e' un servizio esterno: nessuna
@@ -577,25 +680,26 @@
         <p class="lead dopo-titolo">Per un preventivo, un appuntamento, o solo per capire quanto viene.</p>
 
         <div class="social">
-          <a href="https://www.instagram.com/bomber_garage87/" target="_blank" rel="noopener">
+          <a href="https://www.instagram.com/bomber_garage87/" data-umami-event="instagram" target="_blank" rel="noopener">
             <svg class="icona"><use href="#i-instagram"></use></svg>@bomber_garage87
           </a>
-          <a href="https://www.facebook.com/bombersmotorcycle/" target="_blank" rel="noopener">
+          <a href="https://www.facebook.com/bombersmotorcycle/" data-umami-event="facebook" target="_blank" rel="noopener">
             <svg class="icona icona-piena"><use href="#i-facebook"></use></svg>BomberGarage
           </a>
-          <!-- SEGNAPOSTO: quando c'e' un'email, sostituire questa riga con
-               <a href="mailto:...."><svg class="icona"><use href="#i-mail"></use></svg>indirizzo</a>
-               e aggiungere "email" nel JSON-LD in fondo alla pagina. -->
-          <span class="segnaposto">Email da inserire</span>
+          <!-- DA-COMPILARE: email
+               Quando c'e', si sostituisce la riga qui sotto con
+               <a href="mailto:INDIRIZZO" data-umami-event="email"><svg class="icona"><use href="#i-mail"></use></svg>INDIRIZZO</a>
+               e si aggiunge "email": "INDIRIZZO" nel JSON-LD nella testa. -->
+          <span class="segnaposto" data-da-compilare="email">Email da inserire</span>
         </div>
       </div>
 
       <div class="scheda-contatti">
         <div class="bottoni">
-          <a class="btn btn-oro" href="tel:+393931087444">
+          <a class="btn btn-oro" href="tel:+393931087444" data-umami-event="chiama-contatti">
             <svg class="icona"><use href="#i-telefono"></use></svg>Chiama 393 108 7444
           </a>
-          <a class="btn btn-velo" href="https://wa.me/393931087444?text=Ciao%2C%20vi%20scrivo%20dal%20sito%20Bomber%20Garage." target="_blank" rel="noopener">
+          <a class="btn btn-velo" href="https://wa.me/393931087444?text=Ciao%2C%20vi%20scrivo%20dal%20sito%20Bomber%20Garage." data-umami-event="whatsapp-contatti" target="_blank" rel="noopener">
             <svg class="icona icona-piena"><use href="#i-whatsapp"></use></svg>WhatsApp
           </a>
         </div>
@@ -610,9 +714,10 @@
 
 <footer class="piede">
   <div class="wrap">
-    <p>BomberGarage di Stacchiotti Daniele &nbsp;&middot;&nbsp; Via Umberto Biancamano 34, 00185 Roma &nbsp;&middot;&nbsp; <a href="tel:+393931087444">393 108 7444</a></p>
-    <!-- SEGNAPOSTO: inserire la partita IVA reale -->
-    <p>Partita IVA <span class="segnaposto">da inserire</span></p>
+    <p>BomberGarage di Stacchiotti Daniele &nbsp;&middot;&nbsp; Via Umberto Biancamano 34, 00185 Roma &nbsp;&middot;&nbsp; <a href="tel:+393931087444" data-umami-event="chiama-footer">393 108 7444</a></p>
+    <!-- DA-COMPILARE: partita IVA -->
+    <p>Partita IVA <span class="segnaposto" data-da-compilare="partita-iva">da inserire</span>
+       &nbsp;&middot;&nbsp; <a class="link-privacy" href="privacy/">Privacy</a></p>
   </div>
 </footer>
 
@@ -623,10 +728,10 @@
      sempre a un dito di distanza.
      =================================================================== -->
 <div class="barra-contatti">
-  <a class="b-chiama" href="tel:+393931087444">
+  <a class="b-chiama" href="tel:+393931087444" data-umami-event="chiama-sticky">
     <svg class="icona"><use href="#i-telefono"></use></svg>Chiama
   </a>
-  <a class="b-wa" href="https://wa.me/393931087444?text=Ciao%2C%20vi%20scrivo%20dal%20sito%20Bomber%20Garage." target="_blank" rel="noopener">
+  <a class="b-wa" href="https://wa.me/393931087444?text=Ciao%2C%20vi%20scrivo%20dal%20sito%20Bomber%20Garage." data-umami-event="whatsapp-sticky" target="_blank" rel="noopener">
     <svg class="icona icona-piena"><use href="#i-whatsapp"></use></svg>WhatsApp
   </a>
 </div>
@@ -640,53 +745,5 @@
      Google e si rischia una penalizzazione.
      Quando c'e' un'email, si aggiunge "email": "..." qui sotto.
      =================================================================== -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "MotorcycleRepairShop",
-  "@id": "https://vxlyps.github.io/bomber-garage/#officina",
-  "name": "Bomber Garage",
-  "legalName": "BomberGarage di Stacchiotti Daniele",
-  "description": "Officina moto a Roma, zona San Giovanni. Tagliandi e riparazioni, revisione carburatori e rifacimento motori, su qualunque marca.",
-  "url": "https://vxlyps.github.io/bomber-garage/",
-  "telephone": "+39 393 108 7444",
-  "image": "https://vxlyps.github.io/bomber-garage/img/officina-interno.webp",
-  "logo": "https://vxlyps.github.io/bomber-garage/img/logo-bomber-garage.webp",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Via Umberto Biancamano 34",
-    "postalCode": "00185",
-    "addressLocality": "Roma",
-    "addressRegion": "RM",
-    "addressCountry": "IT"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 41.8874905,
-    "longitude": 12.51038
-  },
-  "hasMap": "https://maps.app.goo.gl/XPU6XxXUKYwf9M847",
-  "areaServed": { "@type": "City", "name": "Roma" },
-  "sameAs": [
-    "https://www.instagram.com/bomber_garage87/",
-    "https://www.facebook.com/bombersmotorcycle/"
-  ],
-  "openingHoursSpecification": [
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      "opens": "09:00",
-      "closes": "18:00"
-    }
-  ],
-  "makesOffer": [
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Tagliandi e riparazioni moto" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Revisione carburatori" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Revisione e rifacimento motori" } }
-  ]
-}
-</script>
-
-
 </body>
 </html>
