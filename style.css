@@ -413,6 +413,21 @@ p { text-wrap: pretty; }
 .barra-contatti .b-chiama { background: var(--oro); color: var(--nero); }
 .barra-contatti .b-wa { background: var(--nero-3); color: var(--bianco); }
 
+/* La barra entra scorrendo, cosi' appena si apre la pagina non copre
+   niente e si vede subito la fascia oro degli orari. La classe la mette
+   lo script in cima alla pagina: se JavaScript non gira, la barra resta
+   sempre visibile, cioe' il comportamento di prima. */
+.con-js .barra-contatti {
+  transform: translateY(115%);
+  transition: transform 0.3s ease;
+}
+
+.con-js.scorso .barra-contatti { transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .con-js .barra-contatti { transition: none; }
+}
+
 @media (min-width: 56em) {
   body { padding-bottom: 0; }
   .barra-contatti { display: none; }
@@ -428,16 +443,12 @@ p { text-wrap: pretty; }
   position: relative;
   display: flex;
   align-items: flex-end;
-  min-height: calc(100vh - var(--testata));
-  min-height: calc(100svh - var(--testata));
-  /* sotto si lascia posto alla barra fissa dei contatti, altrimenti
-     la copre l'ultima riga */
-  padding-block: var(--sp-xl) calc(var(--sp-l) + var(--barra));
+  /* Non tutta l'altezza dello schermo: si lascia fuori un pezzo, cosi'
+     la fascia oro con gli orari si vede senza dover scorrere. */
+  min-height: calc(100vh - var(--testata) - 7rem);
+  min-height: calc(100svh - var(--testata) - 7rem);
+  padding-block: var(--sp-l) calc(var(--sp-s) + var(--barra));
   overflow: hidden;
-}
-
-@media (min-width: 56em) {
-  .hero { padding-block: var(--sp-xl); }
 }
 
 .hero-foto { position: absolute; inset: 0; }
@@ -468,6 +479,22 @@ p { text-wrap: pretty; }
   color: rgba(246, 244, 240, 0.8);
 }
 
+/* Da desktop l'apertura si stringe: logo, titolo e spazi calano quel
+   tanto che basta perche' la fascia oro degli orari entri nella prima
+   schermata anche sui portatili bassi. Va tenuto DOPO le regole qui
+   sopra, altrimenti perde e non si applica. */
+@media (min-width: 56em) {
+  .hero {
+    min-height: calc(100vh - var(--testata) - 6rem);
+    min-height: calc(100svh - var(--testata) - 6rem);
+    padding-block: var(--sp-m) var(--sp-l);
+  }
+  .hero-logo { width: 4.25rem; margin-bottom: 0.75rem; }
+  .hero-contenuto .etichetta { margin-bottom: 0.5rem; }
+  .hero h1 { font-size: clamp(3rem, 5.6vw, 5rem); margin-bottom: var(--sp-s); }
+  .hero .lead { margin-bottom: var(--sp-m); }
+}
+
 /* la riga con il voto di Google */
 .voto {
   display: inline-flex;
@@ -496,6 +523,7 @@ p { text-wrap: pretty; }
 
 .lavoro {
   padding: 1.75rem;
+  border: 1px solid rgba(232, 200, 136, 0.3);
   border-radius: var(--raggio-g);
   background: var(--nero-2);
 }
@@ -891,7 +919,7 @@ p { text-wrap: pretty; }
     gap: 1.5rem;
   }
   .fascia-orari .orario { font-size: 1.1875rem; }
-  .fascia-orari .chiuso { padding-left: 0; margin-right: auto; }
+  .fascia-orari .stato { margin-right: auto; }
 }
 
 
@@ -1051,3 +1079,81 @@ p { text-wrap: pretty; }
 }
 
 .orari-grandi .chiuso { color: var(--grigio-2); font-weight: 600; font-size: 1.0625rem; }
+
+
+/* =========================================================================
+   21. APERTO O CHIUSO ADESSO
+   La pastiglia dentro alla fascia oro la riempie l'unico pezzo di
+   JavaScript del sito. Senza, resta nascosta e in pagina restano gli
+   orari scritti.
+   ========================================================================= */
+
+.fascia-orari .stato {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4375rem;
+  padding: 0.3125rem 0.75rem;
+  border-radius: 999px;
+  font-size: var(--t-micro);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.fascia-orari .stato::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.fascia-orari .stato.aperto { background: var(--nero); color: var(--bianco); }
+.fascia-orari .stato.chiuso { background: rgba(12, 12, 13, 0.13); color: rgba(12, 12, 13, 0.74); }
+
+/* deve stare dopo, altrimenti il display sopra vince sull'attributo */
+.fascia-orari .stato[hidden] { display: none; }
+
+/* la riga di oggi, nella scheda degli orari */
+.orari-grandi .oggi dt::after {
+  content: "Oggi";
+  margin-left: 0.5rem;
+  padding: 0.125rem 0.375rem;
+  border-radius: 4px;
+  background: var(--oro);
+  color: var(--nero);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.orari-grandi .oggi dt { color: var(--bianco); font-weight: 600; }
+
+
+/* =========================================================================
+   22. CONTATTI SU DUE COLONNE
+   Da desktop il titolo sta a sinistra e i pulsanti in una scheda a
+   destra, cosi' la pagina non finisce tutta schiacciata a sinistra.
+   ========================================================================= */
+
+.contatti-griglia { display: grid; gap: var(--sp-xl); }
+
+.scheda-contatti {
+  padding: 1.75rem;
+  border: 1px solid rgba(232, 200, 136, 0.3);
+  border-radius: var(--raggio-g);
+  background: var(--nero-3);
+}
+
+.scheda-contatti .bottoni { flex-direction: column; gap: 0.75rem; }
+.scheda-contatti .btn { width: 100%; }
+.scheda-contatti .sottotesto { max-width: none; margin-top: var(--sp-m); }
+
+@media (min-width: 56em) {
+  .contatti-griglia {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-xl);
+    align-items: start;
+  }
+  .scheda-contatti { padding: var(--sp-l); }
+}

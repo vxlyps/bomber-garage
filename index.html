@@ -23,6 +23,84 @@
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="stylesheet" href="style.css">
+<!-- ===================================================================
+     UNICO PEZZO DI JAVASCRIPT DEL SITO
+     Fa due cose, tutte e due comodita': fa entrare la barra dei contatti
+     quando si comincia a scorrere, e scrive se adesso l'officina e'
+     aperta o chiusa. Se non gira non si rompe niente: la barra resta
+     sempre visibile e in pagina restano gli orari scritti.
+     L'ora e' presa sul fuso di Roma, non su quello di chi guarda, cosi'
+     e' giusta anche per chi apre il sito dall'estero.
+     Se cambiano gli orari, si cambiano le due righe segnate qui sotto.
+     =================================================================== -->
+<script>
+(function () {
+  var APRE = 9 * 60;      /* 9:00, in minuti dalla mezzanotte */
+  var CHIUDE = 18 * 60;   /* 18:00 */
+
+  var radice = document.documentElement;
+  radice.className += (radice.className ? ' ' : '') + 'con-js';
+
+  function barra() {
+    var giu = (window.pageYOffset || radice.scrollTop || 0) > 120;
+    if (giu) { radice.classList.add('scorso'); }
+    else { radice.classList.remove('scorso'); }
+  }
+
+  function apertoAdesso() {
+    var fascia = document.querySelector('.fascia-orari');
+    if (!fascia || !window.Intl || !Intl.DateTimeFormat) return;
+
+    var pastiglia = fascia.querySelector('.stato');
+    if (!pastiglia) return;
+
+    var pezzi = {};
+    try {
+      new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/Rome',
+        weekday: 'short',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      }).formatToParts(new Date()).forEach(function (x) { pezzi[x.type] = x.value; });
+    } catch (e) { return; }
+
+    var numeroGiorno = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+    var giorno = numeroGiorno[pezzi.weekday];
+    if (giorno === undefined) return;
+
+    var adesso = parseInt(pezzi.hour, 10) * 60 + parseInt(pezzi.minute, 10);
+    var feriale = giorno >= 1 && giorno <= 5;
+    var aperto = feriale && adesso >= APRE && adesso < CHIUDE;
+
+    var testo;
+    if (aperto) {
+      testo = 'Aperto, chiude alle 18:00';
+    } else if (feriale && adesso < APRE) {
+      testo = 'Chiuso, apre oggi alle 9:00';
+    } else if (giorno >= 1 && giorno <= 4) {
+      testo = 'Chiuso, apre domani alle 9:00';
+    } else {
+      testo = 'Chiuso, apre lunedì alle 9:00';
+    }
+
+    pastiglia.textContent = testo;
+    pastiglia.className = 'stato ' + (aperto ? 'aperto' : 'chiuso');
+    pastiglia.removeAttribute('hidden');
+
+    /* nella scheda degli orari si segna qual e' la riga di oggi */
+    var riga = document.querySelector('[data-giorni="' + (feriale ? 'feriali' : 'weekend') + '"]');
+    if (riga) riga.className = 'oggi';
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    apertoAdesso();
+    barra();
+    window.addEventListener('scroll', barra, { passive: true });
+  });
+})();
+</script>
+
 </head>
 
 <body>
@@ -101,7 +179,6 @@
 
     <nav class="nav" aria-label="Navigazione principale">
       <a href="#officina">Cosa facciamo</a>
-      <a href="#lavoro">Il lavoro</a>
       <a href="#recensioni">Recensioni</a>
       <a href="#dove">Dove siamo</a>
     </nav>
@@ -139,7 +216,6 @@
 
   <nav class="pannello-nav" aria-label="Menu">
     <a href="#officina">Cosa facciamo</a>
-    <a href="#lavoro">Il lavoro</a>
     <a href="#recensioni">Recensioni</a>
     <a href="#dove">Dove siamo e orari</a>
     <a href="#contatti">Contatti</a>
@@ -198,7 +274,8 @@
         <svg class="icona"><use href="#i-orologio"></use></svg>
         Lunedì - venerdì 9:00 - 18:00
       </p>
-      <p class="chiuso">Sabato e domenica chiuso</p>
+      <!-- la pastiglia la riempie lo script che sta nella testa -->
+      <span class="stato" hidden></span>
       <a href="#dove">
         <svg class="icona"><use href="#i-posizione"></use></svg>Via Umberto Biancamano 34, Roma
       </a>
@@ -236,81 +313,6 @@
           <p>Motore fuori dal telaio, aperto e rifatto pezzo per pezzo. Quello che si recupera si recupera, il resto si sostituisce.</p>
         </div>
 
-      </div>
-
-    </div>
-  </section>
-
-
-  <!-- =================================================================
-       IL LAVORO
-       Foto vere di lavori usciti dall'officina. Ogni didascalia dice
-       cosa si sta guardando e cosa e' stato fatto.
-       ================================================================= -->
-  <section class="sezione sezione-2" id="lavoro">
-    <div class="wrap">
-
-      <p class="etichetta">Il lavoro</p>
-      <h2>Roba passata<br>sul banco</h2>
-      <p class="lead misura-l dopo-titolo">Non sono foto da catalogo: sono moto di clienti, fotografate qui dentro mentre si lavorava. Sotto a ognuna c'è scritto cosa si sta guardando.</p>
-
-      <figure class="foto-grande scatto">
-        <img src="img/carburatore.webp"
-             width="1100" height="1104"
-             alt="Un carburatore smontato pezzo per pezzo e disposto su un panno bianco"
-             loading="lazy" decoding="async">
-        <figcaption class="didascalia">
-          <strong>Carburatore</strong>
-          Aperto e smontato pezzo per pezzo. Ogni componente va pulito, controllato e rimontato con le guarnizioni nuove: se manca qualcosa al rimontaggio, si vede subito.
-        </figcaption>
-      </figure>
-
-      <div class="coppia">
-        <figure class="scatto">
-          <span class="tag">Prima</span>
-          <img src="img/motore-prima.webp"
-               width="1100" height="1100"
-               alt="Motore bicilindrico Honda tolto dal telaio e appoggiato sul cavalletto"
-               loading="lazy" decoding="async">
-          <figcaption class="didascalia">
-            <strong>Motore Honda 583</strong>
-            Tolto dal telaio e messo sul cavalletto, come è arrivato.
-          </figcaption>
-        </figure>
-        <figure class="scatto">
-          <span class="tag">Dopo</span>
-          <img src="img/motore-dopo.webp"
-               width="1100" height="1100"
-               alt="Lo stesso motore rimontato, con i carter riverniciati"
-               loading="lazy" decoding="async">
-          <figcaption class="didascalia">
-            <strong>Lo stesso motore</strong>
-            Rifatto e richiuso, carter riverniciati, pronto per tornare dentro.
-          </figcaption>
-        </figure>
-      </div>
-
-      <div class="coppia">
-        <figure class="scatto">
-          <img src="img/yamaha-xjr.webp"
-               width="1100" height="1100"
-               alt="Una Yamaha XJR aperta in officina, con il radiatore dell'olio in vista"
-               loading="lazy" decoding="async">
-          <figcaption class="didascalia">
-            <strong>Yamaha XJR</strong>
-            Quattro cilindri ad aria, aperta per arrivare al radiatore dell'olio e ai collettori.
-          </figcaption>
-        </figure>
-        <figure class="scatto">
-          <img src="img/forcella.webp"
-               width="1100" height="1100"
-               alt="Moto sollevata con l'avantreno smontato e gli steli della forcella a terra"
-               loading="lazy" decoding="async">
-          <figcaption class="didascalia">
-            <strong>Avantreno smontato</strong>
-            Moto sollevata e forcella giù: steli fuori per rifare paraoli e olio.
-          </figcaption>
-        </figure>
       </div>
 
     </div>
@@ -545,11 +547,11 @@
           <div class="riquadro">
             <p class="titolino"><svg class="icona"><use href="#i-orologio"></use></svg>Orari</p>
             <dl class="orari-grandi">
-              <div>
+              <div data-giorni="feriali">
                 <dt>Lunedì - venerdì</dt>
                 <dd>9:00 - 18:00</dd>
               </div>
-              <div>
+              <div data-giorni="weekend">
                 <dt>Sabato e domenica</dt>
                 <dd class="chiuso">Chiuso</dd>
               </div>
@@ -568,34 +570,36 @@
        CONTATTI
        ================================================================= -->
   <section class="sezione sezione-2 contatti" id="contatti">
-    <div class="wrap">
+    <div class="wrap contatti-griglia">
 
-      <p class="etichetta">Contatti</p>
-      <h2>Chiama o scrivi</h2>
-      <p class="lead dopo-titolo">Per un preventivo, un appuntamento, o solo per capire quanto viene.</p>
+      <div>
+        <h2>Contatti</h2>
+        <p class="lead dopo-titolo">Per un preventivo, un appuntamento, o solo per capire quanto viene.</p>
 
-      <div class="bottoni">
-        <a class="btn btn-oro" href="tel:+393931087444">
-          <svg class="icona"><use href="#i-telefono"></use></svg>Chiama 393 108 7444
-        </a>
-        <a class="btn btn-velo" href="https://wa.me/393931087444?text=Ciao%2C%20vi%20scrivo%20dal%20sito%20Bomber%20Garage." target="_blank" rel="noopener">
-          <svg class="icona icona-piena"><use href="#i-whatsapp"></use></svg>WhatsApp
-        </a>
+        <div class="social">
+          <a href="https://www.instagram.com/bomber_garage87/" target="_blank" rel="noopener">
+            <svg class="icona"><use href="#i-instagram"></use></svg>@bomber_garage87
+          </a>
+          <a href="https://www.facebook.com/bombersmotorcycle/" target="_blank" rel="noopener">
+            <svg class="icona icona-piena"><use href="#i-facebook"></use></svg>BomberGarage
+          </a>
+          <!-- SEGNAPOSTO: quando c'e' un'email, sostituire questa riga con
+               <a href="mailto:...."><svg class="icona"><use href="#i-mail"></use></svg>indirizzo</a>
+               e aggiungere "email" nel JSON-LD in fondo alla pagina. -->
+          <span class="segnaposto">Email da inserire</span>
+        </div>
       </div>
 
-      <p class="sottotesto">Su WhatsApp mandaci due foto della moto e scrivi che problema ha: ti rispondiamo con quello che c'è da fare e quanto costa.</p>
-
-      <div class="social">
-        <a href="https://www.instagram.com/bomber_garage87/" target="_blank" rel="noopener">
-          <svg class="icona"><use href="#i-instagram"></use></svg>@bomber_garage87
-        </a>
-        <a href="https://www.facebook.com/bombersmotorcycle/" target="_blank" rel="noopener">
-          <svg class="icona icona-piena"><use href="#i-facebook"></use></svg>BomberGarage
-        </a>
-        <!-- SEGNAPOSTO: quando c'e' un'email, sostituire questa riga con
-             <a href="mailto:...."><svg class="icona"><use href="#i-mail"></use></svg>indirizzo</a>
-             e aggiungere "email" nel JSON-LD in fondo alla pagina. -->
-        <span class="segnaposto">Email da inserire</span>
+      <div class="scheda-contatti">
+        <div class="bottoni">
+          <a class="btn btn-oro" href="tel:+393931087444">
+            <svg class="icona"><use href="#i-telefono"></use></svg>Chiama 393 108 7444
+          </a>
+          <a class="btn btn-velo" href="https://wa.me/393931087444?text=Ciao%2C%20vi%20scrivo%20dal%20sito%20Bomber%20Garage." target="_blank" rel="noopener">
+            <svg class="icona icona-piena"><use href="#i-whatsapp"></use></svg>WhatsApp
+          </a>
+        </div>
+        <p class="sottotesto">Su WhatsApp mandaci due foto della moto e scrivi che problema ha: ti rispondiamo con quello che c'è da fare e quanto costa.</p>
       </div>
 
     </div>
@@ -682,6 +686,7 @@
   ]
 }
 </script>
+
 
 </body>
 </html>

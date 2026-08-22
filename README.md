@@ -3,14 +3,34 @@
 Sito di BomberGarage, officina moto in via Umberto Biancamano 34 a Roma.
 
 Una pagina sola, HTML e CSS statici. Nessun framework, nessun build step,
-nessuna libreria esterna, **zero JavaScript**. Il carattere è Inter e sta
-dentro `fonts/`, non viene da Google Fonts: quindi niente richieste a
-terzi, niente cookie e niente banner da mettere. Si carica su GitHub
-Pages così com'è e funziona subito.
+nessuna libreria esterna. Il carattere è Inter e sta dentro `fonts/`, non
+viene da Google Fonts: quindi niente richieste a terzi, niente cookie e
+niente banner da mettere. Si carica su GitHub Pages così com'è e funziona
+subito.
 
-Anche il menu del telefono è senza JavaScript: il pulsante punta a
-`#menu` e il pannello compare con `:target`. Toccando una voce l'ancora
-cambia e il pannello si chiude da solo.
+Il menu del telefono è senza JavaScript: il pulsante punta a `#menu` e il
+pannello compare con `:target`. Toccando una voce l'ancora cambia e il
+pannello si chiude da solo.
+
+### L'unico pezzo di JavaScript
+
+Sta in cima a `index.html`, dentro alla testa, ed è commentato riga per
+riga. Fa due cose, tutte e due comodità:
+
+1. **Fa entrare la barra dei contatti quando si comincia a scorrere.**
+   Così appena si apre la pagina la barra non copre niente e si vede
+   subito la fascia oro con gli orari.
+2. **Scrive se adesso l'officina è aperta o chiusa**, e se è chiusa dice
+   quando riapre. Segna anche qual è la riga di oggi nella scheda degli
+   orari.
+
+Se non gira (JavaScript spento, browser vecchio, errore) non si rompe
+niente: la barra resta sempre visibile, la pastiglia aperto/chiuso resta
+nascosta e in pagina restano gli orari scritti, che sono la cosa
+importante.
+
+L'ora è presa sul **fuso di Roma**, non su quello del telefono di chi
+guarda, così è giusta anche per chi apre il sito dall'estero.
 
 ## Cosa c'è dentro
 
@@ -113,9 +133,11 @@ punti soli del file, la testa e il fondo.
 
 ## Come si cambiano le cose
 
-**Gli orari** stanno in tre posti: la fascia oro sotto all'apertura, la
-scheda "Orari" nella sezione "Dove siamo", e il blocco
-`openingHoursSpecification` nel JSON-LD in fondo.
+**Gli orari** stanno in quattro posti: la fascia oro sotto all'apertura,
+la scheda "Orari" nella sezione "Dove siamo", il blocco
+`openingHoursSpecification` nel JSON-LD in fondo, e le due righe `APRE`
+e `CHIUDE` in cima allo script (che sono in minuti dalla mezzanotte:
+`9 * 60` e `18 * 60`). Se cambiano, vanno cambiati in tutti e quattro.
 
 **Le foto** stanno in `img/`. Per sostituirne una basta salvare quella
 nuova con lo stesso nome, in webp, e aggiornare i numeri `width` e
@@ -123,3 +145,12 @@ nuova con lo stesso nome, in webp, e aggiornare i numeri `width` e
 
 **I colori e le spaziature** stanno tutti in cima a `style.css`, nel
 blocco delle variabili. Il file è diviso in sezioni numerate.
+
+## Le foto messe da parte
+
+In `img/` ci sono cinque foto che al momento non sono usate in pagina:
+`carburatore`, `motore-prima`, `motore-dopo`, `yamaha-xjr`, `forcella`.
+Erano di una sezione "Il lavoro" con il prima e dopo del motore, tolta
+perché troppo specifica per una pagina di presentazione. Sono rimaste
+nella cartella: quando si vorrà fare una pagina dei lavori sono già
+pronte e ritagliate.
