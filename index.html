@@ -18,7 +18,7 @@
 <meta name="robots" content="noindex, nofollow">
 
 <title>Bomber Garage | Officina moto a Roma, San Giovanni</title>
-<meta name="description" content="Officina moto a Roma, zona San Giovanni. Tagliandi e riparazioni, revisione carburatori, rifacimento motori. Su qualunque marca. Via Umberto Biancamano 34.">
+<meta name="description" content="Officina moto a Roma, zona San Giovanni. Tagliandi, pneumatici, revisioni, centraline, personalizzazioni, pratiche CID e ritiro a domicilio. Via Umberto Biancamano 34.">
 
 <!-- ###################################################################
      INDIRIZZO DEL SITO: L'UNICO POSTO DA CAMBIARE
@@ -50,6 +50,7 @@
   "image": "https://vxlyps.github.io/bomber-garage/img/anteprima-whatsapp.jpg",
   "logo": "https://vxlyps.github.io/bomber-garage/img/logo-bomber-garage.webp",
   "telephone": "+393931087444",
+  "vatID": "IT18635281001",
   "priceRange": "€€",
   "address": {
     "@type": "PostalAddress",
@@ -80,8 +81,13 @@
   ],
   "makesOffer": [
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Tagliandi e riparazioni moto" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Revisione carburatori" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Revisione e rifacimento motori" } }
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Sostituzione pneumatici moto e scooter" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Revisione moto e scooter" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Modifica ECU e centraline" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Personalizzazioni e modifiche moto" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Assistenza CID e pratiche assicurative" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Trasporto e ritiro veicoli" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Consulenza acquisto e vendita usato" } }
   ]
 }
 </script>
@@ -98,7 +104,7 @@
 <meta property="og:locale" content="it_IT">
 <meta property="og:site_name" content="Bomber Garage">
 <meta property="og:title" content="Bomber Garage | Officina moto a Roma, San Giovanni">
-<meta property="og:description" content="Tagliandi e riparazioni, revisione carburatori, rifacimento motori. Su qualunque marca. Via Umberto Biancamano 34, San Giovanni.">
+<meta property="og:description" content="Tagliandi, pneumatici, revisioni, centraline e personalizzazioni. Su qualunque marca. Via Umberto Biancamano 34, San Giovanni.">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -272,15 +278,41 @@
   <symbol id="i-chiave" viewBox="0 0 24 24">
     <path d="M14.6 3.2a5.5 5.5 0 0 0-4.9 8l-6 6a2.1 2.1 0 1 0 3 3l6-6a5.5 5.5 0 0 0 8-4.9c0-.7-.14-1.37-.4-2l-3.4 3.4-2.7-2.7 3.4-3.4a5.5 5.5 0 0 0-2-.4z"/>
   </symbol>
-  <symbol id="i-goccia" viewBox="0 0 24 24">
-    <path d="M12 3.2s6.2 7.1 6.2 11.1a6.2 6.2 0 0 1-12.4 0c0-4 6.2-11.1 6.2-11.1z"/>
-    <path d="M9.2 14.6a2.8 2.8 0 0 0 2.8 2.8"/>
+  <symbol id="i-gomme" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="8.6"/>
+    <circle cx="12" cy="12" r="3.4"/>
+    <path d="M12 3.4v3.2M12 17.4v3.2M3.4 12h3.2M17.4 12h3.2"/>
   </symbol>
-  <symbol id="i-pistone" viewBox="0 0 24 24">
-    <rect x="6.6" y="3.2" width="10.8" height="8.6" rx="1.8"/>
-    <path d="M8.9 6.4h6.2M8.9 8.8h6.2"/>
-    <path d="m10.7 11.8-.9 6.4M13.3 11.8l.9 6.4"/>
-    <circle cx="12" cy="20.2" r="2"/>
+  <symbol id="i-revisione" viewBox="0 0 24 24">
+    <path d="M9 4.6H7.2A2.2 2.2 0 0 0 5 6.8v12.4a2.2 2.2 0 0 0 2.2 2.2h9.6a2.2 2.2 0 0 0 2.2-2.2V6.8a2.2 2.2 0 0 0-2.2-2.2H15"/>
+    <rect x="9" y="2.6" width="6" height="4" rx="1.3"/>
+    <path d="m9.4 13.6 1.9 1.9 3.5-4"/>
+  </symbol>
+  <symbol id="i-centralina" viewBox="0 0 24 24">
+    <rect x="7.6" y="7.6" width="8.8" height="8.8" rx="2"/>
+    <path d="M10 4v3.6M14 4v3.6M10 16.4V20M14 16.4V20M4 10h3.6M4 14h3.6M16.4 10H20M16.4 14H20"/>
+  </symbol>
+  <symbol id="i-regolazioni" viewBox="0 0 24 24">
+    <path d="M4 7h9.6M18.4 7H20M4 12h3.6M12.4 12H20M4 17h9.6M18.4 17H20"/>
+    <circle cx="16" cy="7" r="2.2"/>
+    <circle cx="10" cy="12" r="2.2"/>
+    <circle cx="16" cy="17" r="2.2"/>
+  </symbol>
+  <symbol id="i-documento" viewBox="0 0 24 24">
+    <path d="M13.2 2.8H7.4a2.2 2.2 0 0 0-2.2 2.2v14a2.2 2.2 0 0 0 2.2 2.2h9.2a2.2 2.2 0 0 0 2.2-2.2V8.4z"/>
+    <path d="M13.2 2.8v5.6h5.6"/>
+    <path d="M8.8 13.6h6.4M8.8 16.8h4.2"/>
+  </symbol>
+  <symbol id="i-furgone" viewBox="0 0 24 24">
+    <path d="M2.6 16.6V7.6a1.4 1.4 0 0 1 1.4-1.4h9.2v10.4"/>
+    <path d="M13.2 9.6h3.4l3.8 3.8v3.2"/>
+    <circle cx="7.4" cy="17.8" r="1.9"/>
+    <circle cx="16.8" cy="17.8" r="1.9"/>
+    <path d="M2.6 17.8h2.9M9.3 17.8h5.6M18.7 17.8h1.7"/>
+  </symbol>
+  <symbol id="i-lente" viewBox="0 0 24 24">
+    <circle cx="10.8" cy="10.8" r="6.8"/>
+    <path d="m15.7 15.7 4.5 4.5"/>
   </symbol>
   <symbol id="i-google" viewBox="0 0 48 48">
     <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
@@ -310,7 +342,7 @@
       <a class="btn btn-oro btn-piccolo" href="tel:+393931087444" data-umami-event="chiama-header">
         <svg class="icona"><use href="#i-telefono"></use></svg>Chiama
       </a>
-      <a class="btn-icona" href="https://wa.me/393931087444?text=Ciao%2C%20vi%20scrivo%20dal%20sito%20Bomber%20Garage." data-umami-event="whatsapp-header" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp">
+      <a class="btn-icona" href="https://wa.me/393931087444?text=Ciao%21%20Vi%20ho%20trovati%20sul%20sito.%20Avrei%20bisogno%20di%20un%20preventivo%20per%20la%20mia%20moto." data-umami-event="whatsapp-header" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp">
         <svg class="icona icona-piena"><use href="#i-whatsapp"></use></svg>
       </a>
     </div>
@@ -348,7 +380,7 @@
     <a class="btn btn-oro" href="tel:+393931087444" data-umami-event="chiama-menu">
       <svg class="icona"><use href="#i-telefono"></use></svg>Chiama 393 108 7444
     </a>
-    <a class="btn btn-velo" href="https://wa.me/393931087444?text=Ciao%2C%20vi%20scrivo%20dal%20sito%20Bomber%20Garage." data-umami-event="whatsapp-menu" target="_blank" rel="noopener">
+    <a class="btn btn-velo" href="https://wa.me/393931087444?text=Ciao%21%20Vi%20ho%20trovati%20sul%20sito.%20Avrei%20bisogno%20di%20un%20preventivo%20per%20la%20mia%20moto." data-umami-event="whatsapp-menu" target="_blank" rel="noopener">
       <svg class="icona icona-piena"><use href="#i-whatsapp"></use></svg>WhatsApp
     </a>
   </div>
@@ -373,13 +405,13 @@
            alt="Bomber Garage" decoding="async">
       <p class="etichetta">Roma &nbsp;&middot;&nbsp; San Giovanni</p>
       <h1>Officina moto<br>a Roma</h1>
-      <p class="lead">Via Umberto Biancamano 34. Tagliandi, carburatori e motori, su qualunque marca: dallo scooter alla maxi enduro.</p>
+      <p class="lead">Via Umberto Biancamano 34. Tagliandi, gomme, revisioni ed elettronica, su qualunque marca: dallo scooter alla maxi enduro.</p>
 
       <div class="bottoni">
         <a class="btn btn-oro" href="tel:+393931087444" data-umami-event="chiama-hero">
           <svg class="icona"><use href="#i-telefono"></use></svg>Chiama 393 108 7444
         </a>
-        <a class="btn btn-velo" href="https://wa.me/393931087444?text=Ciao%2C%20vi%20scrivo%20dal%20sito%20Bomber%20Garage." data-umami-event="whatsapp-hero" target="_blank" rel="noopener">
+        <a class="btn btn-velo" href="https://wa.me/393931087444?text=Ciao%21%20Vi%20ho%20trovati%20sul%20sito.%20Avrei%20bisogno%20di%20un%20preventivo%20per%20la%20mia%20moto." data-umami-event="whatsapp-hero" target="_blank" rel="noopener">
           <svg class="icona icona-piena"><use href="#i-whatsapp"></use></svg>WhatsApp
         </a>
       </div>
@@ -416,24 +448,70 @@
       <h2>Si entra rotta,<br>si esce a posto</h2>
       <p class="lead misura dopo-titolo">Prima si guarda la moto, poi si dice cosa serve e quanto viene. Al ritiro non ci sono sorprese.</p>
 
+      <!-- I servizi sono divisi in tre gruppi, in ordine di come uno ci
+           arriva: prima quello per cui si porta la moto in officina, poi
+           quello che si fa fare per scelta, poi le rogne che l'officina
+           si prende al posto tuo. -->
+
+      <p class="gruppo">In officina</p>
       <div class="lavori">
 
         <div class="lavoro">
           <svg class="icona"><use href="#i-chiave"></use></svg>
           <h3>Tagliandi e riparazioni</h3>
-          <p>Manutenzione ordinaria, freni, frizione, catena, impianto elettrico. Su qualunque marca, dallo scooter alla maxi enduro.</p>
+          <p>Manutenzione ordinaria, freni, frizione, catena, impianto elettrico, motore e carburatori. Su qualunque marca, dallo scooter alla maxi enduro.</p>
         </div>
 
         <div class="lavoro">
-          <svg class="icona"><use href="#i-goccia"></use></svg>
-          <h3>Revisione carburatori</h3>
-          <p>Smontati pezzo per pezzo, puliti, rimontati con le guarnizioni nuove e ricarburati. Su una moto che parte male, di solito si comincia da qui.</p>
+          <svg class="icona"><use href="#i-gomme"></use></svg>
+          <h3>Sostituzione pneumatici</h3>
+          <p>Montaggio ed equilibratura, per moto e per scooter. Chiama con la misura che ti serve e ti diciamo quando passare.</p>
         </div>
 
         <div class="lavoro">
-          <svg class="icona"><use href="#i-pistone"></use></svg>
-          <h3>Motori</h3>
-          <p>Motore fuori dal telaio, aperto e rifatto pezzo per pezzo. Quello che si recupera si recupera, il resto si sostituisce.</p>
+          <svg class="icona"><use href="#i-revisione"></use></svg>
+          <h3>Revisioni</h3>
+          <p>Si prenota, si porta la moto e alla pratica ci pensiamo noi. Meglio muoversi per tempo, non l'ultima settimana.</p>
+        </div>
+
+      </div>
+
+      <p class="gruppo">Elettronica e modifiche</p>
+      <div class="lavori lavori-due">
+
+        <div class="lavoro">
+          <svg class="icona"><use href="#i-centralina"></use></svg>
+          <h3>Modifica ECU e centraline</h3>
+          <p>Interventi sulla centralina e sulla mappatura. Prima si sente cosa cerchi dalla moto, poi si decide cosa toccare: non si lavora a pacchetti fatti in serie.</p>
+        </div>
+
+        <div class="lavoro">
+          <svg class="icona"><use href="#i-regolazioni"></use></svg>
+          <h3>Personalizzazioni e modifiche</h3>
+          <p>Scarichi, manubri, pedane, luci, sella. Si parte da quello che hai in testa e si guarda insieme cosa si può fare davvero sulla tua moto.</p>
+        </div>
+
+      </div>
+
+      <p class="gruppo">Pratiche e trasporti</p>
+      <div class="lavori">
+
+        <div class="lavoro">
+          <svg class="icona"><use href="#i-documento"></use></svg>
+          <h3>Assistenza CID e assicurazioni</h3>
+          <p>Dopo un incidente: constatazione amichevole, preventivo per l'assicurazione e riparazione. La pratica la segue l'officina, tu porti solo la moto.</p>
+        </div>
+
+        <div class="lavoro">
+          <svg class="icona"><use href="#i-furgone"></use></svg>
+          <h3>Trasporto e ritiro veicoli</h3>
+          <p>Se la moto non cammina veniamo a prenderla noi e te la riportiamo quando è pronta. Basta dire dove sta.</p>
+        </div>
+
+        <div class="lavoro">
+          <svg class="icona"><use href="#i-lente"></use></svg>
+          <h3>Consulenza acquisto e vendita usato</h3>
+          <p>Prima di comprare un usato portacelo, o mandaci l'annuncio: si guarda com'è messo davvero. Vale anche quando sei tu a vendere.</p>
         </div>
 
       </div>
@@ -778,7 +856,7 @@
           <a class="btn btn-oro" href="tel:+393931087444" data-umami-event="chiama-contatti">
             <svg class="icona"><use href="#i-telefono"></use></svg>Chiama 393 108 7444
           </a>
-          <a class="btn btn-velo" href="https://wa.me/393931087444?text=Ciao%2C%20vi%20scrivo%20dal%20sito%20Bomber%20Garage." data-umami-event="whatsapp-contatti" target="_blank" rel="noopener">
+          <a class="btn btn-velo" href="https://wa.me/393931087444?text=Ciao%21%20Vi%20ho%20trovati%20sul%20sito.%20Avrei%20bisogno%20di%20un%20preventivo%20per%20la%20mia%20moto." data-umami-event="whatsapp-contatti" target="_blank" rel="noopener">
             <svg class="icona icona-piena"><use href="#i-whatsapp"></use></svg>WhatsApp
           </a>
         </div>
@@ -794,8 +872,7 @@
 <footer class="piede">
   <div class="wrap">
     <p>BomberGarage di Stacchiotti Daniele &nbsp;&middot;&nbsp; Via Umberto Biancamano 34, 00185 Roma &nbsp;&middot;&nbsp; <a href="tel:+393931087444" data-umami-event="chiama-footer">393 108 7444</a></p>
-    <!-- DA-COMPILARE: partita IVA -->
-    <p>Partita IVA <span class="segnaposto" data-da-compilare="partita-iva">da inserire</span>
+    <p>Partita IVA 18635281001
        &nbsp;&middot;&nbsp; <a class="link-privacy" href="privacy/">Privacy</a></p>
   </div>
 </footer>
@@ -810,7 +887,7 @@
   <a class="b-chiama" href="tel:+393931087444" data-umami-event="chiama-sticky">
     <svg class="icona"><use href="#i-telefono"></use></svg>Chiama
   </a>
-  <a class="b-wa" href="https://wa.me/393931087444?text=Ciao%2C%20vi%20scrivo%20dal%20sito%20Bomber%20Garage." data-umami-event="whatsapp-sticky" target="_blank" rel="noopener">
+  <a class="b-wa" href="https://wa.me/393931087444?text=Ciao%21%20Vi%20ho%20trovati%20sul%20sito.%20Avrei%20bisogno%20di%20un%20preventivo%20per%20la%20mia%20moto." data-umami-event="whatsapp-sticky" target="_blank" rel="noopener">
     <svg class="icona icona-piena"><use href="#i-whatsapp"></use></svg>WhatsApp
   </a>
 </div>

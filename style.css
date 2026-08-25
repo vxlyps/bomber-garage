@@ -515,10 +515,21 @@ p { text-wrap: pretty; }
    10. COSA SI FA QUI
    ========================================================================= */
 
+/* Etichetta che apre ogni gruppo di servizi. Stesso trattamento delle
+   altre etichette del sito, solo con un po' d'aria sopra per staccare
+   un gruppo dall'altro. */
+.gruppo {
+  margin: var(--sp-xl) 0 var(--sp-m);
+  font-size: var(--t-micro);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--oro);
+}
+
 .lavori {
   display: grid;
   gap: 0.875rem;
-  margin-top: var(--sp-xl);
 }
 
 .lavoro {
@@ -540,6 +551,8 @@ p { text-wrap: pretty; }
 
 @media (min-width: 46em) {
   .lavori { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  /* il gruppo da due schede si allarga invece di lasciare un buco */
+  .lavori-due { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* dentro le sezioni grigie i riquadri si schiariscono, per staccare */

@@ -24,8 +24,7 @@ Sito di BomberGarage, officina moto in via Umberto Biancamano 34 a Roma.
 > **Solo dopo che i record DNS sono già a posto**, mai prima.
 >
 > Extra, quando ci sono: riaccendere Umami (togliere i commenti attorno
-> allo script e mettere l'id vero, su tre pagine), la partita IVA e
-> l'email.
+> allo script e mettere l'id vero, su tre pagine) e l'email.
 
 Una pagina sola, HTML e CSS statici. Nessun framework, nessun build step,
 nessuna libreria esterna. Il carattere è Inter e sta dentro `fonts/`, non
@@ -93,12 +92,11 @@ si rischia una penalizzazione.
 
 ## Da sistemare
 
-1. **Partita IVA.** Nel piede di pagina c'è un segnaposto tratteggiato.
-2. **Email.** Non ne è stata trovata una pubblica, quindi nel blocco
+1. **Email.** Non ne è stata trovata una pubblica, quindi nel blocco
    contatti c'è un segnaposto. Quando c'è, nell'HTML sopra al segnaposto
    c'è già pronto il commento con il pezzo di codice da usare, e va
    aggiunto anche `"email"` nel JSON-LD in fondo.
-3. **Il dominio.** Vedi sotto.
+2. **Il dominio.** Vedi sotto.
 
 ## Il dominio su Aruba
 
@@ -234,8 +232,10 @@ Si trovano tutte con un grep solo:
 
     grep -rn "DA-COMPILARE" .
 
-Sono la partita IVA e l'email. In pagina si vedono come riquadri
-tratteggiati in oro, così non passano inosservati.
+È rimasta solo l'email. In pagina si vede come riquadro tratteggiato in
+oro, così non passa inosservata. La partita IVA è stata inserita
+(18635281001), sta nel piede di pagina, nella pagina privacy e nel
+JSON-LD come `vatID`.
 
 ## Attenzione se metti mano ai commenti HTML
 
@@ -261,3 +261,33 @@ keyframe sono la sosta e lo scatto, e restano proporzionate da sole.
 
 **Se aggiungi o togli una recensione, fallo in tutte e due le serie**,
 altrimenti il giro non si chiude e si vede il salto.
+
+## I servizi
+
+Stanno in `index.html`, sezione "Cosa si fa qui", divisi in tre gruppi
+in ordine di come uno ci arriva:
+
+1. **In officina** — quello per cui si porta la moto: tagliandi e
+   riparazioni, pneumatici, revisioni.
+2. **Elettronica e modifiche** — quello che si fa fare per scelta:
+   centraline e personalizzazioni. Sono due schede più larghe apposta,
+   così il gruppo non lascia un buco nella griglia.
+3. **Pratiche e trasporti** — le rogne che si prende l'officina: CID e
+   assicurazioni, ritiro e trasporto, consulenza sull'usato.
+
+Per aggiungerne uno si copia un blocco `.lavoro`, si sceglie un'icona
+dallo sprite in cima alla pagina e si aggiunge il servizio anche in
+`makesOffer` nel JSON-LD.
+
+## Il messaggio precompilato di WhatsApp
+
+Quando uno tocca il pulsante WhatsApp, si apre la chat con già scritto:
+
+> Ciao! Vi ho trovati sul sito. Avrei bisogno di un preventivo per la
+> mia moto.
+
+È una frase intera apposta: molta gente preme invio senza aggiungere
+niente, e così arriva comunque un messaggio sensato che dice anche da
+dove viene. Per cambiarlo si modifica la parte dopo `?text=` nei cinque
+link `wa.me` di `index.html`, ricordandosi che va scritto in formato
+URL (gli spazi diventano `%20`).
