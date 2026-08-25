@@ -204,18 +204,6 @@ p { text-wrap: pretty; }
   text-transform: uppercase;
   color: var(--oro);
 }
-
-/* segnaposto: roba ancora da riempire, si vede che manca */
-.segnaposto {
-  display: inline-block;
-  padding: 0.1875rem 0.5rem;
-  border: 1px dashed rgba(232, 200, 136, 0.5);
-  border-radius: 5px;
-  color: var(--oro);
-  font-weight: 600;
-}
-
-
 /* =========================================================================
    5. IMPAGINAZIONE
    ========================================================================= */
@@ -770,6 +758,20 @@ p { text-wrap: pretty; }
 }
 .social a:hover { color: var(--oro); }
 .social .icona { width: 1.1875rem; height: 1.1875rem; }
+
+/* I loghi tengono i colori dei rispettivi marchi: sono segnali, si
+   riconoscono a colpo d'occhio e non entrano nella tavolozza del sito.
+   Il colore sta sul logo e non sul link, cosi' passandoci sopra cambia
+   solo la scritta. */
+.logo-social {
+  width: 1.375rem;
+  height: 1.375rem;
+  flex: none;
+  fill: currentColor;
+  stroke: none;
+}
+.logo-social.instagram { color: #e4405f; }
+.logo-social.facebook  { color: #1877f2; }
 
 
 /* =========================================================================

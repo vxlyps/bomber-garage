@@ -232,10 +232,10 @@ Si trovano tutte con un grep solo:
 
     grep -rn "DA-COMPILARE" .
 
-È rimasta solo l'email. In pagina si vede come riquadro tratteggiato in
-oro, così non passa inosservata. La partita IVA è stata inserita
-(18635281001), sta nel piede di pagina, nella pagina privacy e nel
-JSON-LD come `vatID`.
+Non è rimasto niente: la partita IVA (18635281001) è nel piede di
+pagina, nella pagina privacy e nel JSON-LD come `vatID`, e il segnaposto
+dell'email è stato tolto. Quello che manca è segnato solo nei commenti
+dell'HTML.
 
 ## Attenzione se metti mano ai commenti HTML
 
@@ -291,3 +291,12 @@ niente, e così arriva comunque un messaggio sensato che dice anche da
 dove viene. Per cambiarlo si modifica la parte dopo `?text=` nei cinque
 link `wa.me` di `index.html`, ricordandosi che va scritto in formato
 URL (gli spazi diventano `%20`).
+
+## I loghi degli altri
+
+Nei contatti ci sono i marchi veri di **Instagram** e **Facebook**, nei
+loro colori (`#e4405f` e `#1877f2`), e nelle recensioni la **G** di
+Google a quattro colori. Sono lì per dire da dove arrivano le cose, non
+per decorare: per questo tengono i colori loro e non entrano nella
+tavolozza nero e oro del sito. Stanno tutti nello sprite delle icone in
+cima alla pagina, e il colore si cambia da `style.css` (`.logo-social`).
