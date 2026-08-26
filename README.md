@@ -211,7 +211,7 @@ dentro al nome, così dal pannello si vede quale converte:
     chiama-footer                         (numero nel piede)
     chiama-404         chiama-privacy
     mappa-google       recensioni-google
-    instagram          facebook
+    instagram          facebook           email
 
 I link `wa.me` hanno `target="_blank" rel="noopener"`: la pagina non si
 scarica, quindi l'evento fa in tempo a partire. I `tel:` invece navigano
@@ -232,10 +232,10 @@ Si trovano tutte con un grep solo:
 
     grep -rn "DA-COMPILARE" .
 
-Non è rimasto niente: la partita IVA (18635281001) è nel piede di
-pagina, nella pagina privacy e nel JSON-LD come `vatID`, e il segnaposto
-dell'email è stato tolto. Quello che manca è segnato solo nei commenti
-dell'HTML.
+Non è rimasto niente. La partita IVA (18635281001) sta nel piede di
+pagina, nella pagina privacy e nel JSON-LD come `vatID`. L'email
+(bombersmotorcycle.info@gmail.com) sta nel blocco contatti e nel JSON-LD
+come `email`.
 
 ## Attenzione se metti mano ai commenti HTML
 

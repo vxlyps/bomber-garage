@@ -757,7 +757,7 @@ p { text-wrap: pretty; }
   text-decoration: none;
 }
 .social a:hover { color: var(--oro); }
-.social .icona { width: 1.1875rem; height: 1.1875rem; }
+.social .icona { width: 1.3125rem; height: 1.3125rem; }
 
 /* I loghi tengono i colori dei rispettivi marchi: sono segnali, si
    riconoscono a colpo d'occhio e non entrano nella tavolozza del sito.
