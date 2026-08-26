@@ -2,29 +2,37 @@
 
 Sito di BomberGarage, officina moto in via Umberto Biancamano 34 a Roma.
 
-> ## ⚠️ AL LANCIO: TRE COSE, IN QUEST'ORDINE
+> ## IL SITO È PUBBLICO
 >
-> **1. Togliere il noindex.**
-> Cancellare la riga `<meta name="robots" content="noindex, nofollow">`
-> (e il commento sopra) da **tutte e tre** le pagine: `index.html`,
-> `privacy/index.html`, `404.html`. Finché c'è, Google non indicizza.
+> Il `noindex` è stato tolto: Google può indicizzarlo. L'indirizzo è
+> `vxlyps.github.io/bomber-garage`, il dominio arriverà dopo.
 >
-> **2. Cambiare l'indirizzo del sito.**
-> Dalla cartella del sito, un comando solo:
-> ```
-> sed -i '' 's|https://vxlyps.github.io/bomber-garage|https://IL-TUO-DOMINIO.it|g' index.html privacy/index.html 404.html
-> ```
-> Tutti gli indirizzi assoluti stanno nel blocco marcato
-> "INDIRIZZO DEL SITO" nella testa di `index.html` (più due link nella
-> 404): non ce ne sono altri sparsi in giro.
+> **Da fare adesso, in ordine di importanza:**
 >
-> **3. Committare il CNAME.**
-> Scrivere il dominio dentro al file `CNAME` (adesso c'è un segnaposto),
-> togliere la riga `/CNAME` da `.gitignore`, e committare.
-> **Solo dopo che i record DNS sono già a posto**, mai prima.
+> 1. **Mettere l'indirizzo del sito sulla scheda Google dell'attività.**
+>    Nella scheda c'è ancora "Aggiungi sito web". È la cosa che porta più
+>    gente di qualunque altra: quasi tutti arrivano da Maps, non da una
+>    ricerca su Google.
+> 2. **Google Search Console.** Gratis, nessuno script da mettere in
+>    pagina, nessun banner. Dice con quali ricerche lo trovano.
 >
-> Extra, quando ci sono: riaccendere Umami (togliere i commenti attorno
-> allo script e mettere l'id vero, su tre pagine) e l'email.
+> **Quando arriva il dominio:**
+>
+> 1. Cambiare l'indirizzo, un comando solo dalla cartella del sito:
+>    ```
+>    sed -i '' 's|https://vxlyps.github.io/bomber-garage|https://IL-TUO-DOMINIO.it|g' index.html privacy/index.html 404.html
+>    ```
+> 2. Scrivere il dominio dentro al file `CNAME`, togliere la riga
+>    `/CNAME` da `.gitignore`, e committare. **Solo a record DNS già a
+>    posto**, mai prima.
+>
+> Cambiare dominio dopo non brucia niente: appena GitHub Pages vede il
+> `CNAME`, manda da solo un redirect permanente dal vecchio indirizzo
+> `github.io` a quello nuovo, quindi quel poco che Google ha già
+> indicizzato si sposta senza perdersi.
+>
+> Resta fuori anche **Umami**: lo script è commentato, quindi in questo
+> momento il sito non raccoglie nessuna statistica.
 
 Una pagina sola, HTML e CSS statici. Nessun framework, nessun build step,
 nessuna libreria esterna. Il carattere è Inter e sta dentro `fonts/`, non
