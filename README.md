@@ -242,7 +242,7 @@ Si trovano tutte con un grep solo:
 
 Non è rimasto niente. La partita IVA (18635281001) sta nel piede di
 pagina, nella pagina privacy e nel JSON-LD come `vatID`. L'email
-(bombersmotorcycle.info@gmail.com) sta nel blocco contatti e nel JSON-LD
+(bombergarage34@gmail.com) sta nel blocco contatti e nel JSON-LD
 come `email`.
 
 ## Attenzione se metti mano ai commenti HTML
