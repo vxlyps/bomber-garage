@@ -252,23 +252,32 @@ e chiudono un commento: se li scrivi, il commento si chiude davvero in
 quel punto e tutto il testo che segue finisce visibile in cima alla
 pagina. È già successo una volta con le istruzioni di Umami.
 
-## Le recensioni che avanzano
+## Le recensioni
 
-Da desktop ne stanno tre in vista: restano ferme sei secondi e mezzo,
-poi il nastro scatta di una posizione e ne entra una nuova da destra.
-Giro completo in 24 secondi. Sul telefono si scorrono col dito come
-prima, senza nessun movimento automatico.
+Sono tutte vere, prese dalla scheda Google, e ultimo controllo il
+5 ottobre 2026: **22 recensioni, media 5,0**. In pagina ce ne sono 5,
+quelle che Google mostra per esteso a chi guarda senza essere
+connesso: le altre sono dietro al login. Per questo il badge dice "su 22"
+e le schede sono cinque.
 
-Le tre schede sono scritte **due volte** in `index.html`: la seconda
-serie ha `aria-hidden="true"`, serve solo a far ripartire il giro senza
-che si veda il salto, ed è nascosta quando il nastro non è attivo.
+Per aggiornarle: aprire la scheda su Google Maps, tab "Recensioni", e
+ricopiare quelle che compaiono. Il conteggio sta in un posto solo, il
+badge sopra le schede.
 
-Per cambiare il ritmo si tocca solo la durata in `style.css`, sezione
-24: `animation: passo-recensioni 24s infinite`. Le percentuali dentro ai
-keyframe sono la sosta e lo scatto, e restano proporzionate da sole.
+**Da desktop avanzano da sole**: ne stanno tre in vista, restano ferme
+sei secondi e mezzo, poi il nastro scatta di una posizione e ne entra
+una nuova da destra. Giro completo in 40 secondi (5 passi da 8). Sul
+telefono si scorrono col dito, senza nessun movimento automatico.
 
-**Se aggiungi o togli una recensione, fallo in tutte e due le serie**,
-altrimenti il giro non si chiude e si vede il salto.
+Le schede sono scritte **due volte** in `index.html`: la seconda serie
+ha `aria-hidden="true"`, serve solo a far ripartire il giro senza che si
+veda il salto, ed è nascosta quando il nastro non è attivo.
+
+**Se cambia il numero di recensioni** vanno aggiornate tre cose: le
+schede in tutte e due le serie, e in `style.css` (sezione 24) la durata
+`animation: passo-recensioni 40s infinite` e le percentuali dei
+keyframe, che sono un passo ogni 1/N del giro (con 5 recensioni: 20%,
+40%, 60%, 80%, 100%; con N recensioni, la durata è N × 8 secondi).
 
 ## I servizi
 

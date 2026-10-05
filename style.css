@@ -1246,14 +1246,14 @@ p { text-wrap: pretty; }
 
    Non e' uno scorrimento continuo: ne stanno tre in vista, restano ferme
    sei secondi e mezzo, poi il nastro scatta di una posizione a sinistra e
-   ne entra una nuova da destra. Giro completo in 24 secondi.
+   ne entra una nuova da destra. Giro completo in 40 secondi.
 
    I conti: il nastro e' largo quanto la finestra, e ogni scheda e' un
    terzo della finestra meno gli spazi. Un passo vale quindi una scheda
-   piu' uno spazio, cioe' (100% + 1rem) / 3. Tre passi fanno esattamente
-   una serie intera di schede: per questo le schede sono scritte due
-   volte nel markup, cosi' al terzo passo si riparte da capo senza che si
-   veda il salto.
+   piu' uno spazio, cioe' (100% + 1rem) / 3. Tanti passi quante sono le
+   recensioni (adesso 5) fanno esattamente una serie intera di schede:
+   per questo le schede sono scritte due volte nel markup, cosi' all'ultimo
+   passo si riparte da capo senza che si veda il salto.
 
    Si ferma passandoci sopra col mouse o arrivandoci col tasto Tab, e non
    parte proprio per chi ha chiesto meno animazioni nelle impostazioni.
@@ -1280,7 +1280,7 @@ p { text-wrap: pretty; }
     grid-auto-flow: column;
     grid-auto-columns: calc((100% - 2rem) / 3);
     gap: 1rem;
-    animation: passo-recensioni 24s infinite;
+    animation: passo-recensioni 40s infinite;
   }
 
   .recensioni .recensione { width: auto; margin-right: 0; }
@@ -1290,22 +1290,33 @@ p { text-wrap: pretty; }
   .recensioni:focus-within .recensioni-nastro { animation-play-state: paused; }
 
   @keyframes passo-recensioni {
-    /* ferme, poi scatto: le coppie di percentuali sono l'inizio e la
-       fine di ogni sosta, il tratto fra una coppia e l'altra e' il passo */
-    0%, 26.667% {
+    /* Cinque recensioni = cinque passi. Ogni passo dura un quinto del
+       giro (20%): 16% fermo, 4% di scatto. A 40 secondi sono gli stessi
+       6,4 secondi di sosta e 1,6 di scatto di prima. Le coppie di
+       percentuali sono inizio e fine di ogni sosta. Se cambia il numero
+       di recensioni, cambiano le percentuali e la durata sopra. */
+    0%, 16% {
       transform: translateX(0);
       animation-timing-function: ease-in-out;
     }
-    33.333%, 60% {
+    20%, 36% {
       transform: translateX(calc((100% + 1rem) / 3 * -1));
       animation-timing-function: ease-in-out;
     }
-    66.667%, 93.333% {
+    40%, 56% {
       transform: translateX(calc((100% + 1rem) / 3 * -2));
       animation-timing-function: ease-in-out;
     }
-    100% {
+    60%, 76% {
       transform: translateX(calc((100% + 1rem) / 3 * -3));
+      animation-timing-function: ease-in-out;
+    }
+    80%, 96% {
+      transform: translateX(calc((100% + 1rem) / 3 * -4));
+      animation-timing-function: ease-in-out;
+    }
+    100% {
+      transform: translateX(calc((100% + 1rem) / 3 * -5));
     }
   }
 }
