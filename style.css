@@ -188,22 +188,7 @@ p { text-wrap: pretty; }
 
 .dopo-titolo { margin-top: var(--sp-m); }
 
-.didascalia {
-  margin-top: 0.875rem;
-  font-size: var(--t-piccolo);
-  color: var(--grigio);
-}
 
-/* la prima riga dice cosa e', la seconda cosa si e' fatto */
-.didascalia strong {
-  display: block;
-  margin-bottom: 0.1875rem;
-  font-size: var(--t-micro);
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--oro);
-}
 /* =========================================================================
    5. IMPAGINAZIONE
    ========================================================================= */
@@ -558,8 +543,9 @@ p { text-wrap: pretty; }
 /* =========================================================================
    11. GALLERIA
    Una foto alla volta, a tutta larghezza. Sul telefono si vede un pezzo
-   della foto dopo, cosi' si capisce che si scorre col dito. La foto in
-   primo piano si avvicina piano piano, come al cinema.
+   della foto dopo, cosi' si capisce che si scorre col dito. Niente
+   scritte sopra: parlano le foto. Quella in primo piano si avvicina
+   piano piano, come al cinema.
    ========================================================================= */
 
 .galleria { margin-top: var(--sp-xl); }
@@ -589,26 +575,6 @@ p { text-wrap: pretty; }
   width: 100%;
   aspect-ratio: 4 / 5;
   object-fit: cover;
-}
-
-/* la didascalia sta sopra la foto, in basso, su un velo che sale dal nero */
-.foto figcaption {
-  position: absolute;
-  inset: auto 0 0 0;
-  padding: 4rem 1.25rem 1.125rem;
-  background: linear-gradient(to top, rgba(8, 8, 9, 0.85), rgba(8, 8, 9, 0));
-  font-size: var(--t-piccolo);
-  color: rgba(246, 244, 240, 0.8);
-}
-
-.foto figcaption strong {
-  display: block;
-  margin-bottom: 0.125rem;
-  font-size: var(--t-micro);
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--oro);
 }
 
 /* frecce e contatore: solo se lo script c'e', senza resta lo scorrimento */
@@ -656,7 +622,6 @@ p { text-wrap: pretty; }
     max-height: calc(100vh - var(--testata) - 7rem);
     max-height: calc(100svh - var(--testata) - 7rem);
   }
-  .foto figcaption { padding: 6rem 2rem 1.75rem; font-size: var(--t-corpo); }
 }
 
 @media (prefers-reduced-motion: no-preference) {
