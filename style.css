@@ -17,7 +17,7 @@
      8.  Pulsanti e barra contatti
      9.  Apertura
     10.  Cosa si fa qui
-    11.  Il lavoro (foto)
+    11.  Galleria
     12.  L'officina
     13.  Dove siamo
     14.  Contatti
@@ -424,7 +424,7 @@ p { text-wrap: pretty; }
 
 /* =========================================================================
    9. APERTURA
-   Foto dell'officina a tutta pagina, velo scuro sopra, logo e titolo.
+   La moto di casa a tutta pagina, velo scuro sopra, logo e titolo.
    ========================================================================= */
 
 .hero {
@@ -440,14 +440,15 @@ p { text-wrap: pretty; }
 }
 
 .hero-foto { position: absolute; inset: 0; }
-.hero-foto img { width: 100%; height: 100%; object-fit: cover; }
+.hero-foto img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
 
-/* velo a tinta piatta: serve a leggere il titolo, non a decorare */
+/* velo scuro: pieno in basso dove sta il titolo, piu' leggero in alto
+   cosi' la foto respira. Serve a leggere, non a decorare. */
 .hero::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(8, 8, 9, 0.68);
+  background: linear-gradient(to top, rgba(8, 8, 9, 0.9) 0%, rgba(8, 8, 9, 0.62) 50%, rgba(8, 8, 9, 0.35) 100%);
 }
 
 .hero-contenuto { position: relative; z-index: 2; }
@@ -476,6 +477,13 @@ p { text-wrap: pretty; }
     min-height: calc(100vh - var(--testata) - 6rem);
     min-height: calc(100svh - var(--testata) - 6rem);
     padding-block: var(--sp-m) var(--sp-l);
+  }
+  /* il testo sta a sinistra: il velo si scurisce da quella parte e
+     lascia piu' luce alla scritta oro sulla destra */
+  .hero::after {
+    background:
+      linear-gradient(to right, rgba(8, 8, 9, 0.72) 0%, rgba(8, 8, 9, 0) 65%),
+      linear-gradient(to top, rgba(8, 8, 9, 0.8) 0%, rgba(8, 8, 9, 0.25) 60%);
   }
   .hero-logo { width: 4.25rem; margin-bottom: 0.75rem; }
   .hero-contenuto .etichetta { margin-bottom: 0.5rem; }
@@ -548,41 +556,113 @@ p { text-wrap: pretty; }
 
 
 /* =========================================================================
-   11. IL LAVORO (foto)
+   11. GALLERIA
+   Una foto alla volta, a tutta larghezza. Sul telefono si vede un pezzo
+   della foto dopo, cosi' si capisce che si scorre col dito. La foto in
+   primo piano si avvicina piano piano, come al cinema.
    ========================================================================= */
 
-.foto-grande img,
-.coppia img,
-.terzetto img {
-  width: 100%;
-  object-fit: cover;
+.galleria { margin-top: var(--sp-xl); }
+
+.galleria-nastro {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 88%;
+  gap: 0.75rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
   border-radius: var(--raggio-g);
 }
+.galleria-nastro::-webkit-scrollbar { display: none; }
 
-.foto-grande { margin-top: var(--sp-xl); }
-.foto-grande img { aspect-ratio: 4 / 3; }
-
-@media (min-width: 56em) {
-  .foto-grande img { aspect-ratio: 2 / 1; }
+.foto {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--raggio-g);
+  scroll-snap-align: start;
 }
 
-.coppia, .terzetto {
+.foto img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+/* la didascalia sta sopra la foto, in basso, su un velo che sale dal nero */
+.foto figcaption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 4rem 1.25rem 1.125rem;
+  background: linear-gradient(to top, rgba(8, 8, 9, 0.85), rgba(8, 8, 9, 0));
+  font-size: var(--t-piccolo);
+  color: rgba(246, 244, 240, 0.8);
+}
+
+.foto figcaption strong {
+  display: block;
+  margin-bottom: 0.125rem;
+  font-size: var(--t-micro);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--oro);
+}
+
+/* frecce e contatore: solo se lo script c'e', senza resta lo scorrimento */
+.galleria-comandi { display: none; }
+
+.con-js .galleria-comandi {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.galleria-comandi button {
   display: grid;
-  gap: 0.875rem;
-  margin-top: 0.875rem;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1px solid rgba(232, 200, 136, 0.3);
+  border-radius: var(--raggio);
+  background: var(--nero-3);
+  color: var(--oro);
+  cursor: pointer;
 }
+.galleria-comandi button:hover { border-color: var(--oro); }
+.galleria-comandi .icona { width: 1.125rem; height: 1.125rem; }
+.galleria-indietro .icona { transform: scaleX(-1); }
 
-.coppia figure, .terzetto figure { margin: 0; }
-.coppia img { aspect-ratio: 1 / 1; }
-.terzetto img { aspect-ratio: 3 / 4; }
+.galleria-conta {
+  order: -1;
+  margin-right: auto;
+  font-size: var(--t-piccolo);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+  color: var(--grigio-2);
+}
+.galleria-conta b { color: var(--bianco); font-weight: 700; }
 
 @media (min-width: 46em) {
-  .coppia { grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .terzetto { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .galleria-nastro { grid-auto-columns: 100%; gap: 1rem; }
+  /* larga, ma mai piu' alta dello schermo: frecce e contatore si vedono */
+  .foto img {
+    aspect-ratio: 16 / 9;
+    max-height: calc(100vh - var(--testata) - 7rem);
+    max-height: calc(100svh - var(--testata) - 7rem);
+  }
+  .foto figcaption { padding: 6rem 2rem 1.75rem; font-size: var(--t-corpo); }
 }
 
-/* la coppia prima/dopo porta l'etichetta in oro */
-.coppia .prima-dopo { color: var(--oro); }
+@media (prefers-reduced-motion: no-preference) {
+  .foto img { transition: transform 7s ease-out; }
+  .con-js .foto.attiva img { transform: scale(1.05); }
+}
 
 
 /* =========================================================================
@@ -593,7 +673,7 @@ p { text-wrap: pretty; }
 
 .officina img {
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
   border-radius: var(--raggio-g);
 }
@@ -1066,28 +1146,7 @@ p { text-wrap: pretty; }
 
 
 /* =========================================================================
-   19. ETICHETTA SOPRA LE FOTO (prima / dopo)
-   ========================================================================= */
-
-.scatto { position: relative; }
-
-.scatto .tag {
-  position: absolute;
-  top: 0.75rem;
-  left: 0.75rem;
-  padding: 0.25rem 0.625rem;
-  border-radius: 6px;
-  background: var(--oro);
-  color: var(--nero);
-  font-size: var(--t-micro);
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-
-/* =========================================================================
-   20. ORARI IN EVIDENZA DENTRO LA SCHEDA
+   19. ORARI IN EVIDENZA DENTRO LA SCHEDA
    ========================================================================= */
 
 .orari-grandi { display: grid; gap: 0.875rem; }
@@ -1114,7 +1173,7 @@ p { text-wrap: pretty; }
 
 
 /* =========================================================================
-   21. APERTO O CHIUSO ADESSO
+   20. APERTO O CHIUSO ADESSO
    La pastiglia dentro alla fascia oro la riempie l'unico pezzo di
    JavaScript del sito. Senza, resta nascosta e in pagina restano gli
    orari scritti.
@@ -1173,7 +1232,7 @@ p { text-wrap: pretty; }
 
 
 /* =========================================================================
-   22. CONTATTI SU DUE COLONNE
+   21. CONTATTI SU DUE COLONNE
    Da desktop il titolo sta a sinistra e i pulsanti in una scheda a
    destra, cosi' la pagina non finisce tutta schiacciata a sinistra.
    ========================================================================= */
@@ -1202,7 +1261,7 @@ p { text-wrap: pretty; }
 
 
 /* =========================================================================
-   23. PAGINE SEMPLICI (privacy, 404) e link nel piede
+   22. PAGINE SEMPLICI (privacy, 404) e link nel piede
    Stessa grafica del resto, senza tutte le sezioni.
    ========================================================================= */
 
@@ -1240,7 +1299,7 @@ p { text-wrap: pretty; }
 
 
 /* =========================================================================
-   24. LE RECENSIONI CHE AVANZANO DI UNA ALLA VOLTA
+   23. LE RECENSIONI CHE AVANZANO DI UNA ALLA VOLTA
    Solo da desktop, dove prima stavano ferme in tre colonne. Sul telefono
    restano come sono: si scorrono col dito e vanno bene cosi'.
 

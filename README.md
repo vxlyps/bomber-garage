@@ -82,14 +82,14 @@ chiamata esterna.
 ## Da dove vengono i dati
 
 Nome, indirizzo, telefono, orari e coordinate sono presi dalla scheda
-Google dell'attività. Le foto vengono dalla pagina Facebook
-(`bombersmotorcycle`) e dalla scheda Google. Il logo è la foto profilo
-Facebook, ritagliata in tondo con lo sfondo trasparente.
+Google dell'attività. Le foto sono il servizio fatto in officina il 16 e
+17 settembre 2026 (cartella `BomberGarage_foto_settembre`, scatti Canon
+con le targhe già sfocate). Il logo è la foto profilo Facebook,
+ritagliata in tondo con lo sfondo trasparente.
 
 L'oro usato in tutto il sito (`--oro: #e8c888`) è campionato dal logo.
 
-**Le targhe** delle moto dei clienti nella foto dell'officina sono state
-sfocate.
+**Le targhe** delle moto dei clienti sono sfocate già negli originali.
 
 **Le recensioni** in pagina sono vere, lasciate su Google. Sono citate
 brevi e firmate con nome e iniziale del cognome, non con nome e cognome
@@ -179,14 +179,27 @@ nuova con lo stesso nome, in webp, e aggiornare i numeri `width` e
 **I colori e le spaziature** stanno tutti in cima a `style.css`, nel
 blocco delle variabili. Il file è diviso in sezioni numerate.
 
-## Le foto messe da parte
+## Le foto in pagina
 
-In `img/` ci sono cinque foto che al momento non sono usate in pagina:
-`carburatore`, `motore-prima`, `motore-dopo`, `yamaha-xjr`, `forcella`.
-Erano di una sezione "Il lavoro" con il prima e dopo del motore, tolta
-perché troppo specifica per una pagina di presentazione. Sono rimaste
-nella cartella: quando si vorrà fare una pagina dei lavori sono già
-pronte e ritagliate.
+Ogni foto ha due tagli: uno orizzontale per lo schermo largo e uno
+verticale per il telefono, scelti con `<picture>`. I verticali vengono
+dalle cartelle `storie_9x16` e `feed_4x5` del servizio, già ritagliati
+dal fotografo; gli orizzontali da `alta_3000px`, rimpiccioliti.
+
+- **Apertura**: la moto nera con la scritta oro. `apertura-nera.webp`
+  (2000x1332) sugli schermi più larghi che alti, `apertura-nera-verticale.webp`
+  (900x1600, coi fari accesi) sul telefono.
+- **L'officina**: `daniele-al-banco.webp` (1080x1350).
+- **Galleria**: sei foto, `galleria-<nome>.webp` (1600x1066) e
+  `galleria-<nome>-4x5.webp` (900x1125). Si scorre col dito o con le
+  frecce; lo script in testa la fa avanzare da sola ogni 6 secondi solo
+  quando è sullo schermo, si mette in pausa col mouse sopra e si ferma
+  appena qualcuno la tocca. Per aggiungere una foto basta copiare un
+  blocco `<figure class="foto">`: il contatore si aggiorna da solo
+  (va cambiato a mano solo il totale "/ 06" e l'`aria-label` "x di 6").
+
+Le foto vecchie (prese da Facebook e Google) sono state tolte; restano
+nella storia di git se mai servissero.
 
 ## Statistiche e privacy
 
@@ -227,9 +240,10 @@ normalmente, perché aprono il telefono e la pagina resta dov'è.
 
 ## L'anteprima quando si manda il link
 
-`img/anteprima-whatsapp.jpg`, JPEG vero 1200x630, 120 KB (WhatsApp salta
-la miniatura sopra i 300 KB circa). Stemma, nome grande e foto
-dell'officina sotto, leggibile anche a francobollo. È in JPEG e non in
+`img/anteprima-whatsapp.jpg`, JPEG vero 1200x630, 97 KB (WhatsApp salta
+la miniatura sopra i 300 KB circa). Stemma e nome grande a sinistra sul
+nero, a destra la moto nera con la scritta oro, leggibile anche a
+francobollo. È in JPEG e non in
 webp perché l'anteprima di WhatsApp e Facebook col webp non è
 affidabile. Ci puntano sia `og:image` sia `twitter:image`, con
 `og:image:type`, `width`, `height` e `alt`.
@@ -274,7 +288,7 @@ ha `aria-hidden="true"`, serve solo a far ripartire il giro senza che si
 veda il salto, ed è nascosta quando il nastro non è attivo.
 
 **Se cambia il numero di recensioni** vanno aggiornate tre cose: le
-schede in tutte e due le serie, e in `style.css` (sezione 24) la durata
+schede in tutte e due le serie, e in `style.css` (sezione 23) la durata
 `animation: passo-recensioni 40s infinite` e le percentuali dei
 keyframe, che sono un passo ogni 1/N del giro (con 5 recensioni: 20%,
 40%, 60%, 80%, 100%; con N recensioni, la durata è N × 8 secondi).

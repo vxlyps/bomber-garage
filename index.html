@@ -210,7 +210,84 @@
     if (riga) riga.className = 'oggi';
   }
 
+  /* Galleria dell'officina: frecce, contatore e avanzamento da sola.
+     Va avanti ogni 6 secondi solo se si vede sullo schermo, si mette in
+     pausa col mouse sopra e si ferma per sempre appena qualcuno la scorre
+     o preme una freccia. Con "riduci movimento" attivo non parte. */
+  function galleria() {
+    var g = document.querySelector('.galleria');
+    if (!g) return;
+    var nastro = g.querySelector('.galleria-nastro');
+    var foto = nastro.querySelectorAll('.foto');
+    var conta = g.querySelector('.galleria-conta b');
+    var n = foto.length, qui = 0, timer = null, ferma = false, sopra = false, visibile = false;
+    var calma = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function due(x) { return (x < 10 ? '0' : '') + x; }
+
+    function segna(i) {
+      qui = i;
+      for (var k = 0; k < n; k++) foto[k].classList.toggle('attiva', k === i);
+      if (conta) conta.textContent = due(i + 1);
+    }
+
+    function vai(i) {
+      i = (i + n) % n;
+      nastro.scrollTo({ left: foto[i].offsetLeft - foto[0].offsetLeft, behavior: calma ? 'auto' : 'smooth' });
+      segna(i);
+    }
+
+    function riparti() {
+      clearInterval(timer); timer = null;
+      if (!calma && !ferma && !sopra && visibile && !document.hidden) {
+        timer = setInterval(function () { vai(qui + 1); }, 6000);
+      }
+    }
+
+    function aMano() { ferma = true; riparti(); }
+
+    g.querySelector('.galleria-indietro').addEventListener('click', function () { aMano(); vai(qui - 1); });
+    g.querySelector('.galleria-avanti').addEventListener('click', function () { aMano(); vai(qui + 1); });
+    /* "qualcuno la tocca" vuol dire che la scorre di lato: un dito che
+       scende per leggere la pagina non conta */
+    nastro.addEventListener('keydown', aMano);
+    var x0 = 0, y0 = 0;
+    nastro.addEventListener('touchstart', function (e) {
+      x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
+    }, { passive: true });
+    nastro.addEventListener('touchmove', function (e) {
+      var dx = Math.abs(e.touches[0].clientX - x0), dy = Math.abs(e.touches[0].clientY - y0);
+      if (dx > dy && dx > 8) aMano();
+    }, { passive: true });
+    nastro.addEventListener('wheel', function (e) {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) aMano();
+    }, { passive: true });
+    g.addEventListener('mouseenter', function () { sopra = true; riparti(); });
+    g.addEventListener('mouseleave', function () { sopra = false; riparti(); });
+    document.addEventListener('visibilitychange', riparti);
+
+    /* il contatore segue anche lo scorrimento fatto col dito */
+    var attesa;
+    nastro.addEventListener('scroll', function () {
+      clearTimeout(attesa);
+      attesa = setTimeout(function () {
+        var passo = foto.length > 1 ? foto[1].offsetLeft - foto[0].offsetLeft : 1;
+        segna(Math.max(0, Math.min(n - 1, Math.round(nastro.scrollLeft / passo))));
+      }, 80);
+    }, { passive: true });
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (voci) {
+        visibile = voci[0].isIntersecting;
+        riparti();
+      }, { threshold: 0.5 }).observe(g);
+    }
+
+    segna(0);
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
+    galleria();
     apertoAdesso();
     barra();
     window.addEventListener('scroll', barra, { passive: true });
@@ -385,12 +462,15 @@
        ================================================================= -->
   <section class="hero">
 
-    <div class="hero-foto">
-      <img src="img/officina-interno.webp"
-           width="1200" height="1600"
-           alt="L'interno dell'officina Bomber Garage: tre moto sui ponti e il muro degli attrezzi"
+    <!-- schermo largo: la moto di casa con la scritta oro sul serbatoio;
+         telefono: la stessa moto in verticale, coi fari accesi -->
+    <picture class="hero-foto">
+      <source media="(min-aspect-ratio: 1/1)" srcset="img/apertura-nera.webp" width="2000" height="1332">
+      <img src="img/apertura-nera-verticale.webp"
+           width="900" height="1600"
+           alt="La moto nera di Bomber Garage sul ponte, coi fari accesi e la scritta oro sul serbatoio"
            fetchpriority="high" decoding="async">
-    </div>
+    </picture>
 
     <div class="wrap hero-contenuto">
       <img class="hero-logo" src="img/logo-bomber-garage.webp" width="720" height="720"
@@ -623,7 +703,7 @@
              quindi chi usa uno screen reader le sente una volta sola.
              Se si aggiunge o si toglie una recensione sopra, va fatto
              anche qui, altrimenti il giro non si chiude. In piu' il
-             numero di passi nel CSS (sezione 24) deve essere pari al
+             numero di passi nel CSS (sezione 23) deve essere pari al
              numero di recensioni: adesso sono 5. -->
       <article class="recensione" aria-hidden="true">
         <header class="recensione-testa">
@@ -726,9 +806,9 @@
 
       <div class="officina">
         <div class="officina-foto">
-          <img src="img/honda-transalp.webp"
-               width="800" height="1422"
-               alt="Una Honda Transalp sul ponte, davanti al muro degli attrezzi rosso"
+          <img src="img/daniele-al-banco.webp"
+               width="1080" height="1350"
+               alt="Daniele Stacchiotti al lavoro in officina, con un connettore elettrico tra le mani"
                loading="lazy" decoding="async">
         </div>
         <div>
@@ -741,27 +821,69 @@
         </div>
       </div>
 
-      <div class="coppia">
-        <figure class="scatto">
-          <img src="img/bmw-r1200rt.webp"
-               width="800" height="1422"
-               alt="Una BMW R 1200 RT sul ponte dell'officina"
-               loading="lazy" decoding="async">
-          <figcaption class="didascalia">
-            <strong>BMW R 1200 RT</strong>
-            Sul ponte per il tagliando.
-          </figcaption>
-        </figure>
-        <figure class="scatto">
-          <img src="img/officina-interno.webp"
-               width="1200" height="1600"
-               alt="L'officina vista dall'ingresso, con tre moto sui ponti"
-               loading="lazy" decoding="async">
-          <figcaption class="didascalia">
-            <strong>Via Umberto Biancamano 34</strong>
-            Due ponti, il banco e il muro degli attrezzi.
-          </figcaption>
-        </figure>
+      <!-- Galleria: si scorre col dito (o con le frecce). Lo script nella
+           testa la fa andare avanti da sola, piano, e si ferma appena
+           qualcuno la tocca. Senza script resta una fila da scorrere. -->
+      <div class="galleria" role="region" aria-roledescription="galleria" aria-label="Foto dall'officina">
+        <div class="galleria-nastro" tabindex="0">
+          <figure class="foto" aria-label="1 di 6">
+            <picture>
+              <source media="(min-width: 46em)" srcset="img/galleria-triumph-tre-quarti.webp" width="1600" height="1066">
+              <img src="img/galleria-triumph-tre-quarti-4x5.webp" width="900" height="1125"
+                   alt="Una Triumph nera sul ponte rosso, davanti agli scaffali dell'officina" loading="lazy" decoding="async">
+            </picture>
+            <figcaption><strong>Triumph</strong>Sul ponte, col muro degli attrezzi alle spalle.</figcaption>
+          </figure>
+          <figure class="foto" aria-label="2 di 6">
+            <picture>
+              <source media="(min-width: 46em)" srcset="img/galleria-vespa-luce-rossa.webp" width="1600" height="1066">
+              <img src="img/galleria-vespa-luce-rossa-4x5.webp" width="900" height="1125"
+                   alt="Daniele chino su una Vespa arancione, con la luce rossa del fanale accesa" loading="lazy" decoding="async">
+            </picture>
+            <figcaption><strong>Vespa</strong>Anche gli scooter passano di qui.</figcaption>
+          </figure>
+          <figure class="foto" aria-label="3 di 6">
+            <picture>
+              <source media="(min-width: 46em)" srcset="img/galleria-versys-tre-quarti.webp" width="1600" height="1066">
+              <img src="img/galleria-versys-tre-quarti-4x5.webp" width="900" height="1125"
+                   alt="Una Kawasaki Versys nera sul cavalletto da officina" loading="lazy" decoding="async">
+            </picture>
+            <figcaption><strong>Kawasaki Versys</strong>In fila per il suo turno.</figcaption>
+          </figure>
+          <figure class="foto" aria-label="4 di 6">
+            <picture>
+              <source media="(min-width: 46em)" srcset="img/galleria-mani-cablaggio.webp" width="1600" height="1066">
+              <img src="img/galleria-mani-cablaggio-4x5.webp" width="900" height="1125"
+                   alt="Le mani di Daniele sul cablaggio di una moto, con il tester collegato" loading="lazy" decoding="async">
+            </picture>
+            <figcaption><strong>Elettronica</strong>Tester alla mano, filo per filo.</figcaption>
+          </figure>
+          <figure class="foto" aria-label="5 di 6">
+            <picture>
+              <source media="(min-width: 46em)" srcset="img/galleria-nera-motore.webp" width="1600" height="1066">
+              <img src="img/galleria-nera-motore-4x5.webp" width="900" height="1125"
+                   alt="Il motore e l'ammortizzatore della moto nera di Bomber Garage" loading="lazy" decoding="async">
+            </picture>
+            <figcaption><strong>La moto di casa</strong>Nera, con la scritta oro sul serbatoio.</figcaption>
+          </figure>
+          <figure class="foto" aria-label="6 di 6">
+            <picture>
+              <source media="(min-width: 46em)" srcset="img/galleria-vespa-frontale.webp" width="1600" height="1066">
+              <img src="img/galleria-vespa-frontale-4x5.webp" width="900" height="1125"
+                   alt="Una Vespa arancione in officina, tra gli scaffali e le gomme" loading="lazy" decoding="async">
+            </picture>
+            <figcaption><strong>Vespa</strong>Tra gli scaffali dell'officina.</figcaption>
+          </figure>
+        </div>
+        <div class="galleria-comandi">
+          <button class="galleria-indietro" type="button" aria-label="Foto precedente">
+            <svg class="icona"><use href="#i-freccia"></use></svg>
+          </button>
+          <p class="galleria-conta"><b>01</b> / 06</p>
+          <button class="galleria-avanti" type="button" aria-label="Foto successiva">
+            <svg class="icona"><use href="#i-freccia"></use></svg>
+          </button>
+        </div>
       </div>
 
     </div>
