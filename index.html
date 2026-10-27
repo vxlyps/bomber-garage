@@ -289,7 +289,8 @@
 <script defer src="https://cloud.umami.is/script.js" data-website-id="UMAMI_WEBSITE_ID"></script>
 -->
 
-<link rel="stylesheet" href="style.css?v=20261027">
+<link rel="stylesheet" href="style.css?v=2026102705">
+<script src="assistente.js?v=2026102705" defer></script>
 <!-- ===================================================================
      UNICO PEZZO DI JAVASCRIPT DEL SITO
      Fa due cose, tutte e due comodita': fa entrare la barra dei contatti
@@ -535,6 +536,10 @@
   <symbol id="i-chiudi" viewBox="0 0 24 24">
     <path d="M6 6l12 12M18 6L6 18"/>
   </symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24">
+    <path d="M5 4.5h14a1.5 1.5 0 0 1 1.5 1.5v9a1.5 1.5 0 0 1-1.5 1.5h-8.5l-4.5 3.5v-3.5H5A1.5 1.5 0 0 1 3.5 15V6A1.5 1.5 0 0 1 5 4.5z"/>
+    <path d="M8 9.5h8M8 12.5h5"/>
+  </symbol>
   <symbol id="i-chiave" viewBox="0 0 24 24">
     <path d="M14.6 3.2a5.5 5.5 0 0 0-4.9 8l-6 6a2.1 2.1 0 1 0 3 3l6-6a5.5 5.5 0 0 0 8-4.9c0-.7-.14-1.37-.4-2l-3.4 3.4-2.7-2.7 3.4-3.4a5.5 5.5 0 0 0-2-.4z"/>
   </symbol>
@@ -616,6 +621,7 @@
 
     <nav class="nav" aria-label="Navigazione principale">
       <a href="#officina">Cosa facciamo</a>
+      <a href="https://wa.me/393931087444?text=Ciao%21%20Vi%20ho%20trovati%20sul%20sito.%20Avrei%20bisogno%20di%20un%20preventivo%20per%20la%20mia%20moto." target="_blank" rel="noopener" data-apri-assistente>Preventivo</a>
       <a href="#recensioni">Recensioni</a>
       <a href="#dove">Dove siamo</a>
     </nav>
@@ -653,6 +659,7 @@
 
   <nav class="pannello-nav" aria-label="Menu">
     <a href="#officina">Cosa facciamo</a>
+    <a href="https://wa.me/393931087444?text=Ciao%21%20Vi%20ho%20trovati%20sul%20sito.%20Avrei%20bisogno%20di%20un%20preventivo%20per%20la%20mia%20moto." target="_blank" rel="noopener" data-apri-assistente>Preventivo</a>
     <a href="#recensioni">Recensioni</a>
     <a href="#dove">Dove siamo e orari</a>
     <a href="#contatti">Contatti</a>
@@ -741,7 +748,7 @@
       <p class="gruppo">In officina</p>
       <div class="lavori">
 
-        <div class="lavoro">
+        <div class="lavoro" data-parole="tagliand manutenz fren pastigli frizion catena olio filtr candel carburator motore riparaz impianto+elettrico batteri">
           <svg class="icona"><use href="#i-chiave"></use></svg>
           <h3>Tagliandi e riparazioni</h3>
           <p>Manutenzione ordinaria, freni, frizione, catena, impianto elettrico, motore e carburatori. Su qualunque marca, dallo scooter alla maxi enduro.</p>
@@ -765,13 +772,13 @@
       <p class="gruppo">Elettronica e modifiche</p>
       <div class="lavori lavori-due">
 
-        <div class="lavoro">
+        <div class="lavoro" data-parole="centralin ecu mappatur mappa rimappa potenz cavalli elettronic">
           <svg class="icona"><use href="#i-centralina"></use></svg>
           <h3>Modifica ECU e centraline</h3>
           <p>Interventi sulla centralina e sulla mappatura. Prima si sente cosa cerchi dalla moto, poi si decide cosa toccare: non si lavora a pacchetti fatti in serie.</p>
         </div>
 
-        <div class="lavoro">
+        <div class="lavoro" data-parole="personalizz modific scaric marmitt terminal manubr pedan sell custom estetic">
           <svg class="icona"><use href="#i-regolazioni"></use></svg>
           <h3>Personalizzazioni e modifiche</h3>
           <p>Scarichi, manubri, pedane, luci, sella. Si parte da quello che hai in testa e si guarda insieme cosa si può fare davvero sulla tua moto.</p>
@@ -794,7 +801,7 @@
           <p>Se la moto non cammina veniamo a prenderla noi e te la riportiamo quando è pronta. Basta dire dove sta.</p>
         </div>
 
-        <div class="lavoro">
+        <div class="lavoro" data-parole="usat acquist compr vend annunc permut">
           <svg class="icona"><use href="#i-lente"></use></svg>
           <h3>Consulenza acquisto e vendita usato</h3>
           <p>Prima di comprare un usato portacelo, o mandaci l'annuncio: si guarda com'è messo davvero. Vale anche quando sei tu a vendere.</p>
@@ -825,19 +832,19 @@
         <div class="listino">
           <h3>Scooter</h3>
           <ul>
-            <li>
+            <li data-cerca="sh 125|sh 150">
               <span class="voce">Honda SH 125 / 150<small>100/80-16 · 120/80-16</small></span>
               <span class="prezzo"><small>da</small> 120&nbsp;€</span>
             </li>
-            <li>
+            <li data-cerca="x-adv 350|xadv 350|forza 350">
               <span class="voce">Honda X-ADV 350 / Forza 350<small>120/70-15 · 140/70-14</small></span>
               <span class="prezzo"><small>da</small> 135&nbsp;€</span>
             </li>
-            <li>
+            <li data-cerca="sh 300">
               <span class="voce">Honda SH 300<small>110/70-16 · 130/70-16</small></span>
               <span class="prezzo"><small>da</small> 155&nbsp;€</span>
             </li>
-            <li>
+            <li data-cerca="x-adv 750|xadv 750">
               <span class="voce">Honda X-ADV 750<small>120/70-17 · 160/60-15</small></span>
               <span class="prezzo"><small>da</small> 235&nbsp;€</span>
             </li>
@@ -1388,31 +1395,31 @@
       <p class="etichetta">Domande frequenti</p>
       <h2>Prima di passare</h2>
       <div class="domande">
-        <details class="domanda">
+        <details class="domanda" data-parole="scooter motorin vespa ciclomotor cinquantin marca marche epoca vintage ~ducati ~bmw ~harley ~honda ~yamaha ~kawasaki ~suzuki ~triumph ~ktm ~aprilia ~piaggio ~kymco ~guzzi ~benelli">
           <summary>Riparate anche gli scooter?</summary>
           <p>Sì. Si lavora su qualunque marca, dallo scooter alla maxi enduro: tagliandi, freni, frizione, catena, impianto elettrico, motore e carburatori.</p>
         </details>
-        <details class="domanda">
+        <details class="domanda" data-parole="cost prezz ~quant preventiv tariff spend listin">
           <summary>Quanto costa un tagliando o una riparazione?</summary>
           <p>Dipende dalla moto e da cosa serve. Prima si guarda la moto, poi si dice cosa fare e quanto viene, così al ritiro non ci sono sorprese. Per un'idea veloce mandaci due foto su WhatsApp al 393 108 7444.</p>
         </details>
-        <details class="domanda">
+        <details class="domanda" data-parole="gomm pneumatic copertur equilibratur misur battistrad bucat forat">
           <summary>Cambiate le gomme di moto e scooter?</summary>
           <p>Sì, montaggio ed equilibratura per moto e per scooter. Chiama con la misura che ti serve e ti diciamo quando passare.</p>
         </details>
-        <details class="domanda">
+        <details class="domanda" data-parole="revision collaud motorizzazion bollin">
           <summary>Fate le revisioni?</summary>
           <p>Sì. Si prenota, si porta la moto e alla pratica ci pensiamo noi. Meglio muoversi per tempo, non l'ultima settimana.</p>
         </details>
-        <details class="domanda">
+        <details class="domanda" data-parole="ritir prender veng domicil carro attrezz traino trasport recuper non+parte non+si+accende non+cammina non+va+in+moto">
           <summary>La moto non parte: venite a prenderla?</summary>
           <p>Sì. Con il servizio di trasporto e ritiro veniamo a prenderla e te la riportiamo quando è pronta. Basta dire dove sta.</p>
         </details>
-        <details class="domanda">
+        <details class="domanda" data-parole="cid incident sinistr assicuraz constatazion cadut urto tampon danni">
           <summary>Ho fatto un incidente: mi aiutate con il CID?</summary>
           <p>Sì. Constatazione amichevole, preventivo per l'assicurazione e riparazione: la pratica la segue l'officina, tu porti solo la moto.</p>
         </details>
-        <details class="domanda">
+        <details class="domanda" data-parole="dove indirizz orari orario apert aprite chius chiudete sabat domenic raggiung parchegg metro trovarvi biancamano">
           <summary>Dove siete e che orari fate?</summary>
           <p>In Via Umberto Biancamano 34, 00185 Roma, zona San Giovanni. Aperti dal lunedì al venerdì dalle 9:00 alle 18:00, sabato e domenica chiuso.</p>
         </details>
@@ -1469,6 +1476,42 @@
        &nbsp;&middot;&nbsp; <a class="link-privacy" href="privacy/">Privacy</a></p>
   </div>
 </footer>
+
+
+<!-- ===================================================================
+     PREVENTIVO: L'ASSISTENTE IN UNA FINESTRA
+     Il pulsante "Preventivo" apre una piccola chat sopra la pagina: su
+     desktop nell'angolo in basso a destra, sul telefono a schermo intero.
+     Fa quattro domande e scrive il messaggio per WhatsApp. Non e' un'AI:
+     risponde solo con i testi di questa pagina (domande frequenti e
+     servizi con l'attributo data-parole, orari, promo). Il codice sta in
+     assistente.js. Senza JavaScript il pulsante porta dritto a WhatsApp
+     e la finestra resta nascosta.
+     =================================================================== -->
+<a class="apri-assistente" href="https://wa.me/393931087444?text=Ciao%21%20Vi%20ho%20trovati%20sul%20sito.%20Avrei%20bisogno%20di%20un%20preventivo%20per%20la%20mia%20moto." target="_blank" rel="noopener" data-apri-assistente data-umami-event="assistente-apri">
+  <svg class="icona"><use href="#i-chat"></use></svg>Preventivo
+</a>
+
+<div class="assistente" role="dialog" aria-labelledby="assistente-titolo" hidden>
+  <div class="assistente-testa">
+    <img src="img/logo-bomber-garage.webp" width="720" height="720" alt="" loading="lazy" decoding="async">
+    <p><strong id="assistente-titolo">Preventivo per Daniele</strong><span>Risposte automatiche</span></p>
+    <button class="assistente-ricomincia" type="button" hidden>Ricomincia</button>
+    <button class="assistente-chiudi" type="button" aria-label="Chiudi la chat">
+      <svg class="icona"><use href="#i-chiudi"></use></svg>
+    </button>
+  </div>
+
+  <div class="assistente-chat" role="log" aria-live="polite" aria-label="Conversazione"></div>
+
+  <form class="assistente-scrivi">
+    <label class="solo-lettori" for="assistente-testo">Scrivi</label>
+    <input id="assistente-testo" type="text" maxlength="200" autocomplete="off" enterkeyhint="send" placeholder="Oppure scrivi una domanda">
+    <button type="submit" aria-label="Invia">
+      <svg class="icona"><use href="#i-freccia"></use></svg>
+    </button>
+  </form>
+</div>
 
 
 <!-- ===================================================================

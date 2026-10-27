@@ -159,6 +159,40 @@ anche lasciare dove sono: restano nascosti.
 La cosa che pesa di più per "officina moto Roma" resta comunque la
 **scheda Google**: recensioni, foto, categoria giusta e il sito collegato.
 
+## L'assistente del preventivo (`assistente.js`)
+
+Il pulsante **Preventivo** (in basso a destra, e nel menu) apre una
+piccola chat sopra la pagina: su desktop una finestra nell'angolo, sul
+telefono a schermo intero. Fa quattro domande (scooter o moto, marca e
+modello, cosa serve, note) e alla fine mostra il messaggio già scritto
+con il pulsante "Manda su WhatsApp". Il messaggio lo manda il cliente,
+risponde Daniele. Chiudendo, la conversazione resta dov'era.
+
+**Non è un'AI** e non costa niente: niente server, niente cookie,
+niente richieste esterne. Alle domande scritte risponde solo con i testi
+che stanno già nella pagina:
+
+- le **domande frequenti** e le **schede dei servizi** che hanno
+  l'attributo `data-parole`. Le parole chiave stanno lì, accanto al
+  testo: sono inizi di parola (`gomm` vale per gomma, gomme, gommista),
+  `non+parte` è una frase intera, `~ducati` vale mezzo punto (basta per
+  rispondere "qualunque marca", ma perde contro un argomento vero);
+- **aperto o chiuso adesso**, letto dalla pastiglia sotto l'apertura;
+- la **promo gomme**, letta dal listino e solo finché è visibile. Le
+  righe con `data-cerca` riconoscono il modello scritto ("SH 150",
+  "xadv 350") e il prezzo finisce anche nel messaggio.
+
+Se non sa rispondere non inventa: dice di chiederlo a Daniele e prepara
+il messaggio WhatsApp con la domanda dentro. Tempi di consegna,
+pagamenti, disponibilità: li sa solo lui.
+
+Per cambiare le voci tra cui si sceglie (tagliando, gomme...) si modifica
+l'elenco `SERVIZI` in cima ad `assistente.js`. Se si cambia una domanda
+frequente, l'assistente usa subito il testo nuovo.
+
+Senza JavaScript il pulsante e la voce del menu portano dritti a
+WhatsApp, quindi non resta mai un pulsante morto.
+
 ## Dopo ogni modifica al CSS: cambiare il numero di versione
 
 GitHub Pages dice ai browser di tenere i file in memoria per 10 minuti.
@@ -169,10 +203,11 @@ ha un numero di versione:
 
     <link rel="stylesheet" href="style.css?v=20261027">
 
-Quando si cambia `style.css`, si cambia quel numero (la data va bene) in
-`index.html` e in `privacy/index.html`. Un comando solo:
+Quando si cambia `style.css` o `assistente.js`, si cambia quel numero
+(data più un contatore: `2026102705`) in `index.html` e in
+`privacy/index.html`. Un comando solo:
 
-    sed -i '' 's|style.css?v=[0-9]*|style.css?v=AAAAMMGG|' index.html privacy/index.html
+    sed -i '' 's|?v=[0-9]*|?v=AAAAMMGGNN|g' index.html privacy/index.html
 
 ## Come si cambiano le cose
 
