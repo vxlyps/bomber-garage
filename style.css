@@ -1671,17 +1671,12 @@ html:has(.barra-promo:not([hidden])) .hero {
    nell'angolo appena si scorre.
 
    Il bordo: una luce oro che gira piano attorno al pulsante, con un alone
-   morbido dietro. Funziona con una variabile CSS registrata (@property)
-   che fa girare un gradiente conico: dove il browser non la conosce, il
-   bordo resta oro fermo. Con "riduci movimento" non gira. */
+   morbido dietro. Dentro l'anello (ritagliato a forma di pulsante) gira un
+   disco con un gradiente conico: si usa transform: rotate, che funziona
+   su qualunque browser, anche sui telefoni. Con "riduci movimento" attivo
+   nel telefono o nel computer resta fermo, di proposito. */
 
-@property --giro {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-
-@keyframes giro { to { --giro: 360deg; } }
+@keyframes giro { to { transform: translate(-50%, -50%) rotate(360deg); } }
 
 .apri-assistente {
   position: fixed;
@@ -1703,30 +1698,41 @@ html:has(.barra-promo:not([hidden])) .hero {
 }
 .apri-assistente .icona { width: 1.25rem; height: 1.25rem; color: var(--oro); }
 
-/* l'anello: gradiente pieno dietro, coperto dal fondo scuro tranne 1,5px */
-.apri-assistente::before,
+/* l'anello e l'alone: ritagliano un disco che gira. L'anello e' coperto
+   dal fondo scuro tranne 1,5px sul bordo; l'alone e' lo stesso, sfocato. */
+.apri-assistente .anello,
 .apri-assistente .alone {
-  content: "";
   position: absolute;
   inset: -1.5px;
   z-index: -2;
+  overflow: hidden;
   border-radius: calc(var(--raggio) + 1.5px);
-  background: conic-gradient(from var(--giro),
+}
+
+.apri-assistente .alone {
+  inset: -3px;
+  z-index: -3;
+  filter: blur(10px);
+  opacity: 0.55;
+}
+
+.apri-assistente .anello::before,
+.apri-assistente .alone::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  aspect-ratio: 1;
+  background: conic-gradient(
     rgba(232, 200, 136, 0.28) 0deg,
     rgba(232, 200, 136, 0.28) 200deg,
     #e8c888 280deg,
     #fff6e2 315deg,
     #e8c888 340deg,
     rgba(232, 200, 136, 0.28) 360deg);
+  transform: translate(-50%, -50%) rotate(0deg);
   animation: giro 3.6s linear infinite;
-}
-
-/* l'alone: lo stesso gradiente, sfocato */
-.apri-assistente .alone {
-  inset: -3px;
-  z-index: -3;
-  filter: blur(10px);
-  opacity: 0.55;
 }
 
 /* il fondo del pulsante, sopra l'anello */
@@ -1750,8 +1756,8 @@ html:has(.barra-promo:not([hidden])) .hero {
 
 @media (prefers-reduced-motion: reduce) {
   .apri-assistente { transition: none; }
-  .apri-assistente::before,
-  .apri-assistente .alone { animation: none; }
+  .apri-assistente .anello::before,
+  .apri-assistente .alone::before { animation: none; }
 }
 
 @media (min-width: 56em) {
