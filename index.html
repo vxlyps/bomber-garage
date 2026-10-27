@@ -443,7 +443,32 @@
     segna(0);
   }
 
+  /* Promo a tempo: tutto quello che ha data-promo-fine resta nascosto
+     (hidden nell'HTML) e si mostra solo se adesso e' prima di quella
+     data. Cosi' dopo la scadenza, o senza script, non si vede niente.
+     La striscia in cima, chiusa con la X, resta chiusa per la visita. */
+  function promo() {
+    var cose = document.querySelectorAll('[data-promo-fine]');
+    var chiusa = false;
+    try { chiusa = sessionStorage.getItem('promo-chiusa') === '1'; } catch (e) {}
+
+    for (var i = 0; i < cose.length; i++) {
+      var fine = Date.parse(cose[i].getAttribute('data-promo-fine'));
+      if (isNaN(fine) || Date.now() >= fine) continue;
+      if (cose[i].classList.contains('barra-promo') && chiusa) continue;
+      cose[i].removeAttribute('hidden');
+    }
+
+    var barra = document.querySelector('.barra-promo');
+    var x = barra && barra.querySelector('.barra-promo-chiudi');
+    if (x) x.addEventListener('click', function () {
+      barra.setAttribute('hidden', '');
+      try { sessionStorage.setItem('promo-chiusa', '1'); } catch (e) {}
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
+    promo();
     galleria();
     apertoAdesso();
     barra();
@@ -549,6 +574,22 @@
 </svg>
 
 <span class="ancora-ferma" id="chiudi"></span>
+
+<!-- ===================================================================
+     PROMO GOMME, STRISCIA IN CIMA
+     Nascosta di partenza: la mostra lo script in testa solo fino alla
+     data scritta in data-promo-fine. Dopo quella data, o senza
+     JavaScript, non si vede. La X la chiude per tutta la visita.
+     =================================================================== -->
+<div class="barra-promo" data-promo-fine="2026-12-01T00:00:00+01:00" hidden>
+  <div class="wrap">
+    <p><strong>Promo gomme</strong> fino al 30 novembre<span class="solo-largo">: SH 125/150 da 120&nbsp;€, moto da 230&nbsp;€</span></p>
+    <a href="#promo" data-umami-event="promo-striscia">Vedi i prezzi</a>
+    <button class="barra-promo-chiudi" type="button" aria-label="Chiudi la promo">
+      <svg class="icona"><use href="#i-chiudi"></use></svg>
+    </button>
+  </div>
+</div>
 
 <header class="testata">
   <div class="wrap">
@@ -695,6 +736,7 @@
           <svg class="icona"><use href="#i-gomme"></use></svg>
           <h3>Sostituzione pneumatici</h3>
           <p>Montaggio ed equilibratura, per moto e per scooter. Chiama con la misura che ti serve e ti diciamo quando passare.</p>
+          <a class="link-promo" href="#promo" data-promo-fine="2026-12-01T00:00:00+01:00" hidden>Promo fino al 30 novembre<svg class="icona"><use href="#i-freccia"></use></svg></a>
         </div>
 
         <div class="lavoro">
@@ -745,6 +787,72 @@
 
       </div>
 
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       PROMO GOMME
+       Un listino, non un volantino: stessi caratteri del resto della
+       pagina. Nascosta di partenza, la mostra lo script in testa solo
+       fino a data-promo-fine (1 dicembre 2026, ora di Roma). Per la
+       prossima promo: si cambiano righe, prezzi, testo della data e
+       data-promo-fine qui, nella striscia in cima e nel link della
+       scheda gomme.
+       ================================================================= -->
+  <section class="sezione sezione-2 promo" id="promo" data-promo-fine="2026-12-01T00:00:00+01:00" hidden>
+    <div class="wrap">
+      <p class="etichetta">Promo gomme &nbsp;&middot;&nbsp; fino al 30 novembre</p>
+      <h2>Gomme nuove,<br>prezzo chiaro</h2>
+      <p class="lead misura dopo-titolo">Le misure che montiamo di più, in promo fino al 30 novembre. Sono prezzi di partenza: quello esatto dipende dalla gomma che scegli, e te lo diciamo prima di cominciare.</p>
+
+      <div class="listini">
+        <div class="listino">
+          <h3>Scooter</h3>
+          <ul>
+            <li>
+              <span class="voce">Honda SH 125 / 150<small>100/80-16 · 120/80-16</small></span>
+              <span class="prezzo"><small>da</small> 120&nbsp;€</span>
+            </li>
+            <li>
+              <span class="voce">Honda X-ADV 350 / Forza 350<small>120/70-15 · 140/70-14</small></span>
+              <span class="prezzo"><small>da</small> 135&nbsp;€</span>
+            </li>
+            <li>
+              <span class="voce">Honda SH 300<small>110/70-16 · 130/70-16</small></span>
+              <span class="prezzo"><small>da</small> 155&nbsp;€</span>
+            </li>
+            <li>
+              <span class="voce">Honda X-ADV 750<small>120/70-17 · 160/60-15</small></span>
+              <span class="prezzo"><small>da</small> 235&nbsp;€</span>
+            </li>
+          </ul>
+        </div>
+        <div class="listino">
+          <h3>Moto</h3>
+          <ul>
+            <li>
+              <span class="voce">Enduro, anteriore da 19″<small>110/80-19 · 150/70-18</small></span>
+              <span class="prezzo"><small>da</small> 230&nbsp;€</span>
+            </li>
+            <li>
+              <span class="voce">Stradali e sportive<small>120/70-17 · 180/55-17</small></span>
+              <span class="prezzo"><small>da</small> 245&nbsp;€</span>
+            </li>
+            <li>
+              <span class="voce">Enduro, anteriore da 21″<small>90/90-21 · 150/70-18</small></span>
+              <span class="prezzo"><small>da</small> 255&nbsp;€</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="promo-azione">
+        <a class="btn btn-oro" href="https://wa.me/393931087444?text=Ciao%21%20Ho%20visto%20la%20promo%20gomme%20sul%20sito.%20Ho%20uno%20scooter%2Fmoto%3A%20" data-umami-event="whatsapp-promo" target="_blank" rel="noopener">
+          <svg class="icona icona-piena"><use href="#i-whatsapp"></use></svg>Scrivici su WhatsApp
+        </a>
+        <p>Hai un altro modello? Scrivici la misura e ti diamo il prezzo.</p>
+      </div>
     </div>
   </section>
 

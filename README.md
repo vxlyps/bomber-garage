@@ -108,6 +108,29 @@ giorno `www` desse errore di certificato, la cura è togliere e rimettere
 il dominio nelle impostazioni Pages del repository: GitHub ne chiede uno
 nuovo che copre tutti e due i nomi.
 
+## La promo a tempo (gomme, fino al 30 novembre 2026)
+
+Tre pezzi in `index.html`, tutti con `data-promo-fine="2026-12-01T00:00:00+01:00"`:
+la striscia sottile in cima (`.barra-promo`), il link oro nella scheda
+"Sostituzione pneumatici" (`.link-promo`) e la sezione listino `#promo`,
+subito dopo i servizi. Il CSS sta nella sezione 25 di `style.css`.
+
+Sono **nascosti di partenza** (`hidden`): lo script in testa li mostra
+solo se adesso è prima di quella data. Dal 1° dicembre spariscono da soli,
+senza toccare niente; senza JavaScript non si vedono mai, quindi non resta
+in giro una promo scaduta. La X della striscia la chiude per tutta la
+visita (sessionStorage).
+
+I prezzi sono "a partire da", come sui volantini di Daniele: non c'è
+scritto se sono per la coppia né se il montaggio è compreso. Se lui lo
+conferma, si aggiunge una riga sotto al titolo della sezione.
+
+**Per la prossima promo**: si cambiano le righe del listino, i testi con
+la data ("fino al 30 novembre", in tre punti) e `data-promo-fine` in tutti
+e tre gli elementi. La data va scritta con il fuso di Roma: `+01:00`
+d'inverno, `+02:00` d'estate. Finita una promo, i tre pezzi si possono
+anche lasciare dove sono: restano nascosti.
+
 ## Farsi trovare: Google e le AI
 
 - **Titolo e descrizione** puntano su "officina moto Roma" e "meccanico
