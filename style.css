@@ -1665,47 +1665,99 @@ html:has(.barra-promo:not([hidden])) .hero {
 }
 
 /* --- il pulsante --------------------------------------------------------- */
+/* Si vede da subito. Sul telefono parte in basso e sale sopra la barra
+   Chiama / WhatsApp quando questa compare; su desktop parte appena sopra
+   la fascia degli orari (cosi' non copre l'indirizzo) e scende
+   nell'angolo appena si scorre.
+
+   Il bordo: una luce oro che gira piano attorno al pulsante, con un alone
+   morbido dietro. Funziona con una variabile CSS registrata (@property)
+   che fa girare un gradiente conico: dove il browser non la conosce, il
+   bordo resta oro fermo. Con "riduci movimento" non gira. */
+
+@property --giro {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes giro { to { --giro: 360deg; } }
+
 .apri-assistente {
   position: fixed;
   right: var(--margine);
-  bottom: calc(var(--barra) + 0.75rem + env(safe-area-inset-bottom, 0px));
+  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
   z-index: 65;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   min-height: 3rem;
   padding: 0.625rem 1.125rem 0.625rem 0.9375rem;
-  border: 1px solid rgba(232, 200, 136, 0.55);
   border-radius: var(--raggio);
-  background: var(--nero-3);
   color: var(--bianco);
   font-size: var(--t-piccolo);
   font-weight: 700;
   text-decoration: none;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
-}
-.apri-assistente .icona { width: 1.25rem; height: 1.25rem; color: var(--oro); }
-.apri-assistente:hover { border-color: var(--oro); }
-
-/* sul telefono compare insieme alla barra in fondo, quando si scorre */
-.con-js .apri-assistente {
-  transform: translateY(calc(100% + var(--barra) + 2rem));
   transition: transform 0.3s ease;
 }
-.con-js.scorso .apri-assistente { transform: translateY(0); }
+.apri-assistente .icona { width: 1.25rem; height: 1.25rem; color: var(--oro); }
+
+/* l'anello: gradiente pieno dietro, coperto dal fondo scuro tranne 1,5px */
+.apri-assistente::before,
+.apri-assistente .alone {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  z-index: -2;
+  border-radius: calc(var(--raggio) + 1.5px);
+  background: conic-gradient(from var(--giro),
+    rgba(232, 200, 136, 0.28) 0deg,
+    rgba(232, 200, 136, 0.28) 200deg,
+    #e8c888 280deg,
+    #fff6e2 315deg,
+    #e8c888 340deg,
+    rgba(232, 200, 136, 0.28) 360deg);
+  animation: giro 3.6s linear infinite;
+}
+
+/* l'alone: lo stesso gradiente, sfocato */
+.apri-assistente .alone {
+  inset: -3px;
+  z-index: -3;
+  filter: blur(10px);
+  opacity: 0.55;
+}
+
+/* il fondo del pulsante, sopra l'anello */
+.apri-assistente::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: var(--raggio);
+  background: var(--nero-3);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
+}
+
+.apri-assistente:hover .alone { opacity: 0.85; }
+
+/* sul telefono sale sopra la barra quando la barra entra */
+.con-js.scorso .apri-assistente { transform: translateY(calc(-1 * var(--barra))); }
 
 /* a finestra aperta il pulsante non serve */
 .assistente-aperto .apri-assistente { visibility: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
-  .con-js .apri-assistente { transition: none; }
+  .apri-assistente { transition: none; }
+  .apri-assistente::before,
+  .apri-assistente .alone { animation: none; }
 }
 
-/* su desktop sta nell'angolo; anche qui compare quando si comincia a
-   scorrere, cosi' nella prima schermata non copre la fascia degli orari */
 @media (min-width: 56em) {
   .apri-assistente { right: 1.5rem; bottom: 1.5rem; }
-  .con-js .apri-assistente { transform: translateY(calc(100% + 3rem)); }
+  /* in cima alla pagina sta sopra la fascia degli orari */
+  .con-js .apri-assistente { transform: translateY(-5.25rem); }
   .con-js.scorso .apri-assistente { transform: translateY(0); }
 }
 

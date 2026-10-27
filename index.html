@@ -289,8 +289,8 @@
 <script defer src="https://cloud.umami.is/script.js" data-website-id="UMAMI_WEBSITE_ID"></script>
 -->
 
-<link rel="stylesheet" href="style.css?v=2026102705">
-<script src="assistente.js?v=2026102705" defer></script>
+<link rel="stylesheet" href="style.css?v=2026102706">
+<script src="assistente.js?v=2026102706" defer></script>
 <!-- ===================================================================
      UNICO PEZZO DI JAVASCRIPT DEL SITO
      Fa due cose, tutte e due comodita': fa entrare la barra dei contatti
@@ -1480,22 +1480,25 @@
 
 <!-- ===================================================================
      PREVENTIVO: L'ASSISTENTE IN UNA FINESTRA
-     Il pulsante "Preventivo" apre una piccola chat sopra la pagina: su
+     Il pulsante "Preventivo veloce" apre una piccola chat sopra la pagina: su
      desktop nell'angolo in basso a destra, sul telefono a schermo intero.
-     Fa quattro domande e scrive il messaggio per WhatsApp. Non e' un'AI:
+     Parte da un menu (preventivo, prezzi gomme, aperti?, domanda); il
+     preventivo fa tre domande e prepara la richiesta per Daniele, da
+     inviare su WhatsApp. Non e' un'AI:
      risponde solo con i testi di questa pagina (domande frequenti e
      servizi con l'attributo data-parole, orari, promo). Il codice sta in
      assistente.js. Senza JavaScript il pulsante porta dritto a WhatsApp
      e la finestra resta nascosta.
      =================================================================== -->
 <a class="apri-assistente" href="https://wa.me/393931087444?text=Ciao%21%20Vi%20ho%20trovati%20sul%20sito.%20Avrei%20bisogno%20di%20un%20preventivo%20per%20la%20mia%20moto." target="_blank" rel="noopener" data-apri-assistente data-umami-event="assistente-apri">
-  <svg class="icona"><use href="#i-chat"></use></svg>Preventivo
+  <span class="alone" aria-hidden="true"></span>
+  <svg class="icona"><use href="#i-chat"></use></svg>Preventivo veloce
 </a>
 
 <div class="assistente" role="dialog" aria-labelledby="assistente-titolo" hidden>
   <div class="assistente-testa">
     <img src="img/logo-bomber-garage.webp" width="720" height="720" alt="" loading="lazy" decoding="async">
-    <p><strong id="assistente-titolo">Preventivo per Daniele</strong><span>Risposte automatiche</span></p>
+    <p><strong id="assistente-titolo">Bomber Garage</strong><span>Risposte automatiche</span></p>
     <button class="assistente-ricomincia" type="button" hidden>Ricomincia</button>
     <button class="assistente-chiudi" type="button" aria-label="Chiudi la chat">
       <svg class="icona"><use href="#i-chiudi"></use></svg>

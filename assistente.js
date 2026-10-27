@@ -1,12 +1,15 @@
 /* =========================================================================
    Bomber Garage - l'assistente del preventivo
 
-   Una chat semplice in una finestra sopra la pagina: quattro domande
-   (mezzo, modello, cosa serve, note) e alla fine il messaggio per WhatsApp
-   gia' scritto, da mandare a Daniele. Si apre col pulsante "Preventivo"
-   (e con la voce del menu), si chiude con la X o con Esc; chiudendo, la
-   conversazione resta dov'era. Su desktop sta nell'angolo in basso a
-   destra, sul telefono prende tutto lo schermo.
+   Una chat in una finestra sopra la pagina. Parte da un piccolo menu:
+   un preventivo (tre domande: mezzo, modello, cosa serve; poi la
+   richiesta pronta, a cui si puo' aggiungere una nota prima di inviarla),
+   i prezzi delle gomme in promo, se l'officina e' aperta, una domanda
+   libera. Alla fine del preventivo c'e' la richiesta gia' scritta, da
+   inviare a Daniele su WhatsApp. Si apre col pulsante "Preventivo
+   veloce" (e con la voce del menu), si chiude con la X o con Esc;
+   chiudendo, la conversazione resta dov'era. Su desktop sta nell'angolo
+   in basso a destra, sul telefono prende tutto lo schermo.
 
    NON E' UN'INTELLIGENZA ARTIFICIALE. Alle domande scritte risponde solo
    con i testi che stanno gia' nella pagina:
@@ -284,25 +287,148 @@
 
 
   /* ---------------------------------------------------------------------
-     Le quattro domande
+     La conversazione
+
+     Si parte da un piccolo menu (preventivo, prezzi gomme, aperti?,
+     domanda). Il preventivo fa quattro domande e salta quelle a cui si
+     e' gia' risposto: chi arriva dai prezzi delle gomme ha gia' detto
+     il modello e cosa gli serve. WhatsApp compare solo alla fine, come
+     il modo di inviare la richiesta a Daniele.
      --------------------------------------------------------------------- */
+
+  function nuovoPreventivo() {
+    stato.mezzo = null;
+    stato.modello = null;
+    stato.servizi = [];
+    stato.serviziFatti = false;
+    stato.note = '';
+    stato.promo = '';
+    richiesta = [];
+  }
 
   function avvia() {
     chat.textContent = '';
-    stato = { passo: 'mezzo', mezzo: '', modello: '', servizi: [], note: '', promo: '' };
+    stato = { passo: 'menu' };
+    nuovoPreventivo();
     ricomincia.hidden = !toccato;
-    bot('Ciao! Ti preparo il messaggio per Daniele: rispondi a tre domande e su WhatsApp gli scrivi tutto in una volta. Se hai solo una domanda, scrivila qui sotto.');
-    chiediMezzo('');
+    bot('Ciao! Sono l’assistente di Bomber Garage.');
+    menu('Cosa ti serve?');
   }
 
-  function chiediMezzo(prima) {
+  /* un pulsante che, toccato, diventa la tua risposta e fa qualcosa */
+  function voce(etichetta, fai) {
+    return { etichetta: etichetta, fai: function () {
+      chiudiScelte();
+      ricomincia.hidden = false;
+      tu(etichetta);
+      dopo(fai);
+    } };
+  }
+
+  function menu(testo) {
+    stato.passo = 'menu';
+    bot(testo);
+    var voci = [voce('Un preventivo', function () { nuovoPreventivo(); avanti(); })];
+    if (promoAttiva()) voci.push(voce('Prezzi gomme', prezziGomme));
+    voci.push(voce('Siete aperti?', aperti));
+    voci.push(voce('Ho una domanda', unaDomanda));
+    scelte(voci);
+    suggerimento('Oppure scrivi qui la tua domanda');
+  }
+
+  function altro() { menu('Ti serve altro?'); }
+
+  /* --- le scorciatoie del menu ------------------------------------------ */
+
+  function aperti() {
+    var a = document.querySelector('.fascia-orari a[href="#dove"]');
+    var dove = a ? a.textContent.replace(/\s+/g, ' ').trim().replace(/,\s*Roma$/, '') : '';
+    bot((apertoAdesso() || '') + (dove ? ' Siamo in ' + dove + ', a San Giovanni.' : ''));
+    dopo(altro);
+  }
+
+  function unaDomanda() {
+    stato.passo = 'domanda';
+    bot('Scrivila qui sotto. Rispondo con quello che so; se non lo so, ti metto in contatto con Daniele.');
+    suggerimento('Es. riparate anche le Vespa?');
+    mettiFuoco();
+  }
+
+  function prezziGomme() {
+    stato.passo = 'gomme';
+    bot('Che modello hai? Ti dico subito il prezzo della promo.');
+    scelte([{ etichetta: 'Ho una moto', fai: function () { chiudiScelte(); tu('Ho una moto'); dopo(gommeMoto); } }]);
+    suggerimento('Es. Honda SH 150, X-ADV 350');
+    mettiFuoco();
+  }
+
+  function gommeMoto() {
+    var p = promoAttiva();
+    if (!p) return altro();
+    var righe = [];
+    p.querySelectorAll('.listino').forEach(function (col) {
+      var h = col.querySelector('h3');
+      if (!h || piano(h.textContent) !== 'moto') return;
+      col.querySelectorAll('li').forEach(function (li) { righe.push(voceListino(li) + ': ' + prezzoListino(li)); });
+    });
+    bot('Per le moto, ' + scadenzaPromo(p) + ': ' + righe.join('; ') + '. Dipende dalla misura delle gomme.');
+    nuovoPreventivo();
+    stato.mezzo = 'moto';
+    stato.servizi = ['gomme'];
+    stato.serviziFatti = true;
+    stato.promo = 'Ho visto la promo gomme sul sito.';
+    dopoGomme();
+  }
+
+  function rispostaGomme(testo) {
+    tu(testo);
+    dopo(function () {
+      var p = promoAttiva();
+      nuovoPreventivo();
+      stato.modello = testo.replace(/\s+/g, ' ').trim();
+      stato.servizi = ['gomme'];
+      stato.serviziFatti = true;
+      var riga = rigaPromo(testo);
+      if (p && riga) {
+        bot('Per ' + voceListino(riga) + ': ' + prezzoListino(riga) + ', con la promo ' + scadenzaPromo(p) + '. Il prezzo esatto dipende dalla gomma che scegli.');
+        var col = riga.closest('.listino');
+        var h = col && col.querySelector('h3');
+        if (h) stato.mezzo = piano(h.textContent) === 'moto' ? 'moto' : 'scooter';
+        stato.promo = 'Ho visto la promo gomme: ' + voceListino(riga) + ' ' + prezzoListino(riga) + '.';
+      } else {
+        bot('Per questo modello non ho il prezzo in listino. La promo parte da ' + (p ? riassuntoPromo(p) : '') + ': quello giusto dipende dalla misura, e te lo dice Daniele.');
+        stato.promo = 'Ho visto la promo gomme sul sito.';
+      }
+      dopoGomme();
+    });
+  }
+
+  function dopoGomme() {
+    stato.passo = 'menu';
+    scelte([
+      voce('Prenota il cambio gomme', function () { avanti(); }),
+      voce('Altro', altro)
+    ]);
+    suggerimento('Oppure scrivi qui la tua domanda');
+  }
+
+  /* --- il preventivo: chiede solo quello che manca ---------------------- */
+
+  function avanti() {
+    if (stato.mezzo === null) chiediMezzo();
+    else if (stato.modello === null) chiediModello();
+    else if (!stato.serviziFatti) chiediServizi();
+    else mostraRichiesta('Domande finite: ecco la tua richiesta.');
+  }
+
+  function chiediMezzo() {
     stato.passo = 'mezzo';
-    bot(prima + 'Che mezzo hai?');
+    bot('Partiamo dal mezzo: scooter o moto?');
     scelte([
       { etichetta: 'Scooter', fai: function () { rispondiMezzo('scooter'); } },
       { etichetta: 'Moto', fai: function () { rispondiMezzo('moto'); } }
     ]);
-    suggerimento('Oppure scrivi una domanda');
+    suggerimento('Oppure scrivi qui la tua domanda');
   }
 
   function rispondiMezzo(m) {
@@ -310,12 +436,12 @@
     ricomincia.hidden = false;
     stato.mezzo = m;
     tu(m.charAt(0).toUpperCase() + m.slice(1));
-    dopo(function () { chiediModello(''); });
+    dopo(avanti);
   }
 
-  function chiediModello(prima) {
+  function chiediModello() {
     stato.passo = 'modello';
-    bot(prima + 'Marca e modello? Se li sai, aggiungi anno o chilometri.');
+    bot('Che modello è? Se li sai, aggiungi anno e chilometri.');
     scelte([{ etichetta: 'Non lo so', fai: function () { rispondiModello(''); } }]);
     suggerimento(stato.mezzo === 'scooter' ? 'Es. Honda SH 150 del 2019' : 'Es. Yamaha Ténéré 700, 30.000 km');
     mettiFuoco();
@@ -325,14 +451,14 @@
     chiudiScelte();
     stato.modello = t.replace(/\s+/g, ' ').trim();
     tu(stato.modello || 'Non lo so');
-    dopo(function () { chiediServizi(''); });
+    dopo(avanti);
   }
 
-  function chiediServizi(prima) {
+  function chiediServizi() {
     stato.passo = 'servizi';
-    bot(prima + 'Cosa ti serve? Puoi sceglierne più di uno.');
+    bot('Cosa c’è da fare? Puoi sceglierne più di uno.');
 
-    var avanti;
+    var avantiBtn;
     var voci = SERVIZI.map(function (s) {
       return {
         etichetta: s.etichetta,
@@ -340,7 +466,7 @@
           var i = stato.servizi.indexOf(s.id);
           if (i === -1) stato.servizi.push(s.id); else stato.servizi.splice(i, 1);
           b.setAttribute('aria-pressed', i === -1 ? 'true' : 'false');
-          avanti.disabled = stato.servizi.length === 0;
+          avantiBtn.disabled = stato.servizi.length === 0;
         }
       };
     });
@@ -351,9 +477,9 @@
     SERVIZI.forEach(function (s, i) {
       pulsanti[i].setAttribute('aria-pressed', stato.servizi.indexOf(s.id) !== -1 ? 'true' : 'false');
     });
-    avanti = riga.querySelector('.scelta-avanti');
-    avanti.disabled = stato.servizi.length === 0;
-    suggerimento('Oppure scrivi una domanda');
+    avantiBtn = riga.querySelector('.scelta-avanti');
+    avantiBtn.disabled = stato.servizi.length === 0;
+    suggerimento('Oppure scrivi qui la tua domanda');
   }
 
   function scelti(campoNome) {
@@ -364,58 +490,28 @@
   function rispondiServizi() {
     if (!stato.servizi.length) return;
     chiudiScelte();
+    stato.serviziFatti = true;
     tu(scelti('etichetta').join(', '));
 
     dopo(function () {
-      stato.promo = '';
       var p = promoAttiva();
-      if (p && stato.servizi.indexOf('gomme') !== -1) {
+      if (p && stato.servizi.indexOf('gomme') !== -1 && !stato.promo) {
         var riga = rigaPromo(stato.modello);
         if (riga) {
-          bot('Per ' + voceListino(riga) + ' c’è la promo gomme ' + scadenzaPromo(p) + ': ' + prezzoListino(riga) + '. La segno nel messaggio.');
+          bot('Per ' + voceListino(riga) + ' c’è la promo gomme ' + scadenzaPromo(p) + ': ' + prezzoListino(riga) + '. La aggiungo alla richiesta.');
           stato.promo = 'Ho visto la promo gomme: ' + voceListino(riga) + ' ' + prezzoListino(riga) + '.';
         } else {
-          bot('C’è la promo gomme ' + scadenzaPromo(p) + ': ' + riassuntoPromo(p) + ', dipende dalla misura.');
+          bot('C’è anche la promo gomme ' + scadenzaPromo(p) + ': ' + riassuntoPromo(p) + ', dipende dalla misura.');
           stato.promo = 'Ho visto la promo gomme sul sito.';
         }
       }
-      chiediNote('');
+      avanti();
     });
-  }
-
-  function chiediNote(prima) {
-    stato.passo = 'note';
-    var s = stato.servizi;
-    var domanda, esempio;
-    if (s.indexOf('ritiro') !== -1) {
-      domanda = 'Dove si trova il mezzo? Se sai cosa ha, aggiungilo.';
-      esempio = 'Es. Via Tuscolana, non parte da ieri';
-    } else if (s.indexOf('guasto') !== -1 || s.indexOf('altro') !== -1) {
-      domanda = 'Raccontami cosa fa: rumori, spie accese, quando succede.';
-      esempio = 'Es. a freddo fa fatica a partire';
-    } else if (s.indexOf('gomme') !== -1) {
-      domanda = 'Se la sai, scrivi la misura delle gomme: è sul fianco, tipo 120/70-17. Puoi dire anche quando potresti passare.';
-      esempio = 'Es. 120/70-15, passerei giovedì';
-    } else {
-      domanda = 'Vuoi aggiungere qualcosa? Per esempio quando potresti passare.';
-      esempio = 'Es. potrei passare martedì mattina';
-    }
-    bot(prima + domanda);
-    scelte([{ etichetta: 'Niente da aggiungere', fai: function () { rispondiNote(''); } }]);
-    suggerimento(esempio);
-    mettiFuoco();
-  }
-
-  function rispondiNote(t) {
-    chiudiScelte();
-    stato.note = t.replace(/\s+/g, ' ').trim();
-    tu(stato.note || 'Niente da aggiungere');
-    dopo(mostraMessaggio);
   }
 
   function componi() {
     var righe = ['Ciao! Vi scrivo dal sito.'];
-    righe.push('*Mezzo:* ' + stato.mezzo + (stato.modello ? ' ' + stato.modello : ''));
+    righe.push('*Mezzo:* ' + (stato.mezzo || '') + (stato.modello ? ' ' + stato.modello : ''));
     righe.push('*Mi serve:* ' + scelti('testo').join(', '));
     if (stato.note) righe.push('*Note:* ' + stato.note);
     if (stato.promo) righe.push(stato.promo);
@@ -439,56 +535,93 @@
     return carta;
   }
 
-  function mostraMessaggio() {
-    stato.passo = 'fine';
-    var messaggio = componi();
-    bot('Ecco il messaggio. Controllalo e mandalo: ti risponde Daniele.');
-    aggiungi(anteprima(messaggio));
-
-    var azioni = nodo('div', 'assistente-azioni');
-    var manda = nodo('a', 'btn btn-oro');
-    manda.href = linkWhatsApp(messaggio);
-    manda.target = '_blank';
-    manda.rel = 'noopener';
-    manda.setAttribute('data-umami-event', 'whatsapp-assistente');
-    manda.innerHTML = '<svg class="icona icona-piena"><use href="#i-whatsapp"></use></svg>';
-    manda.appendChild(document.createTextNode('Manda su WhatsApp'));
-    azioni.appendChild(manda);
-    aggiungi(azioni);
-
-    bot('Su WhatsApp puoi aggiungere due foto del mezzo: aiuta a capire subito.');
-    suggerimento('Hai una domanda? Scrivila qui');
+  function pulsanteWhatsApp(testo, messaggio, classi, evento) {
+    var a = nodo('a', classi);
+    a.href = linkWhatsApp(messaggio);
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.setAttribute('data-umami-event', evento);
+    a.innerHTML = '<svg class="icona icona-piena"><use href="#i-whatsapp"></use></svg>';
+    a.appendChild(document.createTextNode(testo));
+    var riga = nodo('div', 'assistente-azioni');
+    riga.appendChild(a);
+    return aggiungi(riga);
   }
 
-  /* dopo una domanda scritta si torna al punto in cui si era */
+  /* L'invito sotto la richiesta: cosa conviene aggiungere, a seconda del
+     lavoro. Per il ritiro serve sapere dove sta il mezzo. */
+  function invitoNota() {
+    var s = stato.servizi;
+    if (stato.note) {
+      return ['Se vuoi aggiungere altro, scrivilo qui sotto. Altrimenti è tutto pronto: premi Invia a Daniele.', 'Aggiungi altro (facoltativo)'];
+    }
+    if (s.indexOf('ritiro') !== -1) {
+      return ['Per il ritiro serve sapere dove si trova il mezzo: scrivilo qui sotto e lo aggiungo alla richiesta.', 'Es. Via Tuscolana 100, non parte da ieri'];
+    }
+    if (s.indexOf('guasto') !== -1 || s.indexOf('altro') !== -1) {
+      return ['Se vuoi, scrivi qui sotto cosa fa (rumori, spie accese, quando succede) e lo aggiungo. Altrimenti è pronta da inviare.', 'Es. a freddo fa fatica a partire'];
+    }
+    if (s.indexOf('gomme') !== -1) {
+      return ['Se sai la misura delle gomme (è sul fianco, tipo 120/70-17) o quando passeresti, scrivilo qui sotto e lo aggiungo. Altrimenti è pronta da inviare.', 'Es. 120/70-15, passerei giovedì'];
+    }
+    return ['Se vuoi aggiungere qualcosa, tipo quando passeresti, scrivilo qui sotto e lo aggiungo. Altrimenti è pronta da inviare.', 'Es. potrei passare martedì mattina'];
+  }
+
+  /* La richiesta finita, con un solo pulsante per inviarla. Quando si
+     aggiunge una nota, la versione vecchia sparisce e compare quella
+     nuova: in chat c'e' sempre una richiesta sola, quella giusta. */
+  var richiesta = [];
+
+  function mostraRichiesta(titolo) {
+    stato.passo = 'fine';
+    richiesta.forEach(function (n) { if (n.parentNode) n.parentNode.removeChild(n); });
+    var messaggio = componi();
+    var invito = invitoNota();
+    richiesta = [
+      bot(titolo),
+      aggiungi(anteprima(messaggio)),
+      pulsanteWhatsApp('Invia a Daniele', messaggio, 'btn btn-oro', 'whatsapp-assistente'),
+      bot(invito[0])
+    ];
+    suggerimento(invito[1]);
+  }
+
+  function aggiungiNota(t) {
+    t = t.replace(/\s+/g, ' ').trim();
+    stato.note = stato.note ? stato.note + '. ' + t : t;
+    tu(t);
+    dopo(function () {
+      mostraRichiesta('Aggiunto. Ecco la richiesta aggiornata: se è tutto, inviala.');
+    });
+  }
+
+  /* --- le domande scritte ----------------------------------------------- */
+
+  /* dopo una domanda si torna dove si era: nel preventivo si riprende
+     dalla domanda lasciata, altrimenti si ripropone il menu */
   function riprendi() {
-    var prima = 'Torniamo al messaggio. ';
-    if (stato.passo === 'mezzo') chiediMezzo('Se vuoi ti preparo anche il messaggio per Daniele. ');
-    else if (stato.passo === 'modello') chiediModello(prima);
-    else if (stato.passo === 'servizi') chiediServizi(prima);
-    else if (stato.passo === 'note') chiediNote(prima);
+    if (stato.passo === 'fine') return;
+    if (/^(mezzo|modello|servizi)$/.test(stato.passo)) {
+      bot('Riprendiamo da dove eravamo.');
+      avanti();
+    } else {
+      altro();
+    }
   }
 
   function domandaLibera(testo) {
     tu(testo);
+    ricomincia.hidden = false;
     dopo(function () {
       var r = rispondi(testo);
       if (r) {
         bot(r);
       } else {
-        bot('Questa non la so: meglio chiederla direttamente a Daniele. Ti ho preparato il messaggio.');
-        var a = nodo('a', 'btn btn-velo btn-piccolo assistente-chiedi');
-        a.href = linkWhatsApp('Ciao! Vi scrivo dal sito, ho una domanda: ' + testo);
-        a.target = '_blank';
-        a.rel = 'noopener';
-        a.setAttribute('data-umami-event', 'whatsapp-domanda');
-        a.innerHTML = '<svg class="icona icona-piena"><use href="#i-whatsapp"></use></svg>';
-        a.appendChild(document.createTextNode('Chiedi a Daniele'));
-        var riga = nodo('div', 'assistente-azioni');
-        riga.appendChild(a);
-        aggiungi(riga);
+        bot('Questa la sa solo Daniele: chiediglielo direttamente, la domanda è già scritta.');
+        pulsanteWhatsApp('Chiedi a Daniele', 'Ciao! Vi scrivo dal sito, ho una domanda: ' + testo,
+          'btn btn-velo btn-piccolo', 'whatsapp-domanda');
       }
-      if (stato.passo !== 'fine') dopo(riprendi);
+      dopo(riprendi);
     });
   }
 
@@ -505,15 +638,25 @@
     if (!t) return;
     campo.value = '';
     toccato = true;
+    var p = stato.passo;
 
-    /* alla prima domanda "ho uno scooter" vale come risposta */
-    if (stato.passo === 'mezzo' && !sembraDomanda(t)) {
-      if (/\b(scooter|motorino|vespa)\b/.test(piano(t))) return rispondiMezzo('scooter');
-      if (/\bmoto\b/.test(piano(t))) return rispondiMezzo('moto');
+    /* "ho uno scooter" dal menu o alla prima domanda: si parte col preventivo */
+    if ((p === 'menu' || p === 'domanda' || p === 'mezzo') && !sembraDomanda(t)) {
+      var m = /\b(scooter|motorino|vespa)\b/.test(piano(t)) ? 'scooter' : (/\bmoto\b/.test(piano(t)) ? 'moto' : '');
+      if (m) {
+        if (p !== 'mezzo') nuovoPreventivo();
+        chiudiScelte();
+        ricomincia.hidden = false;
+        stato.mezzo = m;
+        tu(t);
+        return dopo(avanti);
+      }
     }
-    if (stato.passo === 'modello' && !sembraDomanda(t)) return rispondiModello(t);
-    /* nelle note va bene anche una domanda per Daniele: finisce nel messaggio */
-    if (stato.passo === 'note') return rispondiNote(t);
+    if (p === 'modello' && !sembraDomanda(t)) return rispondiModello(t);
+    if (p === 'gomme' && !sembraDomanda(t)) { chiudiScelte(); return rispostaGomme(t); }
+    /* a richiesta pronta, quello che si scrive e' per Daniele: va nella richiesta */
+    if (p === 'fine') return aggiungiNota(t);
+    chiudiScelte();
     domandaLibera(t);
   });
 

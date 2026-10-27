@@ -161,12 +161,19 @@ La cosa che pesa di più per "officina moto Roma" resta comunque la
 
 ## L'assistente del preventivo (`assistente.js`)
 
-Il pulsante **Preventivo** (in basso a destra, e nel menu) apre una
-piccola chat sopra la pagina: su desktop una finestra nell'angolo, sul
-telefono a schermo intero. Fa quattro domande (scooter o moto, marca e
-modello, cosa serve, note) e alla fine mostra il messaggio già scritto
-con il pulsante "Manda su WhatsApp". Il messaggio lo manda il cliente,
-risponde Daniele. Chiudendo, la conversazione resta dov'era.
+Il pulsante **Preventivo veloce** (in basso a destra, con la luce oro
+che gira sul bordo, e la voce "Preventivo" nel menu) apre una piccola
+chat sopra la pagina: su desktop una finestra nell'angolo, sul telefono
+a schermo intero. La pagina sotto non si allunga e non si muove.
+
+Si parte da un menu: **Un preventivo**, **Prezzi gomme** (solo mentre la
+promo è attiva), **Siete aperti?**, **Ho una domanda**. Il preventivo fa
+tre domande (scooter o moto, modello, cosa c'è da fare) e salta quelle a
+cui si è già risposto. Poi dice "Domande finite" e mostra la richiesta
+pronta con il pulsante **Invia a Daniele**: se si scrive qualcosa sotto
+(la misura, dove sta il mezzo, quando si passa) la richiesta si aggiorna
+lì. WhatsApp è solo il modo in cui la richiesta arriva a Daniele.
+Chiudendo la finestra la conversazione resta dov'era.
 
 **Non è un'AI** e non costa niente: niente server, niente cookie,
 niente richieste esterne. Alle domande scritte risponde solo con i testi
