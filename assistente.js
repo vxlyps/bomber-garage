@@ -7,7 +7,7 @@
    i prezzi delle gomme in promo, se l'officina e' aperta, una domanda
    libera. Alla fine del preventivo c'e' la richiesta gia' scritta, da
    inviare a Daniele su WhatsApp. Si apre col pulsante "Preventivo
-   veloce" (e con la voce del menu), si chiude con la X o con Esc;
+   gratuito" (e con la voce del menu), si chiude con la X o con Esc;
    chiudendo, la conversazione resta dov'era. Su desktop sta nell'angolo
    in basso a destra, sul telefono prende tutto lo schermo.
 
@@ -328,7 +328,7 @@
   function menu(testo) {
     stato.passo = 'menu';
     bot(testo);
-    var voci = [voce('Un preventivo', function () { nuovoPreventivo(); avanti(); })];
+    var voci = [voce('Preventivo gratuito', function () { nuovoPreventivo(); avanti(); })];
     if (promoAttiva()) voci.push(voce('Prezzi gomme', prezziGomme));
     voci.push(voce('Siete aperti?', aperti));
     voci.push(voce('Ho una domanda', unaDomanda));
