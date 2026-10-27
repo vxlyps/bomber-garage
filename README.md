@@ -241,7 +241,7 @@ pagina. È già successo una volta con le istruzioni di Umami.
 ## Le recensioni
 
 Sono tutte vere, prese dalla scheda Google, e ultimo controllo il
-9 ottobre 2026: **23 recensioni, media 5,0**. Di queste solo dieci hanno
+27 ottobre 2026: **24 recensioni, media 5,0**. Di queste una dozzina hanno
 un testo, le altre sono solo stelle. In pagina ce ne sono 8, le più
 nuove per prima, accorciate e firmate con nome e iniziale.
 
