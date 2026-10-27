@@ -1357,3 +1357,54 @@ p { text-wrap: pretty; }
   }
 
 }
+
+
+/* =========================================================================
+   24. DOMANDE FREQUENTI
+   Riquadri come quelli dei servizi: si apre la risposta toccando la
+   domanda. Niente animazioni, il segno a destra dice se e' aperta.
+   ========================================================================= */
+
+.domande {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: var(--sp-l);
+  max-width: 48rem;
+}
+
+.domanda {
+  border: 1px solid rgba(232, 200, 136, 0.3);
+  border-radius: var(--raggio-g);
+  background: var(--nero-2);
+}
+
+.domanda summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.125rem 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  list-style: none;
+  cursor: pointer;
+}
+.domanda summary::-webkit-details-marker { display: none; }
+
+.domanda summary::after {
+  content: "+";
+  flex: none;
+  font-size: 1.375rem;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--oro);
+}
+.domanda[open] summary::after { content: "\2212"; }
+
+.domanda summary:hover { color: var(--oro); }
+
+.domanda p {
+  padding: 0 1.375rem 1.25rem;
+  font-size: var(--t-piccolo);
+  color: var(--grigio);
+}

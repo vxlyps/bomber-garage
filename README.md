@@ -2,37 +2,25 @@
 
 Sito di BomberGarage, officina moto in via Umberto Biancamano 34 a Roma.
 
-> ## IL SITO È PUBBLICO
+> ## IL SITO È ONLINE SU https://bombergarage.it
 >
-> Il `noindex` è stato tolto: Google può indicizzarlo. L'indirizzo è
-> `vxlyps.github.io/bomber-garage`, il dominio arriverà dopo.
+> Dominio comprato su Aruba il 9 ottobre 2026, collegato a GitHub Pages.
+> `www.bombergarage.it` e il vecchio `vxlyps.github.io/bomber-garage`
+> rimandano da soli al dominio. HTTPS attivo e obbligatorio.
 >
-> **Da fare adesso, in ordine di importanza:**
+> **Da fare, in ordine di importanza:**
 >
-> 1. **Mettere l'indirizzo del sito sulla scheda Google dell'attività.**
->    Nella scheda c'è ancora "Aggiungi sito web". È la cosa che porta più
->    gente di qualunque altra: quasi tutti arrivano da Maps, non da una
->    ricerca su Google.
-> 2. **Google Search Console.** Gratis, nessuno script da mettere in
->    pagina, nessun banner. Dice con quali ricerche lo trovano.
+> 1. **Il sito sulla scheda Google dell'attività** deve essere
+>    `https://bombergarage.it` (prima c'era l'indirizzo github.io). È la
+>    cosa che porta più gente: quasi tutti arrivano da Maps.
+> 2. **Google Search Console** sulla proprietà `bombergarage.it` (il
+>    record TXT di verifica è già nei DNS), con la sitemap
+>    `https://bombergarage.it/sitemap.xml`.
+> 3. **Bing Webmaster Tools**, che si importa da Search Console con un
+>    clic. Conta perché ChatGPT cerca su Bing.
 >
-> **Quando arriva il dominio:**
->
-> 1. Cambiare l'indirizzo, un comando solo dalla cartella del sito:
->    ```
->    sed -i '' 's|https://vxlyps.github.io/bomber-garage|https://IL-TUO-DOMINIO.it|g' index.html privacy/index.html 404.html
->    ```
-> 2. Scrivere il dominio dentro al file `CNAME`, togliere la riga
->    `/CNAME` da `.gitignore`, e committare. **Solo a record DNS già a
->    posto**, mai prima.
->
-> Cambiare dominio dopo non brucia niente: appena GitHub Pages vede il
-> `CNAME`, manda da solo un redirect permanente dal vecchio indirizzo
-> `github.io` a quello nuovo, quindi quel poco che Google ha già
-> indicizzato si sposta senza perdersi.
->
-> Resta fuori anche **Umami**: lo script è commentato, quindi in questo
-> momento il sito non raccoglie nessuna statistica.
+> Resta fuori **Umami**: lo script è commentato, quindi il sito non
+> raccoglie nessuna statistica.
 
 Una pagina sola, HTML e CSS statici. Nessun framework, nessun build step,
 nessuna libreria esterna. Il carattere è Inter e sta dentro `fonts/`, non
@@ -98,71 +86,55 @@ pagina e rimanda alla scheda, ma **non** è marcato nel JSON-LD: marcare
 le recensioni di Google sul proprio sito è contro le loro linee guida e
 si rischia una penalizzazione.
 
-## Da sistemare
-
-1. **Email.** Non ne è stata trovata una pubblica, quindi nel blocco
-   contatti c'è un segnaposto. Quando c'è, nell'HTML sopra al segnaposto
-   c'è già pronto il commento con il pezzo di codice da usare, e va
-   aggiunto anche `"email"` nel JSON-LD in fondo.
-2. **Il dominio.** Vedi sotto.
-
 ## Il dominio su Aruba
 
-Quando il dominio è comprato, nel pannello Aruba si apre il dominio e si
-va su **Gestione DNS e Redirect**.
+Pannello Aruba, dominio `bombergarage.it`, **Gestione DNS e Redirect**:
 
-**Record A** per il dominio senza www. Host vuoto (o `@`), quattro
-record, uno per riga:
+- quattro record **A** sul dominio senza www: `185.199.108.153`,
+  `185.199.109.153`, `185.199.110.153`, `185.199.111.153`;
+- un **CNAME** `www` verso `vxlyps.github.io`;
+- un **TXT** `google-site-verification=...`: è la verifica di Search
+  Console, non va tolto.
 
-    185.199.108.153
-    185.199.109.153
-    185.199.110.153
-    185.199.111.153
+**Non toccare i record MX** né il TXT `v=spf1`, se ci sono: fanno
+funzionare la posta del dominio.
 
-Se Aruba ha già messo un record A che punta al suo hosting, va
-sostituito con questi quattro.
+Il file `CNAME` nella cartella contiene `bombergarage.it` ed è
+committato: è quello che dice a GitHub Pages quale dominio servire. Se
+si toglie, il sito torna su github.io.
 
-**Record CNAME** per il www:
+Il certificato HTTPS lo rinnova da solo GitHub (Let's Encrypt). Se un
+giorno `www` desse errore di certificato, la cura è togliere e rimettere
+il dominio nelle impostazioni Pages del repository: GitHub ne chiede uno
+nuovo che copre tutti e due i nomi.
 
-    host: www        valore: vxlyps.github.io
+## Farsi trovare: Google e le AI
 
-(con il punto finale, se il pannello Aruba lo richiede)
+- **Titolo e descrizione** puntano su "officina moto Roma" e "meccanico
+  moto", con San Giovanni e l'indirizzo.
+- **Dati strutturati** (JSON-LD nella testa): l'officina come
+  `MotorcycleRepair` con indirizzo, coordinate, orari, servizi, titolare,
+  scheda Maps e social; il sito come `WebSite`; le domande frequenti come
+  `FAQPage`. Il voto delle recensioni **non** è marcato apposta (vedi
+  "Le recensioni").
+- **Domande frequenti** in pagina: le risposte ripetono solo cose già
+  scritte nel resto del sito. Sono il tipo di testo che gli assistenti AI
+  citano quando qualcuno chiede "un meccanico per lo scooter a San
+  Giovanni". Se ne cambi una, cambiala anche nel JSON-LD.
+- **`robots.txt`** apre tutto a tutti e nomina uno per uno i crawler
+  delle AI (ChatGPT, Claude, Perplexity, Gemini, Apple, Bing, Meta).
+- **`llms.txt`**: scheda in testo semplice per gli assistenti AI, con
+  contatti, orari e servizi. Va tenuta allineata alla pagina.
+- **`sitemap.xml`**: quando si cambia la pagina si aggiorna `lastmod`.
+- **IndexNow**: il file `513673f047bcd778397e8d1caff282e7.txt` nella
+  radice è la chiave. Dopo una modifica importante si avvisa Bing (e da
+  lì ChatGPT) con:
+  ```
+  curl "https://api.indexnow.org/indexnow?url=https://bombergarage.it/&key=513673f047bcd778397e8d1caff282e7"
+  ```
 
-### Attenzione ai record MX
-
-**Non toccare i record MX.** Sono quelli che fanno arrivare la posta
-della casella del dominio. Se si cancellano o si modificano, la posta
-smette di funzionare. Vale anche per il record TXT che comincia con
-`v=spf1`: si lascia dov'è.
-
-Si cambiano **solo** i record A e il CNAME del www. Tutto il resto resta
-com'è.
-
-### Il file CNAME
-
-In questa cartella c'è `CNAME.txt` con dentro un dominio di esempio.
-Vanno fatte due cose, **in quest'ordine**:
-
-1. Scriverci dentro il dominio vero, uno solo, senza `http://`.
-2. Rinominarlo in `CNAME`, senza estensione, **solo quando i record DNS
-   sopra sono già a posto.** Se lo si attiva prima, GitHub manda tutti
-   sul dominio nuovo e il sito non si apre più nemmeno dall'indirizzo
-   github.io.
-
-Poi, nelle impostazioni del repository su GitHub, sezione **Pages**, si
-mette il dominio come dominio personalizzato e si spunta **Enforce
-HTTPS** quando il certificato è pronto (da qualche minuto a qualche ora).
-
-La propagazione del DNS di Aruba di solito ci mette da un'ora a un
-giorno.
-
-### E gli indirizzi dentro la pagina
-
-Adesso puntano a `vxlyps.github.io/bomber-garage`, che è dove sta online
-oggi. Quando il dominio è attivo vanno cambiati in `index.html`: il
-`<link rel="canonical">`, il tag `og:url`, `og:image`, e i campi `url`,
-`@id`, `image` e `logo` dentro al JSON-LD in fondo. Sono tutti in due
-punti soli del file, la testa e il fondo.
+La cosa che pesa di più per "officina moto Roma" resta comunque la
+**scheda Google**: recensioni, foto, categoria giusta e il sito collegato.
 
 ## Come si cambiano le cose
 

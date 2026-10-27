@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Bomber Garage | Meccanico moto a Roma, San Giovanni</title>
-<meta name="description" content="Meccanico e officina moto a Roma, San Giovanni: tagliandi, riparazioni, pneumatici, revisioni, diagnosi e centraline. Via Umberto Biancamano 34. Chiama o scrivi su WhatsApp.">
+<title>Officina e meccanico moto a Roma, San Giovanni | Bomber Garage</title>
+<meta name="description" content="Officina moto e scooter a Roma, San Giovanni: tagliandi, riparazioni, gomme, revisioni, centraline e ritiro moto. Via Umberto Biancamano 34. 5,0 su Google.">
 
 <!-- ###################################################################
      INDIRIZZO DEL SITO: L'UNICO POSTO DA CAMBIARE
@@ -14,9 +14,9 @@
      questo blocco e in nessun altro punto del file. Nel resto della
      pagina i percorsi sono tutti relativi.
 
-     Quando arriva il dominio, dalla cartella del sito:
+     Il dominio e' bombergarage.it. Se mai cambiasse, dalla cartella del sito:
 
-       sed -i '' 's|https://bombergarage.it|https://IL-TUO-DOMINIO.it|g' index.html privacy/index.html 404.html
+       sed -i '' 's|https://bombergarage.it|https://NUOVO-DOMINIO.it|g' index.html privacy/index.html 404.html llms.txt robots.txt sitemap.xml
 
      e poi si controlla che qui sotto non sia rimasto niente di vecchio.
 
@@ -34,54 +34,211 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "AutoRepair",
-  "@id": "https://bombergarage.it/#officina",
-  "name": "Bomber Garage",
-  "legalName": "BomberGarage di Stacchiotti Daniele",
-  "description": "Officina moto a Roma, zona San Giovanni. Tagliandi e riparazioni, revisione carburatori e rifacimento motori, su qualunque marca.",
-  "url": "https://bombergarage.it/",
-  "image": "https://bombergarage.it/img/anteprima-whatsapp.jpg",
-  "logo": "https://bombergarage.it/img/logo-bomber-garage.webp",
-  "telephone": "+393931087444",
-  "email": "bombergarage34@gmail.com",
-  "vatID": "IT18635281001",
-  "priceRange": "€€",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Via Umberto Biancamano 34",
-    "postalCode": "00185",
-    "addressLocality": "Roma",
-    "addressRegion": "RM",
-    "addressCountry": "IT"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 41.8874905,
-    "longitude": 12.51038
-  },
-  "hasMap": "https://maps.app.goo.gl/XPU6XxXUKYwf9M847",
-  "areaServed": { "@type": "City", "name": "Roma" },
-  "sameAs": [
-    "https://www.instagram.com/bomber_garage87/",
-    "https://www.facebook.com/bombersmotorcycle/"
-  ],
-  "openingHoursSpecification": [
+  "@graph": [
     {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      "opens": "09:00",
-      "closes": "18:00"
+      "@type": "MotorcycleRepair",
+      "@id": "https://bombergarage.it/#officina",
+      "name": "Bomber Garage",
+      "alternateName": "BomberGarage",
+      "legalName": "BomberGarage di Stacchiotti Daniele",
+      "description": "Officina moto e scooter a Roma, zona San Giovanni. Tagliandi e riparazioni su qualunque marca, sostituzione pneumatici, revisioni, modifica centraline, personalizzazioni, assistenza CID e ritiro moto.",
+      "url": "https://bombergarage.it/",
+      "image": [
+        "https://bombergarage.it/img/anteprima-whatsapp.jpg",
+        "https://bombergarage.it/img/apertura-nera.webp",
+        "https://bombergarage.it/img/daniele-al-banco.webp",
+        "https://bombergarage.it/img/galleria-triumph-tre-quarti.webp"
+      ],
+      "logo": "https://bombergarage.it/img/logo-bomber-garage.webp",
+      "telephone": "+393931087444",
+      "email": "bombergarage34@gmail.com",
+      "vatID": "IT18635281001",
+      "priceRange": "€€",
+      "currenciesAccepted": "EUR",
+      "knowsLanguage": "it",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Via Umberto Biancamano 34",
+        "postalCode": "00185",
+        "addressLocality": "Roma",
+        "addressRegion": "RM",
+        "addressCountry": "IT"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 41.8874905,
+        "longitude": 12.51038
+      },
+      "hasMap": "https://maps.google.com/?cid=5320234748475601047",
+      "areaServed": {
+        "@type": "City",
+        "name": "Roma"
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "Daniele Stacchiotti",
+        "jobTitle": "Meccanico e titolare"
+      },
+      "sameAs": [
+        "https://www.instagram.com/bomber_garage87/",
+        "https://www.facebook.com/bombersmotorcycle/",
+        "https://maps.google.com/?cid=5320234748475601047"
+      ],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "09:00",
+          "closes": "18:00"
+        }
+      ],
+      "knowsAbout": [
+        "riparazione moto",
+        "riparazione scooter",
+        "tagliando moto",
+        "carburatori",
+        "impianto elettrico moto",
+        "pneumatici moto",
+        "revisione moto",
+        "centraline moto"
+      ],
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Tagliandi e riparazioni moto"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Sostituzione pneumatici moto e scooter"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Revisione moto e scooter"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Modifica ECU e centraline"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Personalizzazioni e modifiche moto"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Assistenza CID e pratiche assicurative"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Trasporto e ritiro veicoli"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Consulenza acquisto e vendita usato"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://bombergarage.it/#sito",
+      "url": "https://bombergarage.it/",
+      "name": "Bomber Garage",
+      "inLanguage": "it-IT",
+      "publisher": {
+        "@id": "https://bombergarage.it/#officina"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://bombergarage.it/#domande",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Riparate anche gli scooter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sì. Si lavora su qualunque marca, dallo scooter alla maxi enduro: tagliandi, freni, frizione, catena, impianto elettrico, motore e carburatori."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quanto costa un tagliando o una riparazione?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dipende dalla moto e da cosa serve. Prima si guarda la moto, poi si dice cosa fare e quanto viene, così al ritiro non ci sono sorprese. Per un'idea veloce mandaci due foto su WhatsApp al 393 108 7444."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Cambiate le gomme di moto e scooter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sì, montaggio ed equilibratura per moto e per scooter. Chiama con la misura che ti serve e ti diciamo quando passare."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Fate le revisioni?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sì. Si prenota, si porta la moto e alla pratica ci pensiamo noi. Meglio muoversi per tempo, non l'ultima settimana."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "La moto non parte: venite a prenderla?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sì. Con il servizio di trasporto e ritiro veniamo a prenderla e te la riportiamo quando è pronta. Basta dire dove sta."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ho fatto un incidente: mi aiutate con il CID?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sì. Constatazione amichevole, preventivo per l'assicurazione e riparazione: la pratica la segue l'officina, tu porti solo la moto."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Dove siete e che orari fate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In Via Umberto Biancamano 34, 00185 Roma, zona San Giovanni. Aperti dal lunedì al venerdì dalle 9:00 alle 18:00, sabato e domenica chiuso."
+          }
+        }
+      ]
     }
-  ],
-  "makesOffer": [
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Tagliandi e riparazioni moto" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Sostituzione pneumatici moto e scooter" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Revisione moto e scooter" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Modifica ECU e centraline" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Personalizzazioni e modifiche moto" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Assistenza CID e pratiche assicurative" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Trasporto e ritiro veicoli" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Consulenza acquisto e vendita usato" } }
   ]
 }
 </script>
@@ -102,7 +259,7 @@
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Stemma Bomber Garage e interno dell'officina">
+<meta property="og:image:alt" content="Stemma Bomber Garage e la moto nera con la scritta oro">
 <meta name="twitter:card" content="summary_large_image">
 
 <!-- ###################################################################
@@ -1093,6 +1250,50 @@
 
       </div>
 
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       DOMANDE FREQUENTI
+       Le risposte dicono solo cose che stanno gia' nel resto della
+       pagina. Le stesse domande sono ripetute nel JSON-LD in testa
+       (FAQPage): se ne cambi una qui, cambiala anche li'.
+       ================================================================= -->
+  <section class="sezione" id="domande">
+    <div class="wrap">
+      <p class="etichetta">Domande frequenti</p>
+      <h2>Prima di passare</h2>
+      <div class="domande">
+        <details class="domanda">
+          <summary>Riparate anche gli scooter?</summary>
+          <p>Sì. Si lavora su qualunque marca, dallo scooter alla maxi enduro: tagliandi, freni, frizione, catena, impianto elettrico, motore e carburatori.</p>
+        </details>
+        <details class="domanda">
+          <summary>Quanto costa un tagliando o una riparazione?</summary>
+          <p>Dipende dalla moto e da cosa serve. Prima si guarda la moto, poi si dice cosa fare e quanto viene, così al ritiro non ci sono sorprese. Per un'idea veloce mandaci due foto su WhatsApp al 393 108 7444.</p>
+        </details>
+        <details class="domanda">
+          <summary>Cambiate le gomme di moto e scooter?</summary>
+          <p>Sì, montaggio ed equilibratura per moto e per scooter. Chiama con la misura che ti serve e ti diciamo quando passare.</p>
+        </details>
+        <details class="domanda">
+          <summary>Fate le revisioni?</summary>
+          <p>Sì. Si prenota, si porta la moto e alla pratica ci pensiamo noi. Meglio muoversi per tempo, non l'ultima settimana.</p>
+        </details>
+        <details class="domanda">
+          <summary>La moto non parte: venite a prenderla?</summary>
+          <p>Sì. Con il servizio di trasporto e ritiro veniamo a prenderla e te la riportiamo quando è pronta. Basta dire dove sta.</p>
+        </details>
+        <details class="domanda">
+          <summary>Ho fatto un incidente: mi aiutate con il CID?</summary>
+          <p>Sì. Constatazione amichevole, preventivo per l'assicurazione e riparazione: la pratica la segue l'officina, tu porti solo la moto.</p>
+        </details>
+        <details class="domanda">
+          <summary>Dove siete e che orari fate?</summary>
+          <p>In Via Umberto Biancamano 34, 00185 Roma, zona San Giovanni. Aperti dal lunedì al venerdì dalle 9:00 alle 18:00, sabato e domenica chiuso.</p>
+        </details>
+      </div>
     </div>
   </section>
 
