@@ -362,6 +362,15 @@
     pastiglia.className = 'stato ' + (aperto ? 'aperto' : 'chiuso');
     pastiglia.removeAttribute('hidden');
 
+    /* la versione corta, nella testata che resta sempre in vista */
+    var corta = document.querySelector('.stato-testata');
+    if (corta) {
+      corta.querySelector('b').textContent = aperto ? 'Aperto' : 'Chiuso';
+      corta.querySelector('.dettaglio').textContent = dettaglio;
+      corta.className = 'stato-testata ' + (aperto ? 'aperto' : 'chiuso');
+      corta.removeAttribute('hidden');
+    }
+
     /* nella scheda degli orari si segna qual e' la riga di oggi */
     var riga = document.querySelector('[data-giorni="' + (feriale ? 'feriali' : 'weekend') + '"]');
     if (riga) riga.className = 'oggi';
@@ -593,11 +602,17 @@
 
 <header class="testata">
   <div class="wrap">
-    <a class="marchio" href="#contenuto">
-      <img src="img/logo-bomber-garage.webp" width="720" height="720"
-           alt="" fetchpriority="high" decoding="async">
-      <span>Bomber<br>Garage</span>
-    </a>
+    <div class="testata-sinistra">
+      <a class="marchio" href="#contenuto">
+        <img src="img/logo-bomber-garage.webp" width="720" height="720"
+             alt="" fetchpriority="high" decoding="async">
+        <span>Bomber<br>Garage</span>
+      </a>
+      <!-- Aperto o chiuso, sempre in vista: sta nella testata che non scorre.
+           La riempie lo script in cima, con lo stesso calcolo della pastiglia
+           grande sotto l'apertura. Senza script resta nascosta. -->
+      <a class="stato-testata" href="#dove" hidden><b></b><span class="dettaglio"></span></a>
+    </div>
 
     <nav class="nav" aria-label="Navigazione principale">
       <a href="#officina">Cosa facciamo</a>
