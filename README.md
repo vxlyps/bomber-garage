@@ -159,6 +159,21 @@ anche lasciare dove sono: restano nascosti.
 La cosa che pesa di più per "officina moto Roma" resta comunque la
 **scheda Google**: recensioni, foto, categoria giusta e il sito collegato.
 
+## Dopo ogni modifica al CSS: cambiare il numero di versione
+
+GitHub Pages dice ai browser di tenere i file in memoria per 10 minuti.
+Se si cambia `style.css` e l'HTML insieme, chi ha la pagina aperta può
+vedere l'HTML nuovo con il CSS vecchio: pastiglie senza stile, link
+sottolineati, pezzi fuori posto. Per evitarlo il link al foglio di stile
+ha un numero di versione:
+
+    <link rel="stylesheet" href="style.css?v=20261027">
+
+Quando si cambia `style.css`, si cambia quel numero (la data va bene) in
+`index.html` e in `privacy/index.html`. Un comando solo:
+
+    sed -i '' 's|style.css?v=[0-9]*|style.css?v=AAAAMMGG|' index.html privacy/index.html
+
 ## Come si cambiano le cose
 
 **Gli orari** stanno in quattro posti: la fascia oro sotto all'apertura,
